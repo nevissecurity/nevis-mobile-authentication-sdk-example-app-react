@@ -1,0 +1,127 @@
+{
+	"home": {
+		"title": "Nevis Example App",
+		"registeredAccounts": "Registered accounts: {{numberOfAccounts}}",
+		"readQrCode": "Read Qr Code",
+		"authCloudApiRegistration": "Auth Cloud Api Registration",
+		"inBandAuthenticate": "In-Band Authenticate",
+		"deregister": "Deregister",
+		"deviceInformationChange": "Change Device Information",
+		"pinChange": "PIN Change",
+		"inBandRegister": "In-Band Register",
+		"identitySuiteOnly": "Identity Suite only"
+	},
+	"readQrCode": {
+		"title": "Read Qr Code",
+		"camera": {
+			"accessDenied": "Please allow access to camera.",
+			"accessPermanentlyDenied": "Camera access is denied. Please go to Settings and allow it.",
+			"initializationFailed": "Failed to initialize camera."
+		}
+	},
+	"authCloudApiRegistration": {
+		"title": "Auth Cloud Registration",
+		"enrollResponse": "Enroll response",
+		"appLinkUri": "App Link Uri",
+		"missingDataError": "Either the response or the appLinkUri is required.",
+		"wrongDataError": "You cannot provide both the response and the appLinkUri."
+	},
+	"selectAccount": {
+		"title": "Select an Account"
+	},
+	"selectAuthenticator": {
+		"title": "Select an Authentication Method"
+	},
+	"pin": {
+		"enrollment": {
+			"title": "Create PIN",
+			"description": "Please define a six digit PIN."
+		},
+		"verification": {
+			"title": "Verify PIN",
+			"description": "Please enter your PIN to complete the process."
+		},
+		"change": {
+			"title": "Change PIN",
+			"description": "Please define a six digit PIN."
+		},
+		"placeholder": {
+			"pin": "Enter PIN",
+			"oldPin": "Enter old PIN"
+		},
+		"pinProtectionStatusDescriptionLocked": "Authenticator is locked.",
+		"pinProtectionStatusDescriptionUnlocked": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+	},
+	"deviceInformationChange": {
+		"title": "Change Device Information",
+		"newName": "New name"
+	},
+	"usernamePasswordLogin": {
+		"title": "In-Band Registration",
+		"username": "Enter username",
+		"password": "Enter password"
+	},
+	"cancelButtonTitle": "Cancel",
+	"confirmButtonTitle": "Ok",
+	"biometric": {
+		"popup": {
+			"title": "Biometric authentication required",
+			"description": "Please use the default biometric method to identify yourself.",
+			"cancelButtonTitle": "Cancel"
+		}
+	},
+	"devicePasscode": {
+		"popup": {
+			"title": "Passcode required",
+			"description": "Please provide the device passcode."
+		}
+	},
+	"authenticator": {
+		"title": {
+			"pin": "PIN",
+			"biometric": "Face/Fingerprint",
+			"faceID": "Face ID",
+			"devicePasscode": "Device Passcode",
+			"fingerprint": "Fingerprint",
+			"touchID": "Touch ID"
+		},
+		"notPolicyCompliant": "This authentication method cannot be used with your application",
+		"notEnrolled": "Before using the authenticator, enroll it in the phone System Settings"
+	},
+	"operation": {
+		"init": "Initialization",
+		"registration": "Registration",
+		"authCloudApiRegistration": "Auth Cloud API Registration",
+		"authentication": "Authentication",
+		"deregistration": "Deregistration",
+		"deviceInformationChange": "Device Information Change",
+		"payloadDecode": "OOB Payload Decode",
+		"pinChange": "PIN Change",
+		"localData": "Local Data",
+		"unknown": "Operation",
+		"success": {
+			"title": "{{operation}} successful!"
+		},
+		"failed": {
+			"title": "{{operation}} failed!"
+		}
+	},
+	"transactionConfirmation": {
+		"title": "Transaction Confirmation"
+	},
+	"appError": {
+		"loadAppConfigurationError": "Failed to load the configuration file.",
+		"readLoginConfigurationError": "Failed to read the login configuration.",
+		"cookieNotFound": "No cookie was provided in the login response.",
+		"authorizationProviderNotFound": "Authorization provider not found.",
+		"accountsNotFound": "There are no registered accounts.",
+		"authenticatorNotFound": "No available authenticator found.",
+		"pinAuthenticatorNotFound": "Pin authenticator not found.",
+		"deviceInformationNotFound": "No device information was found for the operation.",
+		"loginDataNotFound": "Please provide both username and password.",
+		"loginError": "Login failed.",
+		"payloadDecodeError": "No Out-Of-Band payload found.",
+		"permissionError": "The application does not have permission to access the camera.",
+		"qrCodeError": "Could not read the QR code."
+	}
+}
