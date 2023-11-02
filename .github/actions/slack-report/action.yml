@@ -1,0 +1,34 @@
+name: Report Status
+description: Report status to Slack
+    Required environment variables
+    * VERSION_NUMBER
+    * BUILD_NUMBER
+    * SLACK_WEBHOOK_URL
+
+inputs:
+    platform:
+        required: true
+        description: The platform for which the application is being built (Android or iOS).
+    is-workflow-state-success:
+        required: true
+        description: Contains 'true' if all of the previous jobs were successful in the workflow, 'false' otherwise.
+
+runs:
+    using: composite
+    steps:
+        - name: Prepare input for Slack report
+          shell: bash
+          run: |
+              echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+              echo "AUTHOR_EMAIL=$(git log -1 --pretty=format:"%ae")" >> $GITHUB_ENV
+              echo "COMMIT_HASH=$(git log -1 --pretty=format:"%h")" >> $GITHUB_ENV
+
+        - name: Report Status
+          uses: slackapi/slack-github-action@v1.24.0
+          if: success() || failure()
+          with:
+              payload-file-path: "./.github/actions/slack-report/message_payload.json"
+          env:
+              SLACK_COLOR: "${{ job.status == 'success' && inputs.is-workflow-state-success == 'true' && '#5cb589' || '#951e13' }}"
+              SLACK_TEXT: "${{ format('*Nevis Mobile Authentication SDK Example App React {0} build is {1}: {2} ({3})*', inputs.platform, job.status == 'success' && inputs.is-workflow-state-success == 'true' && 'completed' || 'failed', env.VERSION_NUMBER, env.BUILD_NUMBER) }}"
+              SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

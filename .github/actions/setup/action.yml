@@ -1,0 +1,31 @@
+name: Setup
+description: Setup Node.js and install dependencies
+
+inputs:
+    build-4-new-arch:
+        description: "If true, the artifact will be built for the new architecture."
+        required: false
+        default: "false"
+
+outputs:
+    cache-hit:
+        description: "True in case the node cache was hit, false otherwise."
+        value: ${{ steps.yarn-cache.outputs.cache-hit }}
+
+runs:
+    using: composite
+    steps:
+        - name: Setup Node.js
+          uses: actions/setup-node@v3
+
+        - name: Cache dependencies
+          id: yarn-cache
+          uses: actions/cache@v3
+          with:
+              path: node_modules
+              key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/package.json') }}-${{ inputs.build-4-new-arch == 'true' && 'new-arch' || 'old-arch' }}
+
+        - name: Install dependencies
+          if: steps.yarn-cache.outputs.cache-hit != 'true'
+          shell: bash
+          run: yarn install --frozen-lockfile

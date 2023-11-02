@@ -2,6 +2,9 @@
 
 # Nevis Mobile Authentication React Native Example Application
 
+[![Main Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/main.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/main.yml)
+[![Pull Request](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/pr.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/pr.yml)
+
 This repository contains the example app demonstrating how to use the _Nevis Mobile Authentication Client SDK for React Native_ in a React Native app.
 The Nevis Mobile Authentication SDK allows you to integrate passwordless authentication to your existing mobile app, backed by [FIDO UAF 1.1](https://fidoalliance.org/specs/fido-uaf-complete-specifications.zip).
 

@@ -1,0 +1,24 @@
+name: Create Git Tag
+description: Creates a git tag for the current repository
+    Required environment variables
+    * BUILD_NUMBER
+    * VERSION_NUMBER
+    * GITHUB_TOKEN
+
+runs:
+    using: composite
+
+    steps:
+        - name: Create Tag
+          uses: actions/github-script@v6
+          env:
+              TAG_NAME: release/${{ env.VERSION_NUMBER }}/${{ env.BUILD_NUMBER }}
+          with:
+              github-token: ${{ env.GITHUB_TOKEN }}
+              script: |
+                  await github.rest.git.createRef({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    ref: "refs/tags/" + process.env.TAG_NAME,
+                    sha: context.sha
+                  })
