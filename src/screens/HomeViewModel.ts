@@ -51,7 +51,14 @@ const useHomeViewModel = () => {
 	}
 
 	function handleDeepLink(url: string) {
-		const payload = url.split('?').at(1)?.split('=').at(1);
+		const payload = url
+			.split('?')
+			.at(1)
+			?.split('&')
+			.filter((queryParam) => queryParam.split('=').at(0) == 'dispatchTokenResponse')
+			.at(0)
+			?.split('=')
+			.at(1);
 		console.log(`Dispatch token response: ${payload}`);
 		if (payload) {
 			OutOfBandOperationHandler.decodePayload(payload).catch(

@@ -7,7 +7,7 @@ The Nevis Mobile Authentication SDK allows you to integrate passwordless authent
 
 Some features demonstrated in this example app are:
 
-* Registering with QR code & app link URIs
+* Registering with ~~QR code &~~ app link URIs
 * Simulating in-band authentication after registration
 * Deregistering a registered account
 * Changing the PIN of the PIN authenticator
@@ -15,6 +15,14 @@ Some features demonstrated in this example app are:
 * Using the SDK with the Authentication Cloud
 
 Please note that the example app only demonstrates a subset of the SDK features. The main purpose is to demonstrate how the SDK can be used and not to cover all supported scenarios and use cases.
+
+---
+**NOTE**
+
+QR code reading is not available at the moment.
+
+---
+
 
 ## Getting Started
 
@@ -259,7 +267,7 @@ Out-of-band operations occur when a message is delivered to the application thro
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name is implemented in the [DeviceInformationChangeViewModel](src/screens/DeviceInformationChangeViewModel.ts) class.
 
-Firebase is not supported in the example app.
+Firebase Cloud Messaging is not supported in the example app.
 
 
 ## License
