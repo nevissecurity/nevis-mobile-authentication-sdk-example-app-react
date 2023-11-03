@@ -114,7 +114,6 @@ Before being able to use the example app with your Authentication Cloud instance
 Edit the `assets/config_authentication_cloud.json` file and replace
 
 * the host name information with your Authentication Cloud instance
-* the FacetId with your Android FacetId
 
 ```json
 {
@@ -123,7 +122,6 @@ Edit the `assets/config_authentication_cloud.json` file and replace
   },
   "sdk": {
     "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud",
-    "facetId": "<YOUR ANDROID FACET_ID>",
      ...
   }
 }
@@ -268,7 +266,6 @@ Out-of-band operations occur when a message is delivered to the application thro
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name is implemented in the [DeviceInformationChangeViewModel](src/screens/DeviceInformationChangeViewModel.ts) class.
 
 Firebase Cloud Messaging is not supported in the example app.
-
 
 ## License
 
