@@ -1,0 +1,50 @@
+name: Build Android
+description: Build Android example app
+    Required environment variables
+    * JAVA_VERSION
+    * GITHUB_USERNAME
+    * GITHUB_PERSONAL_ACCESS_TOKEN
+
+inputs:
+    build-4-new-arch:
+        description: "If true, the artifact will be built for the new architecture."
+        required: true
+
+runs:
+    using: composite
+    steps:
+        - name: Setup
+          id: setup-node
+          uses: ./.github/actions/setup
+          with:
+              build-4-new-arch: ${{ inputs.build-4-new-arch }}
+
+        - name: Install JDK
+          uses: actions/setup-java@v3
+          with:
+              distribution: 'zulu'
+              java-version: ${{ env.JAVA_VERSION }}
+
+        - name: Finalize Android SDK
+          shell: bash
+          run: /bin/bash -c "yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null"
+
+        - name: Cache Gradle
+          if: steps.setup-node.outputs.cache-hit == 'true'
+          uses: actions/cache@v3
+          with:
+              path: |
+                  ~/.gradle/wrapper
+                  ~/.gradle/caches
+              key: ${{ runner.os }}-gradle-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ inputs.build-4-new-arch == 'true' && 'new-arch' || 'old-arch' }}-${{ env.BUILD_TYPE }}
+
+        - name: Build example for Android
+          shell: bash
+          run: yarn android:build
+
+        - name: Slack report
+          if: ${{ github.ref == 'refs/heads/main' }}
+          uses: ./.github/actions/slack-report
+          with:
+              platform: 'iOS'
+              is-workflow-state-success: success()
