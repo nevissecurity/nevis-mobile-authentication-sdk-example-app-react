@@ -69,7 +69,7 @@ First open a terminal and run the `yarn` command in the root directory to get th
 
 4. Synchronize your [android](/android) project with Gradle if opened in Android Studio.
 
-> **Warning**  
+> **Warning**
 > The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
 
 </details>
@@ -177,7 +177,7 @@ yarn ios:old
 
 Or by choosing Product > Run from Xcode, or by clicking the Run button in your project’s toolbar, similarly how you would run a native iOS application.
 
-> **_NOTE_**  
+> **_NOTE_**
 > Running the app on an iOS device requires codesign setup.
 
 </details>
