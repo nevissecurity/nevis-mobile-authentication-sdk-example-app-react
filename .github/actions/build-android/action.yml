@@ -1,14 +1,16 @@
 name: Build Android
-description: Build Android example app
-    Required environment variables
-    * JAVA_VERSION
-    * GITHUB_USERNAME
-    * GITHUB_PERSONAL_ACCESS_TOKEN
+description: Build Android App
 
 inputs:
-    build-4-new-arch:
-        description: "If true, the artifact will be built for the new architecture."
+    new-arch-enabled:
+        description: "Flag that tells whether enable support to the new architecture."
         required: true
+    version-number:
+        description: "The current version number"
+        required: false
+    build-number:
+        description: "The current build number"
+        required: false
 
 runs:
     using: composite
@@ -17,7 +19,7 @@ runs:
           id: setup-node
           uses: ./.github/actions/setup
           with:
-              build-4-new-arch: ${{ inputs.build-4-new-arch }}
+              new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Install JDK
           uses: actions/setup-java@v3
@@ -36,15 +38,62 @@ runs:
               path: |
                   ~/.gradle/wrapper
                   ~/.gradle/caches
-              key: ${{ runner.os }}-gradle-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ inputs.build-4-new-arch == 'true' && 'new-arch' || 'old-arch' }}-${{ env.BUILD_TYPE }}
+              key: ${{ runner.os }}-gradle-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ inputs.new-arch-enabled == 'true' && 'new-arch' || 'old-arch' }}-${{ env.BUILD_TYPE }}
 
-        - name: Build example for Android
+        - name: Build Android App
+          if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
           shell: bash
-          run: yarn android:build
+          run: |
+              if [[ ${{ inputs.new-arch-enabled }} == 'true' ]]; then
+                  NEW_ARCH_ENABLED=true
+              else
+                  NEW_ARCH_ENABLED=false
+              fi
 
-        - name: Slack report
-          if: ${{ github.ref == 'refs/heads/main' }}
-          uses: ./.github/actions/slack-report
+              yarn react-native build-android --mode Debug --extra-params -PnewArchEnabled=$NEW_ARCH_ENABLED
+
+        - name: Update Configuration
+          if: ${{ env.BUILD_TYPE == 'RELEASE' }}
+          uses: ./.github/actions/update-config
           with:
-              platform: 'iOS'
-              is-workflow-state-success: success()
+              host-name: ${{ env.HOST_NAME }}
+
+        - name: Bundle Android Assets
+          if: ${{ env.BUILD_TYPE == 'RELEASE' }}
+          shell: bash
+          run: yarn react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+        - name: Cache RubyGem Dependencies
+          if: ${{ env.BUILD_TYPE == 'RELEASE' }}
+          uses: ruby/setup-ruby@v1
+          with:
+              ruby-version: ${{ env.RUBY_VERSION }}
+              bundler-cache: true
+              working-directory: 'android'
+
+        - name: Decode Keystore
+          if: ${{ env.BUILD_TYPE == 'RELEASE' }}
+          uses: timheuer/base64-to-file@v1
+          with:
+              fileName: 'keystore-example-app.jks'
+              fileDir: './android/etc'
+              encodedString: ${{ env.KEYSTORE_FILE }}
+
+        - name: Publish Android App
+          if: ${{ env.BUILD_TYPE == 'RELEASE' }}
+          env:
+              GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+              SIGNING_CONFIGS: ${{ env.SIGNING_CONFIGS }}
+              GITHUB_USERNAME: ${{ env.GITHUB_USERNAME }}
+              GITHUB_PERSONAL_ACCESS_TOKEN: ${{ env.GITHUB_PERSONAL_ACCESS_TOKEN }}
+              FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
+              FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
+              SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+          uses: maierj/fastlane-action@v3.0.0
+          with:
+              lane: 'main'
+              subdirectory: 'android'
+              options: '{ "version": "${{ inputs.version-number }}",
+                          "build_number": "${{ inputs.build-number }}",
+                          "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
+                        }'

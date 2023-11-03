@@ -689,3 +689,10 @@ hs_err_pid*
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,reactnative,xcode,node,macos,android,androidstudio,ruby,cocoapods,buck
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/reports
+**/fastlane/output
+**/vendor/
+**/.bundle

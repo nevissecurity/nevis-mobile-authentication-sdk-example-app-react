@@ -2,8 +2,8 @@ name: Setup
 description: Setup Node.js and install dependencies
 
 inputs:
-    build-4-new-arch:
-        description: "If true, the artifact will be built for the new architecture."
+    new-arch-enabled:
+        description: "Flag that tells whether enable support to the new architecture."
         required: false
         default: "false"
 
@@ -23,7 +23,7 @@ runs:
           uses: actions/cache@v3
           with:
               path: node_modules
-              key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/package.json') }}-${{ inputs.build-4-new-arch == 'true' && 'new-arch' || 'old-arch' }}
+              key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/package.json') }}-${{ inputs.new-arch-enabled == 'true' && 'new-arch' || 'old-arch' }}
 
         - name: Install dependencies
           if: steps.yarn-cache.outputs.cache-hit != 'true'

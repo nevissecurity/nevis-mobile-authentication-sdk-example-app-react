@@ -1,24 +1,37 @@
 name: Create Git Tag
 description: Creates a git tag for the current repository
-    Required environment variables
-    * BUILD_NUMBER
-    * VERSION_NUMBER
-    * GITHUB_TOKEN
+
+inputs:
+    version-number:
+        description: "The current version number"
+        required: false
+    build-number:
+        description: "The current build number"
+        required: false
 
 runs:
     using: composite
-
     steps:
         - name: Create Tag
           uses: actions/github-script@v6
           env:
-              TAG_NAME: release/${{ env.VERSION_NUMBER }}/${{ env.BUILD_NUMBER }}
+              TAG_NAME: release/${{ inputs.version-number }}/${{ inputs.build-number }}
+              TAG_MESSAGE: "Release NMA SDK Example App React ${{ inputs.version-number }}/${{ inputs.build-number }}"
           with:
               github-token: ${{ env.GITHUB_TOKEN }}
               script: |
+                  const createdTag = await github.rest.git.createTag({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    tag: process.env.TAG_NAME,
+                    message: process.env.TAG_NAME,
+                    object: context.sha,
+                    type: "commit"
+                  })
+
                   await github.rest.git.createRef({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     ref: "refs/tags/" + process.env.TAG_NAME,
-                    sha: context.sha
+                    sha: createdTag.data.sha
                   })

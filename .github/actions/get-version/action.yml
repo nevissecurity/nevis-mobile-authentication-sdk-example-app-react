@@ -1,19 +1,28 @@
 name: Get Version
 description: Retrieves the version and build number of the app
 
+outputs:
+    version-number:
+        description: "The current version"
+        value: ${{ steps.get_version_number.outputs.version_number }}
+    build-number:
+        description: "The generated build number"
+        value: ${{ steps.get_build_number.outputs.build_number }}
+
 runs:
     using: composite
+
     steps:
         - name: Get version number
           id: get_version_number
           shell: bash
           run: |
-              VERSION=$(cat ./package.json | jq '.version')
-              echo "VERSION_NUMBER=${VERSION}" >> $GITHUB_ENV
+              VERSION=$(cat ./package.json | jq -r '.version')
+              echo "version_number=$(echo $VERSION)" >> $GITHUB_OUTPUT
               echo Version number is $VERSION
 
         - name: Generate Build Number
-          id: build_number
+          id: get_build_number
           uses: onyxmueller/build-tag-number@v1
           with:
-              token: ${{env.GITHUB_TOKEN}}
+              token: ${{ env.GITHUB_TOKEN }}
