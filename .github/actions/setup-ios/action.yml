@@ -1,0 +1,38 @@
+name: Setup iOS
+description: Setup iOS resources and install dependencies
+
+inputs:
+    new-arch-enabled:
+        description: "Flag that tells whether enable support to the new architecture."
+        required: true
+    cache-cocoapods:
+        description: "Flag that tells whether need to cache Cocoapods dependencies."
+        required: true
+
+runs:
+    using: composite
+    steps:
+        - name: Set Xcode version
+          uses: maxim-lobanov/setup-xcode@v1
+          with:
+              xcode-version: ${{ env.XCODE_VERSION }}
+
+        - name: Cache Cocoapods
+          if: ${{ inputs.cache-cocoapods == 'true' }}
+          id: cocoapods-cache
+          uses: actions/cache@v3
+          with:
+              path: |
+                  **/ios/Pods
+                  **/ios/build/generated
+              key: ${{ runner.os }}-cocoapods-${{ hashFiles('ios/Podfile.lock') }}-${{ inputs.new-arch-enabled == 'true' && 'new-arch' || 'old-arch' }}-${{ env.BUILD_TYPE }}
+
+        - name: Install Cocoapods - new architecture
+          if: steps.cocoapods-cache.outputs.cache-hit != 'true' && inputs.new-arch-enabled == 'true'
+          shell: bash
+          run: yarn pods:new
+
+        - name: Install Cocoapods - old architecture
+          if: steps.cocoapods-cache.outputs.cache-hit != 'true' && inputs.new-arch-enabled == 'false'
+          shell: bash
+          run: yarn pods:old
