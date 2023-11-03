@@ -1,0 +1,29 @@
+name: Setup Android
+description: Setup Android resources and install dependencies
+
+inputs:
+    cache-gradle:
+        description: "Flag that tells whether need to cache Gradle dependencies."
+        required: true
+
+runs:
+    using: composite
+    steps:
+        - name: Install JDK
+          uses: actions/setup-java@v3
+          with:
+              distribution: 'zulu'
+              java-version: ${{ env.JAVA_VERSION }}
+
+        - name: Finalize Android SDK
+          shell: bash
+          run: /bin/bash -c "yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null"
+
+        - name: Cache Gradle
+          if: ${{ inputs.cache-gradle == 'true' }}
+          uses: actions/cache@v3
+          with:
+              path: |
+                  ~/.gradle/wrapper
+                  ~/.gradle/caches
+              key: ${{ runner.os }}-gradle-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ inputs.new-arch-enabled == 'true' && 'new-arch' || 'old-arch' }}-${{ env.BUILD_TYPE }}

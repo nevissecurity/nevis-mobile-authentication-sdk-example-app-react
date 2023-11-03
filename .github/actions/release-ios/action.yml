@@ -1,0 +1,51 @@
+name: Release iOS
+description: Release iOS App
+
+inputs:
+    new-arch-enabled:
+        description: "Flag that tells whether enable support to the new architecture."
+        required: true
+    version-number:
+        description: "The current version number"
+        required: true
+    build-number:
+        description: "The current build number"
+        required: true
+
+runs:
+    using: composite
+    steps:
+        - name: Set up Node
+          uses: ./.github/actions/setup-node
+          with:
+              new-arch-enabled: ${{ inputs.new-arch-enabled }}
+
+        - name: Set up iOS
+          uses: ./.github/actions/setup-ios
+          with:
+              new-arch-enabled: ${{ inputs.new-arch-enabled }}
+
+        - name: Update Configuration
+          uses: ./.github/actions/update-config
+          with:
+              host-name: ${{ env.HOST_NAME }}
+
+        - name: Publish iOS App
+          env:
+              MATCH_GIT_AUTHORIZATION: ${{ env.MATCH_GIT_AUTHORIZATION }}
+              MATCH_GIT_URL: ${{ env.MATCH_GIT_URL }}
+              MATCH_PASSWORD: ${{ env.MATCH_PASSWORD }}
+              DEVELOPER_PORTAL_TEAM_ID: ${{ env.DEVELOPER_PORTAL_TEAM_ID }}
+              CODE_SIGNING_IDENTITY: ${{ env.CODE_SIGNING_IDENTITY }}
+              PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
+              FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
+              FIREBASE_APP_ID_IOS: ${{ env.FIREBASE_APP_ID_IOS }}
+              TEMP_KEYCHAIN_NAME: ${{ env.TEMP_KEYCHAIN_NAME }}
+              SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+          uses: maierj/fastlane-action@v3.0.0
+          with:
+              lane: 'main'
+              subdirectory: 'ios'
+              options: '{ "version": "${{ inputs.version-number }}",
+                          "build_number": "${{ inputs.build-number }}"
+                        }'

@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,reactnative,xcode,node,macos,android,androidstudio,ruby,cocoapods,buck
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,intellij,reactnative,xcode,node,macos,android,androidstudio,ruby,cocoapods,buck
+# Created by https://www.toptal.com/developers/gitignore/api/buck,node,ruby,macos,xcode,android,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,fastlane
+# Edit at https://www.toptal.com/developers/gitignore?templates=buck,node,ruby,macos,xcode,android,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,fastlane
 
 ### Android ###
 # Gradle files
@@ -56,6 +56,29 @@ buck-out/
 #           - Also handy if you have a large number of dependant pods
 #           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
 Pods/
+
+### fastlane ###
+# fastlane - A streamlined workflow tool for Cocoa deployment
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+# fastlane specific
+**/fastlane/report.xml
+
+# deliver temporary files
+**/fastlane/Preview.html
+
+# snapshot generated screenshots
+**/fastlane/screenshots
+
+# scan temporary files
+**/fastlane/test_output
+
+# Fastlane.swift runner binary
+**/fastlane/FastlaneRunner
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -523,7 +546,6 @@ build-iPhoneOS/
 build-iPhoneSimulator/
 
 ## Specific to RubyMotion (use of CocoaPods):
-#
 # We recommend against adding the Pods directory to your .gitignore. However
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
@@ -688,4 +710,4 @@ hs_err_pid*
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,reactnative,xcode,node,macos,android,androidstudio,ruby,cocoapods,buck
+# End of https://www.toptal.com/developers/gitignore/api/buck,node,ruby,macos,xcode,android,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,fastlane
