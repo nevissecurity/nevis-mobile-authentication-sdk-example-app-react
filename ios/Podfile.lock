@@ -1105,6 +1105,10 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - SocketRocket (0.6.1)
+  - VisionCamera (3.6.4):
+    - React
+    - React-callinvoker
+    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1158,6 +1162,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1260,6 +1265,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1297,7 +1304,7 @@ SPEC CHECKSUMS:
   React-perflogger: e3596db7e753f51766bceadc061936ef1472edc3
   React-RCTActionSheet: 17ab132c748b4471012abbcdcf5befe860660485
   React-RCTAnimation: 3fe720d2c172de51de8dc19ba091c559d22ebd9b
-  React-RCTAppDelegate: 8f895aad77f9fb40d3d66677fe8d0d6530e5fc1e
+  React-RCTAppDelegate: c4e5b513fdcaf3dc017ee8a98a116d3dcd54c0c7
   React-RCTBlob: fd752f54ae335c93a36650be8129b352b852185f
   React-RCTFabric: 36163120563ae0dd36321d6ecacf1cef967c975d
   React-RCTImage: a99cc31f93f72fe17d0448fd45d7a812fd50388e
@@ -1314,6 +1321,7 @@ SPEC CHECKSUMS:
   RNDeviceInfo: bf8a32acbcb875f568217285d1793b0e8588c974
   RNScreens: 16746f018e3db76f82649746673489d6db28649e
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  VisionCamera: 1910a51e4c6f6b049650086d343090f267b4c260
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
 
 PODFILE CHECKSUM: e5be4bdbccb087e7a6fde62a824b9791ad07692c

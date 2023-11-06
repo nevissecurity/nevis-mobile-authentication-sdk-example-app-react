@@ -10,7 +10,7 @@ The Nevis Mobile Authentication SDK allows you to integrate passwordless authent
 
 Some features demonstrated in this example app are:
 
-* Registering with ~~QR code &~~ app link URIs
+* Registering with QR code (with some limitation, see note below) & app link URIs
 * Simulating in-band authentication after registration
 * Deregistering a registered account
 * Changing the PIN of the PIN authenticator
@@ -19,12 +19,8 @@ Some features demonstrated in this example app are:
 
 Please note that the example app only demonstrates a subset of the SDK features. The main purpose is to demonstrate how the SDK can be used and not to cover all supported scenarios and use cases.
 
----
-**NOTE**
-
-QR code reading is not available at the moment.
-
----
+> [!NOTE]
+> QR code scanning in the Example Application is only available for the Old Architecture at the moment as we have not found any open source library that supports both. If you want to support this feature for the New Architecture, you can find alternatives that support it.
 
 
 ## Getting Started
