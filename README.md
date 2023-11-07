@@ -5,12 +5,12 @@
 [![Main Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/main.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/main.yml)
 [![Pull Request](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/pr.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/pr.yml)
 
-This repository contains the example app demonstrating how to use the _Nevis Mobile Authentication Client SDK for React Native_ in a React Native app.
+This repository contains the example app demonstrating how to use the _Nevis Mobile Authentication Client SDK for React Native_ in a React Native application.
 The Nevis Mobile Authentication SDK allows you to integrate passwordless authentication to your existing mobile app, backed by [FIDO UAF 1.1](https://fidoalliance.org/specs/fido-uaf-complete-specifications.zip).
 
 Some features demonstrated in this example app are:
 
-* Registering with QR code (with some limitation, see note below) & app link URIs
+* Registering with QR code (with some limitation, see note below) and app link URIs
 * Simulating in-band authentication after registration
 * Deregistering a registered account
 * Changing the PIN of the PIN authenticator
@@ -20,12 +20,12 @@ Some features demonstrated in this example app are:
 Please note that the example app only demonstrates a subset of the SDK features. The main purpose is to demonstrate how the SDK can be used and not to cover all supported scenarios and use cases.
 
 > [!NOTE]
-> QR code scanning in the Example Application is only available for the Old Architecture at the moment as we have not found any open source library that supports both. If you want to support this feature for the New Architecture, you can find alternatives that support it.
+> QR code scanning in the example application is only available for the old architecture at the moment as we have not found any open source library that supports both old and new architecture. If you want to implement QR code scanning for the new architecture, evaluate plugin alternatives which support it.
 
 
 ## Getting Started
 
-Before you can actually start compiling and using the example applications please ensure you have the following ready:
+Before you can actually start compiling and using the example application please ensure you have the following ready:
 
 * An [Authentication Cloud](https://docs.nevis.net/authcloud/) instance provided by Nevis.
 * An [access key](https://docs.nevis.net/authcloud/access-app/access-key) to use with the Authentication Cloud.
@@ -57,7 +57,7 @@ First open a terminal and run the `yarn` command in the root directory to get th
     GITHUB_PERSONAL_ACCESS_TOKEN=<YOUR PERSONAL ACCESS TOKEN>
     ```
 
-2. To choose between the Old and the [New Architecture](https://reactnative.dev/docs/the-new-architecture/landing-page), you have to set the `newArchEnabled` property to `false` or `true` respectively by either (Note that if you use the yarn scripts described in the Build & run section, this will be done automatically for the selected architecture via setting the environment variable):
+2. To choose between the Old and the [new architecture](https://reactnative.dev/docs/the-new-architecture/landing-page), you have to set the `newArchEnabled` property to `false` or `true` respectively by either (Note that if you use the yarn scripts described in the Build & run section, this will be done automatically for the selected architecture via setting the environment variable):
     * Changing the corresponding line in `android/gradle.properties`
     * Setting the environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
 
@@ -75,13 +75,13 @@ First open a terminal and run the `yarn` command in the root directory to get th
 
 Native iOS dependencies of this project (including the Nevis Mobile Authentication Client SDK for iOS) are provided via [Cocoapods](https://cocoapods.org/). Please install all dependencies by running
 
-* When using the [New Architecture](https://reactnative.dev/docs/the-new-architecture/landing-page):
+* When using the [new architecture](https://reactnative.dev/docs/the-new-architecture/landing-page):
 
 ```
 RCT_NEW_ARCH_ENABLED=1 USE_FRAMEWORKS=static NO_FLIPPER=1 pod install
 ```
 
-* When using the Old Architecture:
+* When using the old architecture:
 
 ```
 RCT_NEW_ARCH_ENABLED=0 pod install
@@ -142,12 +142,12 @@ Due to the [Fast Refresh](https://reactnative.dev/docs/fast-refresh) feature of 
 
 If you configured everything properly, you can run the app on an Android device or Emulator with the following yarn commands:
 
-* Using the New Architecture
+* Using the new architecture
 ```
 yarn android:new
 ```
 
-* Using the Old Architecture
+* Using the old architecture
 ```
 yarn android:old
 ```
@@ -159,13 +159,13 @@ yarn android:old
 
 If you configured everything properly, you're ready to build and run the example app on an iOS device or Simulator with the following yarn commands:
 
-* Using the New Architecture
+* Using the new architecture
 
 ```
 yarn ios:new
 ```
 
-* Using the Old Architecture
+* Using the old architecture
 
 ```
 yarn ios:old
