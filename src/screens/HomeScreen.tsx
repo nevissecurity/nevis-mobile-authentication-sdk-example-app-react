@@ -2,7 +2,7 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Linking, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -63,7 +63,7 @@ const HomeScreen = () => {
 		return () => {
 			linkingEvent.remove();
 		};
-	}, [onInitClient, onHandleDeepLink]);
+	}, []);
 
 	return (
 		<SafeAreaView style={styles.container}>
