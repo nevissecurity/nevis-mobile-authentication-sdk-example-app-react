@@ -3,16 +3,17 @@
  */
 
 import React, { useCallback, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import { useDynamicValue } from 'react-native-dynamic';
 import {
-	Camera,
-	useCameraDevice,
-	useCameraPermission,
-	useCodeScanner,
-} from 'react-native-vision-camera';
+	check as checkPermission,
+	PERMISSIONS,
+	request as requestPermission,
+	RESULTS,
+} from 'react-native-permissions';
+import { Camera, useCameraDevice, useCodeScanner } from 'react-native-vision-camera';
 
 import useReadQrCodeViewModel from './ReadQrCodeViewModel';
 import CloseButton from '../components/CloseButton';
@@ -26,7 +27,9 @@ const ReadQrCodeScreen = () => {
 
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const { hasPermission, requestPermission } = useCameraPermission();
+	const cameraPermission =
+		Platform.OS == 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA;
+	const [hasCameraPermission, setHasCameraPermission] = useState(false);
 	const device = useCameraDevice('back');
 
 	const codeScanner = useCodeScanner({
@@ -39,6 +42,25 @@ const ReadQrCodeScreen = () => {
 		},
 	});
 
+	function requestCameraPermission() {
+		requestPermission(cameraPermission).then((result) => {
+			switch (result) {
+				case RESULTS.DENIED:
+					setErrorMessage(t('readQrCode.camera.accessDenied'));
+					setHasCameraPermission(false);
+					break;
+				case RESULTS.GRANTED:
+					setErrorMessage('');
+					setHasCameraPermission(true);
+					break;
+				case RESULTS.BLOCKED:
+					setErrorMessage(t('readQrCode.camera.accessPermanentlyDenied'));
+					setHasCameraPermission(false);
+					break;
+			}
+		});
+	}
+
 	const onClose = useCallback(async () => {
 		close();
 	}, []);
@@ -47,10 +69,24 @@ const ReadQrCodeScreen = () => {
 		setErrorMessage(t('readQrCode.camera.initializationFailed'));
 	}
 
-	if (!hasPermission && !errorMessage) {
-		requestPermission().then((permissionGiven) => {
-			if (!permissionGiven) {
-				setErrorMessage(t('readQrCode.camera.accessDenied'));
+	if (!hasCameraPermission && !errorMessage) {
+		checkPermission(cameraPermission).then((result) => {
+			switch (result) {
+				case RESULTS.UNAVAILABLE:
+					setErrorMessage(t('readQrCode.camera.initializationFailed'));
+					setHasCameraPermission(false);
+					break;
+				case RESULTS.DENIED:
+					requestCameraPermission();
+					break;
+				case RESULTS.GRANTED:
+					setErrorMessage('');
+					setHasCameraPermission(true);
+					break;
+				case RESULTS.BLOCKED:
+					setErrorMessage(t('readQrCode.camera.accessPermanentlyDenied'));
+					setHasCameraPermission(false);
+					break;
 			}
 		});
 	}
@@ -60,7 +96,7 @@ const ReadQrCodeScreen = () => {
 			<CloseButton onPress={onClose} />
 			<Text style={styles.textTitle}>{t('readQrCode.title')}</Text>
 			<View style={styles.middleContainer}>
-				{device && hasPermission && (
+				{device && hasCameraPermission && (
 					<Camera
 						style={StyleSheet.absoluteFill}
 						device={device}

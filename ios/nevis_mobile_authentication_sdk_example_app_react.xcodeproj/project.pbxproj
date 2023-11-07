@@ -11,9 +11,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		4F7BD942A4EE5BF625091FDC /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 521F311C9A384F8D92B971EE /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */; };
+		27A6C8348E50669CCF94F22B /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CF51900C90D4AFF77B852A /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D0C59AD1982CDEB3D061D67D /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DC5D2343E5394E7B356E21 /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework */; };
+		AEB059CCC2AA3D763C6820F1 /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2EA710B922FBB64A3FE38F /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,19 +30,19 @@
 		00E356EE1AD99517003FC87E /* nevis_mobile_authentication_sdk_example_app_reactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = nevis_mobile_authentication_sdk_example_app_reactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* nevis_mobile_authentication_sdk_example_app_reactTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nevis_mobile_authentication_sdk_example_app_reactTests.m; sourceTree = "<group>"; };
-		01DC5D2343E5394E7B356E21 /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* nevis_mobile_authentication_sdk_example_app_react.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nevis_mobile_authentication_sdk_example_app_react.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = nevis_mobile_authentication_sdk_example_app_react/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = nevis_mobile_authentication_sdk_example_app_react/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = nevis_mobile_authentication_sdk_example_app_react/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = nevis_mobile_authentication_sdk_example_app_react/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = nevis_mobile_authentication_sdk_example_app_react/main.m; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig"; sourceTree = "<group>"; };
-		521F311C9A384F8D92B971EE /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nevis_mobile_authentication_sdk_example_app_react.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5709B34CF0A7D63546082F79 /* Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2EA92124461BAE3009C4CBD5 /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig"; sourceTree = "<group>"; };
+		36CF51900C90D4AFF77B852A /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nevis_mobile_authentication_sdk_example_app_react.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F9D222F4AE5FB29D37FDE58 /* Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = nevis_mobile_authentication_sdk_example_app_react/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig"; sourceTree = "<group>"; };
+		C85B32E9BAE5B4719BF858BA /* Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig"; sourceTree = "<group>"; };
+		DB2EA710B922FBB64A3FE38F /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC6EB560E7A047E988D5963F /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0C59AD1982CDEB3D061D67D /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework in Frameworks */,
+				AEB059CCC2AA3D763C6820F1 /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F7BD942A4EE5BF625091FDC /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework in Frameworks */,
+				27A6C8348E50669CCF94F22B /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,8 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				521F311C9A384F8D92B971EE /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */,
-				01DC5D2343E5394E7B356E21 /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework */,
+				36CF51900C90D4AFF77B852A /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */,
+				DB2EA710B922FBB64A3FE38F /* Pods_nevis_mobile_authentication_sdk_example_app_react_nevis_mobile_authentication_sdk_example_app_reactTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,10 +140,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig */,
+				C85B32E9BAE5B4719BF858BA /* Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig */,
+				3F9D222F4AE5FB29D37FDE58 /* Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig */,
+				EC6EB560E7A047E988D5963F /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig */,
+				2EA92124461BAE3009C4CBD5 /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -155,12 +155,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "nevis_mobile_authentication_sdk_example_app_reactTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				F19BFA2EE462050C917CA4E0 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				0388A900E5A664B05FF60E58 /* [CP] Embed Pods Frameworks */,
+				FCA7DC178F032A56BBAF94FF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,14 +176,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "nevis_mobile_authentication_sdk_example_app_react" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				09BBADA2EB20E0CDDA27506A /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				83B5674833D38664571DB84D /* [CP] Embed Pods Frameworks */,
+				65248A4C6615F844DBADD2F0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -266,46 +266,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		0388A900E5A664B05FF60E58 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		09BBADA2EB20E0CDDA27506A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -327,24 +305,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
+		65248A4C6615F844DBADD2F0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -361,7 +322,46 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
+		83B5674833D38664571DB84D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F19BFA2EE462050C917CA4E0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FCA7DC178F032A56BBAF94FF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -430,7 +430,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig */;
+			baseConfigurationReference = EC6EB560E7A047E988D5963F /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -457,7 +457,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig */;
+			baseConfigurationReference = 2EA92124461BAE3009C4CBD5 /* Pods-nevis_mobile_authentication_sdk_example_app_react-nevis_mobile_authentication_sdk_example_app_reactTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -481,7 +481,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig */;
+			baseConfigurationReference = C85B32E9BAE5B4719BF858BA /* Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -508,7 +508,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig */;
+			baseConfigurationReference = 3F9D222F4AE5FB29D37FDE58 /* Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

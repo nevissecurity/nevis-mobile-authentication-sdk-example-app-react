@@ -1071,6 +1071,22 @@ PODS:
     - React-perflogger (= 0.72.6)
   - RNDeviceInfo (10.11.0):
     - React-Core
+  - RNPermissions (3.10.1):
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (3.27.0):
     - hermes-engine
     - RCT-Folly (= 2021.07.22.00)
@@ -1161,6 +1177,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1263,6 +1280,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   VisionCamera:
@@ -1319,11 +1338,12 @@ SPEC CHECKSUMS:
   React-utils: 1dc03e6e55f56388b6fdde3768a66c885bacb627
   ReactCommon: cfe086d2e2ec9f2907c66666c856082608fba822
   RNDeviceInfo: bf8a32acbcb875f568217285d1793b0e8588c974
+  RNPermissions: 195e12267899b5f5e8053f38e7ce2ca1b85ddc96
   RNScreens: 16746f018e3db76f82649746673489d6db28649e
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: 1910a51e4c6f6b049650086d343090f267b4c260
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
 
-PODFILE CHECKSUM: e5be4bdbccb087e7a6fde62a824b9791ad07692c
+PODFILE CHECKSUM: c8ed3c54ecd3aebb7a1d842c50aab8d0cd9dec40
 
 COCOAPODS: 1.14.2
