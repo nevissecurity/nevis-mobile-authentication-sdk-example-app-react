@@ -63,7 +63,7 @@ const HomeScreen = () => {
 		return () => {
 			linkingEvent.remove();
 		};
-	}, []);
+	}, [onInitClient, onHandleDeepLink]);
 
 	return (
 		<SafeAreaView style={styles.container}>
