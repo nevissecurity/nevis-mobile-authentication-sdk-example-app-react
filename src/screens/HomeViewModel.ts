@@ -127,9 +127,9 @@ const useHomeViewModel = () => {
 			.catch(ErrorHandler.handle.bind(null, OperationType.localData));
 	}
 
-	/*function readQrCode() {
+	function readQrCode() {
 		navigation.navigate('ReadQrCode');
-	}*/
+	}
 
 	function authCloudApiRegister() {
 		navigation.navigate('AuthCloudApiRegistration');
@@ -312,7 +312,7 @@ const useHomeViewModel = () => {
 		initClient,
 		fetchData,
 		handleDeepLink,
-		//readQrCode,
+		readQrCode,
 		authCloudApiRegister,
 		inBandRegister,
 		inBandAuthenticate,

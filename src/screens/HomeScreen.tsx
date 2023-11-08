@@ -21,7 +21,7 @@ const HomeScreen = () => {
 		initClient,
 		fetchData,
 		handleDeepLink,
-		//readQrCode,
+		readQrCode,
 		authCloudApiRegister,
 		inBandRegister,
 		inBandAuthenticate,
@@ -76,7 +76,7 @@ const HomeScreen = () => {
 				</View>
 				<View style={styles.middleContainer} />
 				<View style={styles.bottomContainer}>
-					{/*<OutlinedButton text={t('home.readQrCode')} onPress={readQrCode} />*/}
+					<OutlinedButton text={t('home.readQrCode')} onPress={readQrCode} />
 					<OutlinedButton
 						text={t('home.inBandAuthenticate')}
 						onPress={inBandAuthenticate}
