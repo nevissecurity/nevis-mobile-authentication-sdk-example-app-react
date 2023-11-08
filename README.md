@@ -10,7 +10,7 @@ The Nevis Mobile Authentication SDK allows you to integrate passwordless authent
 
 Some features demonstrated in this example app are:
 
-* Registering with QR code (with some limitation, see note below) and app link URIs
+* Registering with QR code (when using the old architecture, see note below) and app link URIs
 * Simulating in-band authentication after registration
 * Deregistering a registered account
 * Changing the PIN of the PIN authenticator
@@ -206,7 +206,7 @@ The solution is to increase the internal memory. In Android Studio
 
 In this section you can find hints about how the Nevis Mobile Authentication SDK is integrated into the example app.
 
-* All SDK invocation is implemented in the corresponding view model class.
+* All SDK invocations are implemented in the corresponding view model class.
 * All SDK specific user interaction related protocol implementation can be found in the [userInteraction](src/userInteraction) folder.
 
 ### Initialization
