@@ -1,0 +1,69 @@
+name: Release Android
+description: Release Android App
+
+inputs:
+    new-arch-enabled:
+        description: "Flag that tells whether enable support to the new architecture."
+        required: true
+    version-number:
+        description: "The current version number"
+        required: true
+    build-number:
+        description: "The current build number"
+        required: true
+
+runs:
+    using: composite
+    steps:
+        - name: Setup
+          id: setup-node
+          uses: ./.github/actions/setup-node
+          with:
+              new-arch-enabled: ${{ inputs.new-arch-enabled }}
+
+        - name: Set up Android
+          uses: ./.github/actions/setup-android
+          with:
+              cache-gradle: ${{ steps.setup-node.outputs.cache-hit == 'true' }}
+
+        - name: Update Configuration
+          uses: ./.github/actions/update-config
+          with:
+              host-name: ${{ env.HOST_NAME }}
+
+        - name: Bundle Android Assets
+          shell: bash
+          run: yarn react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+        - name: Cache RubyGem Dependencies
+          uses: ruby/setup-ruby@v1
+          with:
+              ruby-version: ${{ env.RUBY_VERSION }}
+              bundler-cache: true
+              working-directory: 'android'
+
+        - name: Decode Keystore
+          uses: timheuer/base64-to-file@v1
+          with:
+              fileName: 'keystore-example-app.jks'
+              fileDir: './android/etc'
+              encodedString: ${{ env.KEYSTORE_FILE }}
+
+        - name: Publish Android App
+          if: ${{ env.BUILD_TYPE == 'RELEASE' }}
+          env:
+              GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+              SIGNING_CONFIGS: ${{ env.SIGNING_CONFIGS }}
+              GITHUB_USERNAME: ${{ env.GITHUB_USERNAME }}
+              GITHUB_PERSONAL_ACCESS_TOKEN: ${{ env.GITHUB_PERSONAL_ACCESS_TOKEN }}
+              FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
+              FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
+              SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+          uses: maierj/fastlane-action@v3.0.0
+          with:
+              lane: 'main'
+              subdirectory: 'android'
+              options: '{ "version": "${{ inputs.version-number }}",
+                          "build_number": "${{ inputs.build-number }}",
+                          "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
+                        }'
