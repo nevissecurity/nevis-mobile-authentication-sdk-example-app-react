@@ -4,6 +4,10 @@
 
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
+const white = 'white';
+const black = 'black';
+const red = 'red';
+
 const titleContainerStyle: ViewStyle = {
 	flex: 1,
 	rowGap: 32,
@@ -89,7 +93,7 @@ const transparentTitleBarStyle: ViewStyle = {
 
 export const darkStyle = StyleSheet.create({
 	container: {
-		backgroundColor: 'black',
+		backgroundColor: black,
 		flex: 1,
 	},
 	titleContainer: titleContainerStyle,
@@ -97,10 +101,10 @@ export const darkStyle = StyleSheet.create({
 	bottomContainer: bottomContainerStyle,
 	listContainer: listContainerStyle,
 	textForeground: {
-		color: 'white',
+		color: white,
 	},
 	textError: {
-		color: 'red',
+		color: red,
 	},
 	textTitle: textTitleStyle,
 	textNormal: textNormalStyle,
@@ -109,14 +113,14 @@ export const darkStyle = StyleSheet.create({
 	textCenter: textCenterStyle,
 	closeButton: closeButtonStyle,
 	input: {
-		color: 'white',
-		borderColor: 'white',
-		backgroundColor: 'black',
+		color: white,
+		borderColor: white,
+		backgroundColor: black,
 	},
 	roundedButton: roundedButtonStyle,
 	inputField: inputFieldStyle,
 	horizontalHairline: {
-		backgroundColor: 'black',
+		backgroundColor: black,
 		height: 0.5,
 	},
 	transparentTitleBar: transparentTitleBarStyle,
@@ -124,7 +128,7 @@ export const darkStyle = StyleSheet.create({
 
 export const lightStyle = StyleSheet.create({
 	container: {
-		backgroundColor: 'white',
+		backgroundColor: white,
 		flex: 1,
 	},
 	titleContainer: titleContainerStyle,
@@ -132,10 +136,10 @@ export const lightStyle = StyleSheet.create({
 	bottomContainer: bottomContainerStyle,
 	listContainer: listContainerStyle,
 	textForeground: {
-		color: 'black',
+		color: black,
 	},
 	textError: {
-		color: 'red',
+		color: red,
 	},
 	textTitle: textTitleStyle,
 	textNormal: textNormalStyle,
@@ -144,14 +148,14 @@ export const lightStyle = StyleSheet.create({
 	textCenter: textCenterStyle,
 	closeButton: closeButtonStyle,
 	input: {
-		color: 'black',
-		borderColor: 'black',
-		backgroundColor: 'white',
+		color: black,
+		borderColor: black,
+		backgroundColor: white,
 	},
 	roundedButton: roundedButtonStyle,
 	inputField: inputFieldStyle,
 	horizontalHairline: {
-		backgroundColor: 'white',
+		backgroundColor: white,
 		height: 0.5,
 	},
 	transparentTitleBar: transparentTitleBarStyle,
