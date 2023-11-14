@@ -8,6 +8,7 @@
 		"deregister": "Deregister",
 		"deviceInformationChange": "Change Device Information",
 		"pinChange": "PIN Change",
+		"deleteAuthenticators": "Delete Authenticators",
 		"inBandRegister": "In-Band Register",
 		"identitySuiteOnly": "Identity Suite only"
 	},

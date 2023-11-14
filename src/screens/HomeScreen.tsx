@@ -92,7 +92,7 @@ const HomeScreen = () => {
 						onPress={authCloudApiRegister}
 					/>
 					<OutlinedButton
-						text="Delete Authenticators"
+						text={t('home.deleteAuthenticators')}
 						onPress={deleteLocalAuthenticators}
 					/>
 					<Text style={[styles.textForeground, styles.textNormal]}>
