@@ -3,17 +3,16 @@
  */
 
 import { useCallback } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { useDynamicValue } from 'react-native-dynamic';
 
 import useResultViewModel from './ResultViewModel';
 import { type RootStackParamList } from './RootStackParamList';
 import OutlinedButton from '../components/OutlinedButton';
 import { OperationTypeUtils } from '../model/OperationType';
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Result'>;
 
@@ -21,7 +20,8 @@ const ResultScreen = ({ route }: Props) => {
 	const { confirm } = useResultViewModel();
 
 	const { t } = useTranslation();
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 
 	const onConfirm = useCallback(async () => {
 		confirm();
@@ -35,18 +35,20 @@ const ResultScreen = ({ route }: Props) => {
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.titleContainer} />
 				<View style={styles.middleContainer}>
-					<Text style={styles.textTitle}>
+					<Text style={[styles.textForeground, styles.textTitle]}>
 						{errorDescription || errorCause
 							? t('operation.failed.title', { operation: resolvedOperation })
 							: t('operation.success.title', { operation: resolvedOperation })}
 					</Text>
 					{errorDescription && (
-						<Text style={[styles.textError, styles.textCenter]}>
+						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
 							{errorDescription}
 						</Text>
 					)}
 					{errorCause && (
-						<Text style={[styles.textError, styles.textCenter]}>{errorCause}</Text>
+						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
+							{errorCause}
+						</Text>
 					)}
 				</View>
 				<View style={styles.bottomContainer}>

@@ -2,16 +2,15 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { useDynamicValue } from 'react-native-dynamic';
 
 import { type RootStackParamList } from './RootStackParamList';
 import useSelectAuthenticatorViewModel from './SelectAuthenticatorViewModel';
 import { AuthenticatorItemUtils } from '../model/AuthenticatorItem';
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectAuthenticator'>;
@@ -37,11 +36,12 @@ const SelectAuthenticatorListItem = ({
 	details?: string;
 	onPress: () => void;
 }) => {
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	return (
 		<TouchableOpacity style={styles.listContainer} onPress={onPress}>
-			<Text style={styles.textNormal}>{title}</Text>
-			{details && <Text style={styles.textDetail}>{details}</Text>}
+			<Text style={[styles.textForeground, styles.textNormal]}>{title}</Text>
+			{details && <Text style={[styles.textForeground, styles.textDetail]}>{details}</Text>}
 		</TouchableOpacity>
 	);
 };
@@ -54,7 +54,8 @@ const SelectAuthenticatorScreen = ({ route }: Props) => {
 	const { select } = useSelectAuthenticatorViewModel();
 
 	const { t } = useTranslation();
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 
 	function getItems() {
 		return route.params.items.map((item) => {
@@ -81,7 +82,9 @@ const SelectAuthenticatorScreen = ({ route }: Props) => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.titleContainer}>
-				<Text style={styles.textTitle}>{t('selectAuthenticator.title')}</Text>
+				<Text style={[styles.textForeground, styles.textTitle]}>
+					{t('selectAuthenticator.title')}
+				</Text>
 				<FlatList
 					data={getItems()}
 					ItemSeparatorComponent={renderSeparator}

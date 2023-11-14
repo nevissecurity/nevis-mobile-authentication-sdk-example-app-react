@@ -3,10 +3,9 @@
  */
 
 import { useCallback, useState } from 'react';
-import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
-import { useDynamicValue } from 'react-native-dynamic';
 import {
 	check as checkPermission,
 	PERMISSIONS,
@@ -17,13 +16,14 @@ import { Camera, useCameraDevice, useCodeScanner } from 'react-native-vision-cam
 
 import useReadQrCodeViewModel from './ReadQrCodeViewModel';
 import CloseButton from '../components/CloseButton';
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 const ReadQrCodeScreen = () => {
 	const { setDispatchTokenResponse, close } = useReadQrCodeViewModel();
 
 	const { t } = useTranslation();
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 
 	const [errorMessage, setErrorMessage] = useState('');
 
@@ -94,7 +94,7 @@ const ReadQrCodeScreen = () => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<CloseButton onPress={onClose} />
-			<Text style={styles.textTitle}>{t('readQrCode.title')}</Text>
+			<Text style={[styles.textForeground, styles.textTitle]}>{t('readQrCode.title')}</Text>
 			<View style={styles.middleContainer}>
 				{device && hasCameraPermission && (
 					<Camera
@@ -105,7 +105,9 @@ const ReadQrCodeScreen = () => {
 					/>
 				)}
 				{errorMessage && (
-					<Text style={[styles.textNormal, styles.textCenter]}>{errorMessage}</Text>
+					<Text style={[styles.textForeground, styles.textNormal, styles.textCenter]}>
+						{errorMessage}
+					</Text>
 				)}
 			</View>
 		</SafeAreaView>

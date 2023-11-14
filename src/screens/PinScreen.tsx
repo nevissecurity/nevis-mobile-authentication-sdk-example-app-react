@@ -3,7 +3,7 @@
  */
 
 import { useCallback } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import {
 	PinAuthenticatorProtectionStatus,
@@ -13,14 +13,13 @@ import {
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { useDynamicValue } from 'react-native-dynamic';
 
 import usePinViewModel from './PinViewModel';
 import { type RootStackParamList } from './RootStackParamList';
 import InputField from '../components/InputField';
 import OutlinedButton from '../components/OutlinedButton';
 import { PinMode } from '../model/PinMode';
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pin'>;
 
@@ -28,7 +27,8 @@ const PinScreen = ({ route }: Props) => {
 	const { setOldPin, setPin, confirm, cancel } = usePinViewModel();
 
 	const { t } = useTranslation();
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 
 	function title(pinMode: PinMode): string {
 		switch (pinMode) {
@@ -82,10 +82,14 @@ const PinScreen = ({ route }: Props) => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.titleContainer}>
-					<Text style={styles.textTitle}>{title(route.params.mode)}</Text>
+					<Text style={[styles.textForeground, styles.textTitle]}>
+						{title(route.params.mode)}
+					</Text>
 				</View>
 				<View style={styles.middleContainer}>
-					<Text style={styles.textNormal}>{description(route.params.mode)}</Text>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{description(route.params.mode)}
+					</Text>
 					{isChange && (
 						<InputField
 							placeholder={t('pin.placeholder.oldPin')}
@@ -99,13 +103,13 @@ const PinScreen = ({ route }: Props) => {
 						keyboardType={'numeric'}
 					/>
 					{lastRecoverableError && (
-						<Text style={[styles.textDetail, styles.textCenter, styles.textError]}>
+						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
 							{lastRecoverableError.description}
 						</Text>
 					)}
 					{authenticatorProtectionStatus &&
 						!(authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked) && (
-							<Text style={[styles.textDetail, styles.textCenter, styles.textError]}>
+							<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
 								{authenticatorProtectionText(authenticatorProtectionStatus)}
 							</Text>
 						)}

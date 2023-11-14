@@ -2,99 +2,161 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-export const dynamicStyles = new DynamicStyleSheet({
+const white = 'white';
+const black = 'black';
+const red = 'red';
+
+const titleContainerStyle: ViewStyle = {
+	flex: 1,
+	rowGap: 32,
+	padding: 16,
+};
+
+const middleContainerStyle: ViewStyle = {
+	flex: 2,
+	justifyContent: 'center',
+	rowGap: 16,
+	padding: 16,
+};
+
+const bottomContainerStyle: ViewStyle = {
+	flex: 7,
+	justifyContent: 'flex-end',
+	rowGap: 16,
+	padding: 16,
+};
+
+const listContainerStyle: ViewStyle = {
+	flex: 1,
+	rowGap: 8,
+	paddingTop: 16,
+	paddingBottom: 16,
+};
+
+const textTitleStyle: TextStyle = {
+	textAlign: 'center',
+	fontWeight: 'bold',
+	fontSize: 22,
+};
+
+const textNormalStyle: TextStyle = {
+	fontSize: 17,
+};
+
+const textDetailStyle: TextStyle = {
+	fontSize: 14,
+};
+
+const textInfoStyle: TextStyle = {
+	fontSize: 12,
+};
+
+const textCenterStyle: TextStyle = {
+	textAlign: 'center',
+};
+
+const closeButtonStyle: ViewStyle = {
+	alignItems: 'center',
+	justifyContent: 'center',
+	alignSelf: 'flex-end',
+	marginRight: 5,
+	marginTop: 5,
+	height: 40,
+	width: 40,
+};
+
+const roundedButtonStyle: ViewStyle = {
+	alignItems: 'center',
+	justifyContent: 'center',
+	borderRadius: 10,
+	borderWidth: 1,
+	height: 40,
+};
+
+const inputFieldStyle: ViewStyle = {
+	paddingLeft: 16,
+	borderRadius: 10,
+	borderWidth: 1,
+	height: 40,
+};
+
+const transparentTitleBarStyle: ViewStyle = {
+	position: 'absolute',
+	justifyContent: 'center',
+	alignItems: 'center',
+	top: 40,
+	width: '100%',
+	zIndex: 1,
+};
+
+export const darkStyle = StyleSheet.create({
 	container: {
-		backgroundColor: new DynamicValue('white', 'black'),
+		backgroundColor: black,
 		flex: 1,
 	},
-	titleContainer: {
-		flex: 1,
-		rowGap: 32,
-		padding: 16,
-	},
-	middleContainer: {
-		flex: 2,
-		justifyContent: 'center',
-		rowGap: 16,
-		padding: 16,
-	},
-	bottomContainer: {
-		flex: 7,
-		justifyContent: 'flex-end',
-		rowGap: 16,
-		padding: 16,
-	},
-	listContainer: {
-		flex: 1,
-		rowGap: 8,
-		paddingTop: 16,
-		paddingBottom: 16,
-	},
-	textTitle: {
-		color: new DynamicValue('black', 'white'),
-		textAlign: 'center',
-		fontWeight: 'bold',
-		fontSize: 22,
-	},
-	textNormal: {
-		color: new DynamicValue('black', 'white'),
-		fontSize: 17,
-	},
-	textDetail: {
-		color: new DynamicValue('black', 'white'),
-		fontSize: 14,
-	},
-	textInfo: {
-		color: new DynamicValue('black', 'white'),
-		fontSize: 12,
-	},
-	textCenter: {
-		textAlign: 'center',
+	titleContainer: titleContainerStyle,
+	middleContainer: middleContainerStyle,
+	bottomContainer: bottomContainerStyle,
+	listContainer: listContainerStyle,
+	textForeground: {
+		color: white,
 	},
 	textError: {
-		color: 'red',
-		fontSize: 17,
+		color: red,
 	},
-	closeButton: {
-		alignItems: 'center',
-		justifyContent: 'center',
-		alignSelf: 'flex-end',
-		marginRight: 5,
-		marginTop: 5,
-		height: 40,
-		width: 40,
-	},
-	roundedButton: {
-		color: new DynamicValue('black', 'white'),
-		borderColor: new DynamicValue('black', 'white'),
-		backgroundColor: new DynamicValue('white', 'black'),
-		alignItems: 'center',
-		justifyContent: 'center',
-		borderRadius: 10,
-		borderWidth: 1,
-		height: 40,
-	},
+	textTitle: textTitleStyle,
+	textNormal: textNormalStyle,
+	textDetail: textDetailStyle,
+	textInfo: textInfoStyle,
+	textCenter: textCenterStyle,
+	closeButton: closeButtonStyle,
 	input: {
-		color: new DynamicValue('black', 'white'),
-		borderColor: new DynamicValue('black', 'white'),
-		backgroundColor: new DynamicValue('white', 'black'),
-		paddingLeft: 16,
-		borderRadius: 10,
-		borderWidth: 1,
-		height: 40,
+		color: white,
+		borderColor: white,
+		backgroundColor: black,
 	},
+	roundedButton: roundedButtonStyle,
+	inputField: inputFieldStyle,
 	horizontalHairline: {
-		backgroundColor: new DynamicValue('white', 'black'),
+		backgroundColor: black,
 		height: 0.5,
 	},
-	transparentTitleBar: {
-		position: 'absolute',
-		justifyContent: 'center',
-		alignItems: 'center',
-		top: 40,
-		width: '100%',
-		zIndex: 1,
+	transparentTitleBar: transparentTitleBarStyle,
+});
+
+export const lightStyle = StyleSheet.create({
+	container: {
+		backgroundColor: white,
+		flex: 1,
 	},
+	titleContainer: titleContainerStyle,
+	middleContainer: middleContainerStyle,
+	bottomContainer: bottomContainerStyle,
+	listContainer: listContainerStyle,
+	textForeground: {
+		color: black,
+	},
+	textError: {
+		color: red,
+	},
+	textTitle: textTitleStyle,
+	textNormal: textNormalStyle,
+	textDetail: textDetailStyle,
+	textInfo: textInfoStyle,
+	textCenter: textCenterStyle,
+	closeButton: closeButtonStyle,
+	input: {
+		color: black,
+		borderColor: black,
+		backgroundColor: white,
+	},
+	roundedButton: roundedButtonStyle,
+	inputField: inputFieldStyle,
+	horizontalHairline: {
+		backgroundColor: white,
+		height: 0.5,
+	},
+	transparentTitleBar: transparentTitleBarStyle,
 });

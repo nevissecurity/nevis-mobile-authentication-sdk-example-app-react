@@ -3,17 +3,16 @@
  */
 
 import { memo } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, useColorScheme } from 'react-native';
 
-import { useDynamicValue } from 'react-native-dynamic';
-
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 function OutlinedButton({ text, onPress }: { text: string; onPress: () => void }) {
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	return (
-		<TouchableOpacity style={styles.roundedButton} onPress={onPress}>
-			<Text style={styles.textNormal}>{text}</Text>
+		<TouchableOpacity style={[styles.input, styles.roundedButton]} onPress={onPress}>
+			<Text style={[styles.textForeground, styles.textNormal]}>{text}</Text>
 		</TouchableOpacity>
 	);
 }

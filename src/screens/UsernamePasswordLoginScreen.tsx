@@ -3,21 +3,21 @@
  */
 
 import { useCallback } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
-import { useDynamicValue } from 'react-native-dynamic';
 
 import useUsernamePasswordLoginViewModel from './UsernamePasswordLoginViewModel';
 import InputField from '../components/InputField';
 import OutlinedButton from '../components/OutlinedButton';
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 const UsernamePasswordLoginScreen = () => {
 	const { setUsername, setPassword, confirm, cancel } = useUsernamePasswordLoginViewModel();
 
 	const { t } = useTranslation();
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 
 	const onCancel = useCallback(async () => {
 		cancel();
@@ -27,15 +27,21 @@ const UsernamePasswordLoginScreen = () => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.titleContainer}>
-					<Text style={styles.textTitle}>{t('usernamePasswordLogin.title')}</Text>
+					<Text style={[styles.textForeground, styles.textTitle]}>
+						{t('usernamePasswordLogin.title')}
+					</Text>
 				</View>
 				<View style={styles.middleContainer}>
-					<Text style={styles.textNormal}>{t('usernamePasswordLogin.username')}</Text>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{t('usernamePasswordLogin.username')}
+					</Text>
 					<InputField
 						placeholder={t('usernamePasswordLogin.username')}
 						onChangeText={setUsername}
 					/>
-					<Text style={styles.textNormal}>{t('usernamePasswordLogin.password')}</Text>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{t('usernamePasswordLogin.password')}
+					</Text>
 					<InputField
 						placeholder={t('usernamePasswordLogin.password')}
 						onChangeText={setPassword}
