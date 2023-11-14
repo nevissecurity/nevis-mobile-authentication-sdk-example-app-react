@@ -3,17 +3,16 @@
  */
 
 import { useCallback, useEffect } from 'react';
-import { Linking, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Linking, SafeAreaView, ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { useDynamicValue } from 'react-native-dynamic';
 
 import useHomeViewModel from './HomeViewModel';
 import OutlinedButton from '../components/OutlinedButton';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 const HomeScreen = () => {
 	const {
@@ -32,7 +31,8 @@ const HomeScreen = () => {
 	} = useHomeViewModel();
 
 	const { t } = useTranslation();
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 
 	// Updating screen upon focus
 	useFocusEffect(
@@ -69,8 +69,8 @@ const HomeScreen = () => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.titleContainer}>
-					<Text style={styles.textTitle}>{t('home.title')}</Text>
-					<Text style={styles.textNormal}>
+					<Text style={[styles.textForeground, styles.textTitle]}>{t('home.title')}</Text>
+					<Text style={[styles.textForeground, styles.textNormal]}>
 						{t('home.registeredAccounts', { numberOfAccounts: numberOfAccounts })}
 					</Text>
 				</View>
@@ -95,7 +95,9 @@ const HomeScreen = () => {
 						text="Delete Authenticators"
 						onPress={deleteLocalAuthenticators}
 					/>
-					<Text style={styles.textNormal}>{t('home.identitySuiteOnly')}</Text>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{t('home.identitySuiteOnly')}
+					</Text>
 					<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
 				</View>
 			</ScrollView>

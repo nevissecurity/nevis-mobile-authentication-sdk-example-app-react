@@ -3,17 +3,16 @@
  */
 
 import { memo } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, useColorScheme } from 'react-native';
 
-import { useDynamicValue } from 'react-native-dynamic';
-
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 function CloseButton({ onPress }: { onPress: () => void }) {
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	return (
 		<TouchableOpacity style={styles.closeButton} onPress={onPress}>
-			<Text style={styles.textTitle}>X</Text>
+			<Text style={[styles.textForeground, styles.textTitle]}>X</Text>
 		</TouchableOpacity>
 	);
 }

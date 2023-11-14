@@ -1,16 +1,14 @@
 /**
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
-
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { useDynamicValue } from 'react-native-dynamic';
 
 import { type RootStackParamList } from './RootStackParamList';
 import useSelectAccountViewModel from './SelectAccountViewModel';
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectAccount'>;
 
@@ -24,10 +22,11 @@ type SelectAccountItemProps = {
 };
 
 const SelectAccountListItem = ({ title, onPress }: { title: string; onPress: () => void }) => {
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	return (
 		<TouchableOpacity style={styles.listContainer} onPress={onPress}>
-			<Text style={styles.textNormal}>{title}</Text>
+			<Text style={[styles.textForeground, styles.textNormal]}>{title}</Text>
 		</TouchableOpacity>
 	);
 };
@@ -40,7 +39,8 @@ const SelectAccountScreen = ({ route }: Props) => {
 	const { select } = useSelectAccountViewModel();
 
 	const { t } = useTranslation();
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 
 	function getItems() {
 		return route.params.items.map((item) => {
@@ -71,7 +71,9 @@ const SelectAccountScreen = ({ route }: Props) => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.titleContainer}>
-				<Text style={styles.textTitle}>{t('selectAccount.title')}</Text>
+				<Text style={[styles.textForeground, styles.textTitle]}>
+					{t('selectAccount.title')}
+				</Text>
 				<FlatList
 					data={getItems()}
 					ItemSeparatorComponent={renderSeparator}

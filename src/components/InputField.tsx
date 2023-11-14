@@ -3,11 +3,9 @@
  */
 
 import { memo } from 'react';
-import { type KeyboardTypeOptions, TextInput } from 'react-native';
+import { type KeyboardTypeOptions, TextInput, useColorScheme } from 'react-native';
 
-import { useDynamicValue } from 'react-native-dynamic';
-
-import { dynamicStyles } from '../Styles';
+import { darkStyle, lightStyle } from '../Styles';
 
 function InputField({
 	placeholder,
@@ -18,10 +16,11 @@ function InputField({
 	onChangeText: (text: string) => void;
 	keyboardType?: KeyboardTypeOptions;
 }) {
-	const styles = useDynamicValue(dynamicStyles);
+	const colorScheme = useColorScheme();
+	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	return (
 		<TextInput
-			style={styles.input}
+			style={[styles.input, styles.inputField]}
 			autoCorrect={false}
 			keyboardType={keyboardType || 'default'}
 			onChangeText={onChangeText}
