@@ -2,7 +2,7 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';

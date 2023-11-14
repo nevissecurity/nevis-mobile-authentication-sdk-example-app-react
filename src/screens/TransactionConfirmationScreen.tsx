@@ -2,7 +2,7 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -24,11 +24,11 @@ const TransactionConfirmationScreen = ({ route }: Props) => {
 
 	const onConfirm = useCallback(async () => {
 		await confirm(route.params.selectedUsername, route.params.accountSelectionHandler);
-	}, []);
+	}, [route.params.selectedUsername, route.params.accountSelectionHandler]);
 
 	const onCancel = useCallback(async () => {
 		await cancel(route.params.accountSelectionHandler);
-	}, []);
+	}, [route.params.accountSelectionHandler]);
 
 	return (
 		<SafeAreaView style={styles.container}>

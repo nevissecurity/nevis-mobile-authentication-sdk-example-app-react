@@ -2,7 +2,6 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import React from 'react';
 import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';

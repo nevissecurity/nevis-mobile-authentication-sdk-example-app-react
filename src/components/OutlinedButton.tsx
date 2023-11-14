@@ -2,7 +2,7 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import React from 'react';
+import { memo } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 import { useDynamicValue } from 'react-native-dynamic';
@@ -18,4 +18,4 @@ function OutlinedButton({ text, onPress }: { text: string; onPress: () => void }
 	);
 }
 
-export default React.memo(OutlinedButton);
+export default memo(OutlinedButton);
