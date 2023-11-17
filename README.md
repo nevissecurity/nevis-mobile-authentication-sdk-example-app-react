@@ -180,7 +180,7 @@ Or by choosing Product > Run from Xcode, or by clicking the Run button in your p
 
 ### Try it out
 
-Now that the Flutter example app is up and running, it's time to try it out!
+Now that the React Native example app is up and running, it's time to try it out!
 
 Check out our [Quickstart Guide](https://docs.nevis.net/mobilesdk/quickstart).
 
