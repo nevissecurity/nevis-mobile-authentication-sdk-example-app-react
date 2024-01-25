@@ -3,10 +3,11 @@
  */
 
 import { useCallback, useEffect } from 'react';
-import { Linking, SafeAreaView, ScrollView, Text, useColorScheme, View } from 'react-native';
+import { Linking, ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useHomeViewModel from './HomeViewModel';
 import OutlinedButton from '../components/OutlinedButton';
@@ -33,6 +34,7 @@ const HomeScreen = () => {
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const insets = useSafeAreaInsets();
 
 	// Updating screen upon focus
 	useFocusEffect(
@@ -66,42 +68,45 @@ const HomeScreen = () => {
 	}, [onInitClient, onHandleDeepLink]);
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<ScrollView contentContainerStyle={styles.container}>
-				<View style={styles.titleContainer}>
-					<Text style={[styles.textForeground, styles.textTitle]}>{t('home.title')}</Text>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{t('home.registeredAccounts', { numberOfAccounts: numberOfAccounts })}
-					</Text>
-				</View>
-				<View style={styles.middleContainer} />
-				<View style={styles.bottomContainer}>
-					<OutlinedButton text={t('home.readQrCode')} onPress={readQrCode} />
-					<OutlinedButton
-						text={t('home.inBandAuthenticate')}
-						onPress={inBandAuthenticate}
-					/>
-					<OutlinedButton text={t('home.deregister')} onPress={deregister} />
-					<OutlinedButton
-						text={t('home.deviceInformationChange')}
-						onPress={changeDeviceInformation}
-					/>
-					<OutlinedButton text={t('home.pinChange')} onPress={changePin} />
-					<OutlinedButton
-						text={t('home.authCloudApiRegistration')}
-						onPress={authCloudApiRegister}
-					/>
-					<OutlinedButton
-						text={t('home.deleteAuthenticators')}
-						onPress={deleteLocalAuthenticators}
-					/>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{t('home.identitySuiteOnly')}
-					</Text>
-					<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
-				</View>
-			</ScrollView>
-		</SafeAreaView>
+		<ScrollView
+			contentContainerStyle={styles.container}
+			style={{
+				paddingTop: insets.top,
+				paddingBottom: insets.bottom,
+				paddingLeft: insets.left,
+				paddingRight: insets.right,
+			}}
+		>
+			<View style={styles.titleContainer}>
+				<Text style={[styles.textForeground, styles.textTitle]}>{t('home.title')}</Text>
+				<Text style={[styles.textForeground, styles.textNormal]}>
+					{t('home.registeredAccounts', { numberOfAccounts: numberOfAccounts })}
+				</Text>
+			</View>
+			<View style={styles.middleContainer} />
+			<View style={styles.bottomContainer}>
+				<OutlinedButton text={t('home.readQrCode')} onPress={readQrCode} />
+				<OutlinedButton text={t('home.inBandAuthenticate')} onPress={inBandAuthenticate} />
+				<OutlinedButton text={t('home.deregister')} onPress={deregister} />
+				<OutlinedButton
+					text={t('home.deviceInformationChange')}
+					onPress={changeDeviceInformation}
+				/>
+				<OutlinedButton text={t('home.pinChange')} onPress={changePin} />
+				<OutlinedButton
+					text={t('home.authCloudApiRegistration')}
+					onPress={authCloudApiRegister}
+				/>
+				<OutlinedButton
+					text={t('home.deleteAuthenticators')}
+					onPress={deleteLocalAuthenticators}
+				/>
+				<Text style={[styles.textForeground, styles.textNormal]}>
+					{t('home.identitySuiteOnly')}
+				</Text>
+				<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
+			</View>
+		</ScrollView>
 	);
 };
 

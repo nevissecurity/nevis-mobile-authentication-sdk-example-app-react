@@ -3,9 +3,10 @@
  */
 
 import { useCallback } from 'react';
-import { SafeAreaView, ScrollView, Text, useColorScheme, View } from 'react-native';
+import { ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useAuthCloudApiRegistrationViewModel from './AuthCloudApiRegistrationViewModel';
 import InputField from '../components/InputField';
@@ -19,41 +20,48 @@ const AuthCloudApiRegistrationScreen = () => {
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const insets = useSafeAreaInsets();
 
 	const onCancel = useCallback(async () => {
 		cancel();
 	}, []);
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<ScrollView contentContainerStyle={styles.container}>
-				<View style={styles.titleContainer}>
-					<Text style={[styles.textForeground, styles.textTitle]}>
-						{t('authCloudApiRegistration.title')}
-					</Text>
-				</View>
-				<View style={styles.middleContainer}>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{t('authCloudApiRegistration.enrollResponse')}
-					</Text>
-					<InputField
-						placeholder={t('authCloudApiRegistration.enrollResponse')}
-						onChangeText={setEnrollResponse}
-					/>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{t('authCloudApiRegistration.appLinkUri')}
-					</Text>
-					<InputField
-						placeholder={t('authCloudApiRegistration.appLinkUri')}
-						onChangeText={setAppLinkUri}
-					/>
-				</View>
-				<View style={styles.bottomContainer}>
-					<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
-					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-				</View>
-			</ScrollView>
-		</SafeAreaView>
+		<ScrollView
+			contentContainerStyle={styles.container}
+			style={{
+				paddingTop: insets.top,
+				paddingBottom: insets.bottom,
+				paddingLeft: insets.left,
+				paddingRight: insets.right,
+			}}
+		>
+			<View style={styles.titleContainer}>
+				<Text style={[styles.textForeground, styles.textTitle]}>
+					{t('authCloudApiRegistration.title')}
+				</Text>
+			</View>
+			<View style={styles.middleContainer}>
+				<Text style={[styles.textForeground, styles.textNormal]}>
+					{t('authCloudApiRegistration.enrollResponse')}
+				</Text>
+				<InputField
+					placeholder={t('authCloudApiRegistration.enrollResponse')}
+					onChangeText={setEnrollResponse}
+				/>
+				<Text style={[styles.textForeground, styles.textNormal]}>
+					{t('authCloudApiRegistration.appLinkUri')}
+				</Text>
+				<InputField
+					placeholder={t('authCloudApiRegistration.appLinkUri')}
+					onChangeText={setAppLinkUri}
+				/>
+			</View>
+			<View style={styles.bottomContainer}>
+				<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
+				<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+			</View>
+		</ScrollView>
 	);
 };
 

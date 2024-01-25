@@ -3,7 +3,7 @@
  */
 
 import { useCallback, useState } from 'react';
-import { Platform, SafeAreaView, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { Platform, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,6 +12,7 @@ import {
 	request as requestPermission,
 	RESULTS,
 } from 'react-native-permissions';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Camera, useCameraDevice, useCodeScanner } from 'react-native-vision-camera';
 
 import useReadQrCodeViewModel from './ReadQrCodeViewModel';
@@ -24,6 +25,7 @@ const ReadQrCodeScreen = () => {
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const insets = useSafeAreaInsets();
 
 	const [errorMessage, setErrorMessage] = useState('');
 
@@ -92,7 +94,17 @@ const ReadQrCodeScreen = () => {
 	}
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
+		>
 			<CloseButton onPress={onClose} />
 			<Text style={[styles.textForeground, styles.textTitle]}>{t('readQrCode.title')}</Text>
 			<View style={styles.middleContainer}>
@@ -110,7 +122,7 @@ const ReadQrCodeScreen = () => {
 					</Text>
 				)}
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 };
 

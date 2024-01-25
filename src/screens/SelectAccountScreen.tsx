@@ -1,10 +1,11 @@
 /**
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
-import { FlatList, SafeAreaView, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type RootStackParamList } from './RootStackParamList';
 import useSelectAccountViewModel from './SelectAccountViewModel';
@@ -41,6 +42,7 @@ const SelectAccountScreen = ({ route }: Props) => {
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const insets = useSafeAreaInsets();
 
 	function getItems() {
 		return route.params.items.map((item) => {
@@ -69,7 +71,17 @@ const SelectAccountScreen = ({ route }: Props) => {
 	};
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
+		>
 			<View style={styles.titleContainer}>
 				<Text style={[styles.textForeground, styles.textTitle]}>
 					{t('selectAccount.title')}
@@ -81,7 +93,7 @@ const SelectAccountScreen = ({ route }: Props) => {
 					keyExtractor={(item) => item.username}
 				/>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 };
 
