@@ -3,10 +3,11 @@
  */
 
 import { useCallback } from 'react';
-import { SafeAreaView, Text, useColorScheme, View } from 'react-native';
+import { Text, useColorScheme, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type RootStackParamList } from './RootStackParamList';
 import useTransactionConfirmationViewModel from './TransactionConfirmationViewModel';
@@ -21,6 +22,7 @@ const TransactionConfirmationScreen = ({ route }: Props) => {
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const insets = useSafeAreaInsets();
 
 	const onConfirm = useCallback(async () => {
 		await confirm(route.params.selectedUsername, route.params.accountSelectionHandler);
@@ -31,7 +33,17 @@ const TransactionConfirmationScreen = ({ route }: Props) => {
 	}, [route.params.accountSelectionHandler]);
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
+		>
 			<View style={styles.titleContainer}>
 				<Text style={[styles.textForeground, styles.textTitle]}>
 					{t('transactionConfirmation.title')}
@@ -44,7 +56,7 @@ const TransactionConfirmationScreen = ({ route }: Props) => {
 				<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
 				<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 };
 

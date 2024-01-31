@@ -3,7 +3,7 @@
  */
 
 import { useCallback } from 'react';
-import { SafeAreaView, ScrollView, Text, useColorScheme, View } from 'react-native';
+import { ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import {
 	PinAuthenticatorProtectionStatus,
@@ -13,6 +13,7 @@ import {
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import usePinViewModel from './PinViewModel';
 import { type RootStackParamList } from './RootStackParamList';
@@ -29,6 +30,7 @@ const PinScreen = ({ route }: Props) => {
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const insets = useSafeAreaInsets();
 
 	function title(pinMode: PinMode): string {
 		switch (pinMode) {
@@ -79,47 +81,53 @@ const PinScreen = ({ route }: Props) => {
 	const lastRecoverableError = route.params.lastRecoverableError;
 	const authenticatorProtectionStatus = route.params.authenticatorProtectionStatus;
 	return (
-		<SafeAreaView style={styles.container}>
-			<ScrollView contentContainerStyle={styles.container}>
-				<View style={styles.titleContainer}>
-					<Text style={[styles.textForeground, styles.textTitle]}>
-						{title(route.params.mode)}
-					</Text>
-				</View>
-				<View style={styles.middleContainer}>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{description(route.params.mode)}
-					</Text>
-					{isChange && (
-						<InputField
-							placeholder={t('pin.placeholder.oldPin')}
-							onChangeText={setOldPin}
-							keyboardType={'numeric'}
-						/>
-					)}
+		<ScrollView
+			contentContainerStyle={styles.container}
+			style={{
+				paddingTop: insets.top,
+				paddingBottom: insets.bottom,
+				paddingLeft: insets.left,
+				paddingRight: insets.right,
+			}}
+		>
+			<View style={styles.titleContainer}>
+				<Text style={[styles.textForeground, styles.textTitle]}>
+					{title(route.params.mode)}
+				</Text>
+			</View>
+			<View style={styles.middleContainer}>
+				<Text style={[styles.textForeground, styles.textNormal]}>
+					{description(route.params.mode)}
+				</Text>
+				{isChange && (
 					<InputField
-						placeholder={t('pin.placeholder.pin')}
-						onChangeText={setPin}
+						placeholder={t('pin.placeholder.oldPin')}
+						onChangeText={setOldPin}
 						keyboardType={'numeric'}
 					/>
-					{lastRecoverableError && (
+				)}
+				<InputField
+					placeholder={t('pin.placeholder.pin')}
+					onChangeText={setPin}
+					keyboardType={'numeric'}
+				/>
+				{lastRecoverableError && (
+					<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
+						{lastRecoverableError.description}
+					</Text>
+				)}
+				{authenticatorProtectionStatus &&
+					!(authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked) && (
 						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-							{lastRecoverableError.description}
+							{authenticatorProtectionText(authenticatorProtectionStatus)}
 						</Text>
 					)}
-					{authenticatorProtectionStatus &&
-						!(authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked) && (
-							<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-								{authenticatorProtectionText(authenticatorProtectionStatus)}
-							</Text>
-						)}
-				</View>
-				<View style={styles.bottomContainer}>
-					<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
-					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-				</View>
-			</ScrollView>
-		</SafeAreaView>
+			</View>
+			<View style={styles.bottomContainer}>
+				<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
+				<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+			</View>
+		</ScrollView>
 	);
 };
 
