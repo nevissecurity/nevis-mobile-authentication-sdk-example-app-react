@@ -35,6 +35,7 @@ const AuthCloudApiRegistrationScreen = () => {
 				paddingLeft: insets.left,
 				paddingRight: insets.right,
 			}}
+			keyboardShouldPersistTaps={'handled'}
 		>
 			<View style={styles.titleContainer}>
 				<Text style={[styles.textForeground, styles.textTitle]}>
