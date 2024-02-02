@@ -8,6 +8,10 @@ const white = 'white';
 const black = 'black';
 const red = 'red';
 
+const contentContainerStyle: ViewStyle = {
+	flexGrow: 1,
+};
+
 const titleContainerStyle: ViewStyle = {
 	flex: 1,
 	rowGap: 32,
@@ -96,6 +100,7 @@ export const darkStyle = StyleSheet.create({
 		backgroundColor: black,
 		flex: 1,
 	},
+	contentContainer: contentContainerStyle,
 	titleContainer: titleContainerStyle,
 	middleContainer: middleContainerStyle,
 	bottomContainer: bottomContainerStyle,
@@ -131,6 +136,7 @@ export const lightStyle = StyleSheet.create({
 		backgroundColor: white,
 		flex: 1,
 	},
+	contentContainer: contentContainerStyle,
 	titleContainer: titleContainerStyle,
 	middleContainer: middleContainerStyle,
 	bottomContainer: bottomContainerStyle,

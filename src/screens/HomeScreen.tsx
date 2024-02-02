@@ -79,7 +79,7 @@ const HomeScreen = () => {
 				},
 			]}
 		>
-			<ScrollView>
+			<ScrollView contentContainerStyle={styles.contentContainer}>
 				<View style={styles.titleContainer}>
 					<Text style={[styles.textForeground, styles.textTitle]}>{t('home.title')}</Text>
 					<Text style={[styles.textForeground, styles.textNormal]}>

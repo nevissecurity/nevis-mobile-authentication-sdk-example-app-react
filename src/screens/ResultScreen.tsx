@@ -44,7 +44,7 @@ const ResultScreen = ({ route }: Props) => {
 				},
 			]}
 		>
-			<ScrollView>
+			<ScrollView contentContainerStyle={styles.contentContainer}>
 				<View style={styles.titleContainer} />
 				<View style={styles.middleContainer}>
 					<Text style={[styles.textForeground, styles.textTitle]}>

@@ -41,7 +41,10 @@ const DeviceInformationChangeScreen = ({ route }: Props) => {
 				},
 			]}
 		>
-			<ScrollView keyboardShouldPersistTaps={'handled'}>
+			<ScrollView
+				contentContainerStyle={styles.contentContainer}
+				keyboardShouldPersistTaps={'handled'}
+			>
 				<View style={styles.titleContainer}>
 					<Text style={[styles.textForeground, styles.textTitle]}>
 						{t('deviceInformationChange.title')}
