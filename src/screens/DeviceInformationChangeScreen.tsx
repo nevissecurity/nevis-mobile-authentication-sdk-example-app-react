@@ -30,33 +30,38 @@ const DeviceInformationChangeScreen = ({ route }: Props) => {
 	}, []);
 
 	return (
-		<ScrollView
-			contentContainerStyle={styles.container}
-			style={{
-				paddingTop: insets.top,
-				paddingBottom: insets.bottom,
-				paddingLeft: insets.left,
-				paddingRight: insets.right,
-			}}
-			keyboardShouldPersistTaps={'handled'}
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
 		>
-			<View style={styles.titleContainer}>
-				<Text style={[styles.textForeground, styles.textTitle]}>
-					{t('deviceInformationChange.title')}
-				</Text>
-			</View>
-			<View style={styles.middleContainer}>
-				<Text style={[styles.textForeground, styles.textNormal]}>{route.params.name}</Text>
-				<InputField
-					placeholder={t('deviceInformationChange.newName')}
-					onChangeText={setDeviceName}
-				/>
-			</View>
-			<View style={styles.bottomContainer}>
-				<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
-				<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-			</View>
-		</ScrollView>
+			<ScrollView keyboardShouldPersistTaps={'handled'}>
+				<View style={styles.titleContainer}>
+					<Text style={[styles.textForeground, styles.textTitle]}>
+						{t('deviceInformationChange.title')}
+					</Text>
+				</View>
+				<View style={styles.middleContainer}>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{route.params.name}
+					</Text>
+					<InputField
+						placeholder={t('deviceInformationChange.newName')}
+						onChangeText={setDeviceName}
+					/>
+				</View>
+				<View style={styles.bottomContainer}>
+					<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
+					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+				</View>
+			</ScrollView>
+		</View>
 	);
 };
 
