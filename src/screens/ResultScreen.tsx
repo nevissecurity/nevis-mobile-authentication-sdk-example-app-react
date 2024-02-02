@@ -33,37 +33,41 @@ const ResultScreen = ({ route }: Props) => {
 	const errorDescription = route.params.errorDescription;
 	const errorCause = route.params.errorCause;
 	return (
-		<ScrollView
-			contentContainerStyle={styles.container}
-			style={{
-				paddingTop: insets.top,
-				paddingBottom: insets.bottom,
-				paddingLeft: insets.left,
-				paddingRight: insets.right,
-			}}
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
 		>
-			<View style={styles.titleContainer} />
-			<View style={styles.middleContainer}>
-				<Text style={[styles.textForeground, styles.textTitle]}>
-					{errorDescription || errorCause
-						? t('operation.failed.title', { operation: resolvedOperation })
-						: t('operation.success.title', { operation: resolvedOperation })}
-				</Text>
-				{errorDescription && (
-					<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-						{errorDescription}
+			<ScrollView>
+				<View style={styles.titleContainer} />
+				<View style={styles.middleContainer}>
+					<Text style={[styles.textForeground, styles.textTitle]}>
+						{errorDescription || errorCause
+							? t('operation.failed.title', { operation: resolvedOperation })
+							: t('operation.success.title', { operation: resolvedOperation })}
 					</Text>
-				)}
-				{errorCause && (
-					<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-						{errorCause}
-					</Text>
-				)}
-			</View>
-			<View style={styles.bottomContainer}>
-				<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
-			</View>
-		</ScrollView>
+					{errorDescription && (
+						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
+							{errorDescription}
+						</Text>
+					)}
+					{errorCause && (
+						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
+							{errorCause}
+						</Text>
+					)}
+				</View>
+				<View style={styles.bottomContainer}>
+					<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
+				</View>
+			</ScrollView>
+		</View>
 	);
 };
 

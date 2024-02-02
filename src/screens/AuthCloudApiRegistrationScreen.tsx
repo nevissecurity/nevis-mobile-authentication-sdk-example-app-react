@@ -27,42 +27,45 @@ const AuthCloudApiRegistrationScreen = () => {
 	}, []);
 
 	return (
-		<ScrollView
-			contentContainerStyle={styles.container}
-			style={{
-				paddingTop: insets.top,
-				paddingBottom: insets.bottom,
-				paddingLeft: insets.left,
-				paddingRight: insets.right,
-			}}
-			keyboardShouldPersistTaps={'handled'}
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
 		>
-			<View style={styles.titleContainer}>
-				<Text style={[styles.textForeground, styles.textTitle]}>
-					{t('authCloudApiRegistration.title')}
-				</Text>
-			</View>
-			<View style={styles.middleContainer}>
-				<Text style={[styles.textForeground, styles.textNormal]}>
-					{t('authCloudApiRegistration.enrollResponse')}
-				</Text>
-				<InputField
-					placeholder={t('authCloudApiRegistration.enrollResponse')}
-					onChangeText={setEnrollResponse}
-				/>
-				<Text style={[styles.textForeground, styles.textNormal]}>
-					{t('authCloudApiRegistration.appLinkUri')}
-				</Text>
-				<InputField
-					placeholder={t('authCloudApiRegistration.appLinkUri')}
-					onChangeText={setAppLinkUri}
-				/>
-			</View>
-			<View style={styles.bottomContainer}>
-				<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
-				<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-			</View>
-		</ScrollView>
+			<ScrollView keyboardShouldPersistTaps={'handled'}>
+				<View style={styles.titleContainer}>
+					<Text style={[styles.textForeground, styles.textTitle]}>
+						{t('authCloudApiRegistration.title')}
+					</Text>
+				</View>
+				<View style={styles.middleContainer}>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{t('authCloudApiRegistration.enrollResponse')}
+					</Text>
+					<InputField
+						placeholder={t('authCloudApiRegistration.enrollResponse')}
+						onChangeText={setEnrollResponse}
+					/>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{t('authCloudApiRegistration.appLinkUri')}
+					</Text>
+					<InputField
+						placeholder={t('authCloudApiRegistration.appLinkUri')}
+						onChangeText={setAppLinkUri}
+					/>
+				</View>
+				<View style={styles.bottomContainer}>
+					<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
+					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+				</View>
+			</ScrollView>
+		</View>
 	);
 };
 

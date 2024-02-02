@@ -81,54 +81,57 @@ const PinScreen = ({ route }: Props) => {
 	const lastRecoverableError = route.params.lastRecoverableError;
 	const authenticatorProtectionStatus = route.params.authenticatorProtectionStatus;
 	return (
-		<ScrollView
-			contentContainerStyle={styles.container}
-			style={{
-				paddingTop: insets.top,
-				paddingBottom: insets.bottom,
-				paddingLeft: insets.left,
-				paddingRight: insets.right,
-			}}
-			keyboardShouldPersistTaps={'handled'}
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
 		>
-			<View style={styles.titleContainer}>
-				<Text style={[styles.textForeground, styles.textTitle]}>
-					{title(route.params.mode)}
-				</Text>
-			</View>
-			<View style={styles.middleContainer}>
-				<Text style={[styles.textForeground, styles.textNormal]}>
-					{description(route.params.mode)}
-				</Text>
-				{isChange && (
+			<ScrollView keyboardShouldPersistTaps={'handled'}>
+				<View style={styles.titleContainer}>
+					<Text style={[styles.textForeground, styles.textTitle]}>
+						{title(route.params.mode)}
+					</Text>
+				</View>
+				<View style={styles.middleContainer}>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{description(route.params.mode)}
+					</Text>
+					{isChange && (
+						<InputField
+							placeholder={t('pin.placeholder.oldPin')}
+							onChangeText={setOldPin}
+							keyboardType={'numeric'}
+						/>
+					)}
 					<InputField
-						placeholder={t('pin.placeholder.oldPin')}
-						onChangeText={setOldPin}
+						placeholder={t('pin.placeholder.pin')}
+						onChangeText={setPin}
 						keyboardType={'numeric'}
 					/>
-				)}
-				<InputField
-					placeholder={t('pin.placeholder.pin')}
-					onChangeText={setPin}
-					keyboardType={'numeric'}
-				/>
-				{lastRecoverableError && (
-					<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-						{lastRecoverableError.description}
-					</Text>
-				)}
-				{authenticatorProtectionStatus &&
-					!(authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked) && (
+					{lastRecoverableError && (
 						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-							{authenticatorProtectionText(authenticatorProtectionStatus)}
+							{lastRecoverableError.description}
 						</Text>
 					)}
-			</View>
-			<View style={styles.bottomContainer}>
-				<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
-				<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-			</View>
-		</ScrollView>
+					{authenticatorProtectionStatus &&
+						!(authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked) && (
+							<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
+								{authenticatorProtectionText(authenticatorProtectionStatus)}
+							</Text>
+						)}
+				</View>
+				<View style={styles.bottomContainer}>
+					<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
+					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+				</View>
+			</ScrollView>
+		</View>
 	);
 };
 

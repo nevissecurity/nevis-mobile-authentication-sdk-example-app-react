@@ -68,45 +68,52 @@ const HomeScreen = () => {
 	}, [onInitClient, onHandleDeepLink]);
 
 	return (
-		<ScrollView
-			contentContainerStyle={styles.container}
-			style={{
-				paddingTop: insets.top,
-				paddingBottom: insets.bottom,
-				paddingLeft: insets.left,
-				paddingRight: insets.right,
-			}}
+		<View
+			style={[
+				styles.container,
+				{
+					paddingTop: insets.top,
+					paddingBottom: insets.bottom,
+					paddingLeft: insets.left,
+					paddingRight: insets.right,
+				},
+			]}
 		>
-			<View style={styles.titleContainer}>
-				<Text style={[styles.textForeground, styles.textTitle]}>{t('home.title')}</Text>
-				<Text style={[styles.textForeground, styles.textNormal]}>
-					{t('home.registeredAccounts', { numberOfAccounts: numberOfAccounts })}
-				</Text>
-			</View>
-			<View style={styles.middleContainer} />
-			<View style={styles.bottomContainer}>
-				<OutlinedButton text={t('home.readQrCode')} onPress={readQrCode} />
-				<OutlinedButton text={t('home.inBandAuthenticate')} onPress={inBandAuthenticate} />
-				<OutlinedButton text={t('home.deregister')} onPress={deregister} />
-				<OutlinedButton
-					text={t('home.deviceInformationChange')}
-					onPress={changeDeviceInformation}
-				/>
-				<OutlinedButton text={t('home.pinChange')} onPress={changePin} />
-				<OutlinedButton
-					text={t('home.authCloudApiRegistration')}
-					onPress={authCloudApiRegister}
-				/>
-				<OutlinedButton
-					text={t('home.deleteAuthenticators')}
-					onPress={deleteLocalAuthenticators}
-				/>
-				<Text style={[styles.textForeground, styles.textNormal]}>
-					{t('home.identitySuiteOnly')}
-				</Text>
-				<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
-			</View>
-		</ScrollView>
+			<ScrollView>
+				<View style={styles.titleContainer}>
+					<Text style={[styles.textForeground, styles.textTitle]}>{t('home.title')}</Text>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{t('home.registeredAccounts', { numberOfAccounts: numberOfAccounts })}
+					</Text>
+				</View>
+				<View style={styles.middleContainer} />
+				<View style={styles.bottomContainer}>
+					<OutlinedButton text={t('home.readQrCode')} onPress={readQrCode} />
+					<OutlinedButton
+						text={t('home.inBandAuthenticate')}
+						onPress={inBandAuthenticate}
+					/>
+					<OutlinedButton text={t('home.deregister')} onPress={deregister} />
+					<OutlinedButton
+						text={t('home.deviceInformationChange')}
+						onPress={changeDeviceInformation}
+					/>
+					<OutlinedButton text={t('home.pinChange')} onPress={changePin} />
+					<OutlinedButton
+						text={t('home.authCloudApiRegistration')}
+						onPress={authCloudApiRegister}
+					/>
+					<OutlinedButton
+						text={t('home.deleteAuthenticators')}
+						onPress={deleteLocalAuthenticators}
+					/>
+					<Text style={[styles.textForeground, styles.textNormal]}>
+						{t('home.identitySuiteOnly')}
+					</Text>
+					<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
+				</View>
+			</ScrollView>
+		</View>
 	);
 };
 
