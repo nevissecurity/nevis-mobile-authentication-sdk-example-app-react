@@ -2,7 +2,7 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import { useColorScheme, View } from 'react-native';
+import { StatusBar, useColorScheme, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -28,9 +28,12 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const statusBarColor = colorScheme === 'dark' ? 'black' : 'white';
+	const statusBarStyle = colorScheme === 'dark' ? 'light-content' : 'dark-content';
 
 	return (
 		<View style={styles.container}>
+			<StatusBar barStyle={statusBarStyle} backgroundColor={statusBarColor} />
 			<NavigationContainer ref={navigationRef}>
 				<RootStack.Navigator screenOptions={{ headerShown: false }}>
 					<RootStack.Screen name="Home" component={HomeScreen} />
