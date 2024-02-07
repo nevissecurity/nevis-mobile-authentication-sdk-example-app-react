@@ -7,8 +7,8 @@
 		"android:clean": "cd android && rm -rf build/ && rm -rf app/build && rm -rf app/.cxx && ./gradlew clean && cd ..",
 		"android:new": "yarn android:clean && ORG_GRADLE_PROJECT_newArchEnabled=true yarn android",
 		"android:old": "yarn android:clean && ORG_GRADLE_PROJECT_newArchEnabled=false yarn android",
-		"pods:new": "cd ios && RCT_NEW_ARCH_ENABLED=1 USE_FRAMEWORKS=static NO_FLIPPER=1 pod install --repo-update && cd ..",
-		"pods:old": "cd ios && RCT_NEW_ARCH_ENABLED=0 pod install --repo-update && cd ..",
+		"pods:new": "cd ios && bundle install && RCT_NEW_ARCH_ENABLED=1 USE_FRAMEWORKS=static NO_FLIPPER=1 bundle exec pod install --repo-update && cd ..",
+		"pods:old": "cd ios && bundle install && RCT_NEW_ARCH_ENABLED=0 bundle exec pod install --repo-update && cd ..",
 		"ios": "react-native run-ios",
 		"ios:clean": "cd ios && rm -rf build/ && cd ..",
 		"ios:new": "RCT_NEW_ARCH_ENABLED=1 USE_FRAMEWORKS=static NO_FLIPPER=1 yarn ios:clean && yarn pods:new && yarn ios",
@@ -19,7 +19,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@nevis-security/nevis-mobile-authentication-sdk-react": "3.5.1",
+		"@nevis-security/nevis-mobile-authentication-sdk-react": "3.6.0",
 		"@react-navigation/native": "6.1.9",
 		"@react-navigation/native-stack": "6.9.16",
 		"i18next": "23.6.0",

@@ -29,4 +29,8 @@ export class PinEnrollerImpl extends PinEnroller {
 	onValidCredentialsProvided(): void {
 		console.log('Valid PIN credentials provided.');
 	}
+
+	// You can add a custom PIN policy by overriding the `pinPolicy` getter.
+	// The default minimum and maximum PIN length are 6 without any validation during PIN enrollment or change.
+	// pinPolicy = new CustomPinPolicy();
 }

@@ -74,11 +74,11 @@ PODS:
     - hermes-engine/Pre-built (= 0.72.6)
   - hermes-engine/Pre-built (0.72.6)
   - libevent (2.1.12)
-  - NevisMobileAuthentication (3.5.1)
-  - NevisMobileAuthentication-Debug (3.5.1)
-  - NevisMobileAuthenticationSdkReact (3.5.1):
-    - NevisMobileAuthentication (~> 3.5.0)
-    - NevisMobileAuthentication-Debug (~> 3.5.0)
+  - NevisMobileAuthentication (3.6.1)
+  - NevisMobileAuthentication-Debug (3.6.1)
+  - NevisMobileAuthenticationSdkReact (3.6.0):
+    - NevisMobileAuthentication (~> 3.6.0)
+    - NevisMobileAuthentication-Debug (~> 3.6.0)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - OpenSSL-Universal (1.1.1100)
@@ -538,8 +538,8 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
-  - NevisMobileAuthentication (~> 3.5.0)
-  - NevisMobileAuthentication-Debug (~> 3.5.0)
+  - NevisMobileAuthentication (~> 3.6.0)
+  - NevisMobileAuthentication-Debug (~> 3.6.0)
   - "NevisMobileAuthenticationSdkReact (from `../node_modules/@nevis-security/nevis-mobile-authentication-sdk-react`)"
   - OpenSSL-Universal (= 1.1.1100)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -713,9 +713,9 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 8057e75cfc1437b178ac86c8654b24e7fead7f60
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  NevisMobileAuthentication: 02c5e19e6bc5cbb4137270cd1438faf4e1e1e991
-  NevisMobileAuthentication-Debug: 08dfda6740b4aff50a2f63e2ca87404392cec94f
-  NevisMobileAuthenticationSdkReact: 16aefe5f8545c3d51b3a5ebbcce725218519841d
+  NevisMobileAuthentication: 3801ddc251892ee3c9fc2b01d9ba62ce083332a2
+  NevisMobileAuthentication-Debug: 6f122eac4bdc5d0916b535784eff0ab9f3088ce0
+  NevisMobileAuthenticationSdkReact: 68c99c7cc2dd04c1dcd206bd1370efa7ebc4eb08
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 28469809442eb4eb5528462705f7d852948c8a74
@@ -758,6 +758,6 @@ SPEC CHECKSUMS:
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: c8ed3c54ecd3aebb7a1d842c50aab8d0cd9dec40
+PODFILE CHECKSUM: 663a3c28752e15af779a47f7de70b4fb2a150779
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
