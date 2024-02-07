@@ -74,7 +74,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "3.5.1"
+        versionName "3.6.0"
     }
 
     buildTypes {
@@ -88,7 +88,7 @@ android {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.5.+'
+    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.6.+'
 
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
