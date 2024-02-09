@@ -11,7 +11,7 @@ module.exports = {
 		},
 	},
 	env: {
-		'jest': true,
+		'jest': false,
 		'react-native/react-native': true,
 	},
 	plugins: ['@typescript-eslint', 'import', 'react', 'react-native'],
