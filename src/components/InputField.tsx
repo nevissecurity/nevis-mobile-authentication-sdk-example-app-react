@@ -18,6 +18,7 @@ function InputField({
 }) {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
+	const placeholderTextColor = colorScheme === 'dark' ? '#ffffff9e' : '#0000005f';
 	return (
 		<TextInput
 			style={[styles.input, styles.inputField]}
@@ -25,6 +26,7 @@ function InputField({
 			keyboardType={keyboardType || 'default'}
 			onChangeText={onChangeText}
 			placeholder={placeholder}
+			placeholderTextColor={placeholderTextColor}
 		/>
 	);
 }
