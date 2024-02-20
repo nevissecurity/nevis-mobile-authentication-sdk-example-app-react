@@ -3,8 +3,10 @@
  */
 
 import { useCallback, useState } from 'react';
-import { Platform, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
+import { useAppState } from '@react-native-community/hooks';
+import { useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import {
 	check as checkPermission,
@@ -28,21 +30,14 @@ const ReadQrCodeScreen = () => {
 	const insets = useSafeAreaInsets();
 
 	const [errorMessage, setErrorMessage] = useState('');
+	const [isLoading, setLoading] = useState(false);
 
 	const cameraPermission =
 		Platform.OS == 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA;
 	const [hasCameraPermission, setHasCameraPermission] = useState(false);
-	const device = useCameraDevice('back');
-
-	const codeScanner = useCodeScanner({
-		codeTypes: ['qr'],
-		onCodeScanned: (codes) => {
-			const value = codes[0]?.value;
-			if (value) {
-				setDispatchTokenResponse(value);
-			}
-		},
-	});
+	const isFocused = useIsFocused();
+	const appState = useAppState();
+	const isActive = isFocused && appState === 'active' && !isLoading;
 
 	function requestCameraPermission() {
 		requestPermission(cameraPermission).then((result) => {
@@ -67,10 +62,6 @@ const ReadQrCodeScreen = () => {
 		close();
 	}, []);
 
-	if (!device && !errorMessage) {
-		setErrorMessage(t('readQrCode.camera.initializationFailed'));
-	}
-
 	if (!hasCameraPermission && !errorMessage) {
 		checkPermission(cameraPermission).then((result) => {
 			switch (result) {
@@ -93,6 +84,23 @@ const ReadQrCodeScreen = () => {
 		});
 	}
 
+	const device = useCameraDevice('back');
+
+	if (!device && !errorMessage) {
+		setErrorMessage(t('readQrCode.camera.initializationFailed'));
+	}
+
+	const codeScanner = useCodeScanner({
+		codeTypes: ['qr'],
+		onCodeScanned: (codes) => {
+			const value = codes[0]?.value;
+			if (value) {
+				setLoading(true);
+				setDispatchTokenResponse(value);
+			}
+		},
+	});
+
 	return (
 		<View
 			style={[
@@ -108,15 +116,16 @@ const ReadQrCodeScreen = () => {
 			<CloseButton onPress={onClose} />
 			<Text style={[styles.textForeground, styles.textTitle]}>{t('readQrCode.title')}</Text>
 			<View style={styles.middleContainer}>
-				{device && hasCameraPermission && (
+				{isLoading && <ActivityIndicator size="large" />}
+				{!isLoading && device && hasCameraPermission && (
 					<Camera
 						style={StyleSheet.absoluteFill}
 						device={device}
 						codeScanner={codeScanner}
-						isActive={true}
+						isActive={isActive}
 					/>
 				)}
-				{errorMessage && (
+				{!isLoading && errorMessage && (
 					<Text style={[styles.textForeground, styles.textNormal, styles.textCenter]}>
 						{errorMessage}
 					</Text>
