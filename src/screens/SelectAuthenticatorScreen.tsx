@@ -2,8 +2,10 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import { FlatList, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { useCallback } from 'react';
+import { BackHandler, FlatList, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -52,12 +54,25 @@ const SelectAuthenticatorItem = ({ item, onPress }: SelectAuthenticatorItemProps
 );
 
 const SelectAuthenticatorScreen = ({ route }: Props) => {
-	const { select } = useSelectAuthenticatorViewModel();
+	const { select, cancel } = useSelectAuthenticatorViewModel();
 
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	const insets = useSafeAreaInsets();
+
+	useFocusEffect(
+		useCallback(() => {
+			const onBackPress = () => {
+				cancel(route.params.handler);
+				return true;
+			};
+
+			const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+			return () => subscription.remove();
+		}, [route.params.handler])
+	);
 
 	function getItems() {
 		return route.params.items.map((item) => {

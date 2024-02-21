@@ -8,12 +8,22 @@ import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
 
 const useSelectAuthenticatorViewModel = () => {
-	async function select(aaid: string, handler?: AuthenticatorSelectionHandler) {
-		await handler?.aaid(aaid).catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+	async function select(
+		aaid: string,
+		authenticatorSelectionHandler?: AuthenticatorSelectionHandler
+	) {
+		await authenticatorSelectionHandler
+			?.aaid(aaid)
+			.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+	}
+
+	async function cancel(authenticatorSelectionHandler?: AuthenticatorSelectionHandler) {
+		await authenticatorSelectionHandler?.cancel();
 	}
 
 	return {
 		select,
+		cancel,
 	};
 };
 

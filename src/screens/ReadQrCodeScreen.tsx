@@ -3,10 +3,18 @@
  */
 
 import { useCallback, useState } from 'react';
-import { ActivityIndicator, Platform, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import {
+	ActivityIndicator,
+	BackHandler,
+	Platform,
+	StyleSheet,
+	Text,
+	useColorScheme,
+	View,
+} from 'react-native';
 
 import { useAppState } from '@react-native-community/hooks';
-import { useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import {
 	check as checkPermission,
@@ -57,6 +65,19 @@ const ReadQrCodeScreen = () => {
 			}
 		});
 	}
+
+	useFocusEffect(
+		useCallback(() => {
+			const onBackPress = () => {
+				close();
+				return true;
+			};
+
+			const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+			return () => subscription.remove();
+		}, [])
+	);
 
 	const onClose = useCallback(async () => {
 		close();
