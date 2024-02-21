@@ -494,9 +494,9 @@ PODS:
     - React-jsi (= 0.72.10)
     - React-logger (= 0.72.10)
     - React-perflogger (= 0.72.10)
-  - RNDeviceInfo (10.11.0):
+  - RNDeviceInfo (10.12.0):
     - React-Core
-  - RNPermissions (3.10.1):
+  - RNPermissions (4.1.2):
     - React-Core
   - RNScreens (3.27.0):
     - RCT-Folly (= 2021.07.22.00)
@@ -749,8 +749,8 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 6ca43e8deadf01ff06b3f01abf8f0e4d508e23c3
   React-utils: 372b83030a74347331636909278bf0a60ec30d59
   ReactCommon: 38824bfffaf4c51fbe03a2730b4fd874ef34d67b
-  RNDeviceInfo: bf8a32acbcb875f568217285d1793b0e8588c974
-  RNPermissions: a446c2ce1f3bf54383c283798307cca5f50d70e4
+  RNDeviceInfo: db5c64a060e66e5db3102d041ebe3ef307a85120
+  RNPermissions: b6a24058146ed9f6a615f6a3517496999cbc235e
   RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: 4b98b273902ac18491bb68481b6601f1f0da0f2d
