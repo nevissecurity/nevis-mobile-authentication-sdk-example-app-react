@@ -3,8 +3,9 @@
  */
 
 import { useCallback } from 'react';
-import { Text, useColorScheme, View } from 'react-native';
+import { BackHandler, Text, useColorScheme, View } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -23,6 +24,19 @@ const TransactionConfirmationScreen = ({ route }: Props) => {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	const insets = useSafeAreaInsets();
+
+	useFocusEffect(
+		useCallback(() => {
+			const onBackPress = () => {
+				cancel(route.params.accountSelectionHandler);
+				return true;
+			};
+
+			const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+			return () => subscription.remove();
+		}, [route.params.accountSelectionHandler])
+	);
 
 	const onConfirm = useCallback(async () => {
 		await confirm(route.params.selectedUsername, route.params.accountSelectionHandler);

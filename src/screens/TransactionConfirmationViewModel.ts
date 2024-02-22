@@ -4,8 +4,6 @@
 
 import { AccountSelectionHandler } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import * as RootNavigation from '../utility/RootNavigation';
-
 const useTransactionConfirmationViewModel = () => {
 	async function confirm(
 		selectedUsername: string,
@@ -16,7 +14,6 @@ const useTransactionConfirmationViewModel = () => {
 
 	async function cancel(accountSelectionHandler?: AccountSelectionHandler) {
 		await accountSelectionHandler?.cancel();
-		RootNavigation.goToHome();
 	}
 
 	return {

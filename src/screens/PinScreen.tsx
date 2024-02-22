@@ -3,7 +3,7 @@
  */
 
 import { useCallback } from 'react';
-import { ScrollView, Text, useColorScheme, View } from 'react-native';
+import { BackHandler, ScrollView, Text, useColorScheme, View } from 'react-native';
 
 import {
 	PinAuthenticatorProtectionStatus,
@@ -11,6 +11,7 @@ import {
 	PinProtectionStatusLockedOut,
 	PinProtectionStatusUnlocked,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
+import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -31,6 +32,19 @@ const PinScreen = ({ route }: Props) => {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	const insets = useSafeAreaInsets();
+
+	useFocusEffect(
+		useCallback(() => {
+			const onBackPress = () => {
+				cancel(route.params.mode, route.params.handler);
+				return true;
+			};
+
+			const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+			return () => subscription.remove();
+		}, [route.params.mode, route.params.handler])
+	);
 
 	function title(pinMode: PinMode): string {
 		switch (pinMode) {

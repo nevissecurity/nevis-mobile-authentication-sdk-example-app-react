@@ -3,8 +3,9 @@
  */
 
 import { useCallback } from 'react';
-import { ScrollView, Text, useColorScheme, View } from 'react-native';
+import { BackHandler, ScrollView, Text, useColorScheme, View } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -21,6 +22,19 @@ const AuthCloudApiRegistrationScreen = () => {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	const insets = useSafeAreaInsets();
+
+	useFocusEffect(
+		useCallback(() => {
+			const onBackPress = () => {
+				cancel();
+				return true;
+			};
+
+			const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+			return () => subscription.remove();
+		}, [])
+	);
 
 	const onCancel = useCallback(async () => {
 		cancel();
