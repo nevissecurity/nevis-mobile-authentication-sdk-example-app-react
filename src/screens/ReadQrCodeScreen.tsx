@@ -137,14 +137,20 @@ const ReadQrCodeScreen = () => {
 			<CloseButton onPress={onClose} />
 			<Text style={[styles.textForeground, styles.textTitle]}>{t('readQrCode.title')}</Text>
 			<View style={styles.middleContainer}>
-				{isLoading && <ActivityIndicator size="large" />}
-				{!isLoading && device && hasCameraPermission && (
+				{device && hasCameraPermission && (
 					<Camera
 						style={StyleSheet.absoluteFill}
 						device={device}
 						codeScanner={codeScanner}
 						isActive={isActive}
 					/>
+				)}
+				{isLoading && (
+					<View
+						style={[StyleSheet.absoluteFill, styles.container, styles.middleContainer]}
+					>
+						<ActivityIndicator size="large" />
+					</View>
 				)}
 				{!isLoading && errorMessage && (
 					<Text style={[styles.textForeground, styles.textNormal, styles.textCenter]}>
