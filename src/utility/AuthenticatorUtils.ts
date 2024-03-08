@@ -18,7 +18,7 @@ export class AuthenticatorUtils {
 						return i18next.t('authenticator.title.faceID');
 					},
 					android: () => {
-						return i18next.t('authenticator.title.fingerprint');
+						return i18next.t('authenticator.title.biometric');
 					},
 					default: () => {
 						return '';

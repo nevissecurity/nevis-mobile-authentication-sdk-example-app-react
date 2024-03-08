@@ -53,6 +53,13 @@
 		"pinProtectionStatusDescriptionLocked": "Authenticator is locked.",
 		"pinProtectionStatusDescriptionUnlocked": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
 	},
+	"transactionConfirmation": {
+		"title": "Transaction Confirmation"
+	},
+	"confirmation": {
+		"description": "Authenticate using {{authenticator}}",
+		"description_fingerprint_verification": "Use Fingerprint sensor to authenticate."
+	},
 	"deviceInformationChange": {
 		"title": "Change Device Information",
 		"newName": "New name"
@@ -106,9 +113,6 @@
 		"failed": {
 			"title": "{{operation}} failed!"
 		}
-	},
-	"transactionConfirmation": {
-		"title": "Transaction Confirmation"
 	},
 	"appError": {
 		"loadAppConfigurationError": "Failed to load the configuration file.",
