@@ -8,8 +8,8 @@ import {
 	FingerprintUserVerifier,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { ErrorHandler } from '../error/ErrorHandler';
-import { OperationType } from '../model/OperationType';
+import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
+import * as RootNavigation from '../utility/RootNavigation';
 
 export class FingerprintUserVerifierImpl extends FingerprintUserVerifier {
 	async verifyFingerprint(
@@ -22,9 +22,10 @@ export class FingerprintUserVerifierImpl extends FingerprintUserVerifier {
 				: 'Please start fingerprint user verification.'
 		);
 
-		await handler
-			.listenForOsCredentials()
-			.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+		RootNavigation.navigate('Confirmation', {
+			authenticator: AuthenticatorUtils.localizedTitle(context.authenticator),
+			handler: handler,
+		});
 	}
 
 	onValidCredentialsProvided(): void {

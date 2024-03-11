@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AuthCloudApiRegistrationScreen from './screens/AuthCloudApiRegistrationScreen';
+import ConfirmationScreen from './screens/ConfirmationScreen';
 import DeviceInformationChangeScreen from './screens/DeviceInformationChangeScreen';
 import HomeScreen from './screens/HomeScreen';
 import PinScreen from './screens/PinScreen';
@@ -60,6 +61,7 @@ export default function App() {
 						name="TransactionConfirmation"
 						component={TransactionConfirmationScreen}
 					/>
+					<RootStack.Screen name="Confirmation" component={ConfirmationScreen} />
 					<RootStack.Screen name="Result" component={ResultScreen} />
 				</RootStack.Navigator>
 			</NavigationContainer>
