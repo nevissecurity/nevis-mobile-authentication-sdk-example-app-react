@@ -71,6 +71,13 @@
 			"cancelButtonTitle": "Cancel"
 		}
 	},
+	"fingerprint": {
+		"popup": {
+			"title": "Fingerprint Verification",
+			"description": "Use Fingerprint sensor to authenticate.",
+			"cancelButtonTitle": "Cancel"
+		}
+	},
 	"devicePasscode": {
 		"popup": {
 			"title": "Passcode required",

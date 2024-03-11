@@ -7,6 +7,7 @@ import { StatusBar, useColorScheme, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import EventProvider from './event/EventProvider';
 import AuthCloudApiRegistrationScreen from './screens/AuthCloudApiRegistrationScreen';
 import DeviceInformationChangeScreen from './screens/DeviceInformationChangeScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -32,37 +33,39 @@ export default function App() {
 	const statusBarStyle = colorScheme === 'dark' ? 'light-content' : 'dark-content';
 
 	return (
-		<View style={styles.container}>
-			<StatusBar barStyle={statusBarStyle} backgroundColor={statusBarColor} />
-			<NavigationContainer ref={navigationRef}>
-				<RootStack.Navigator screenOptions={{ headerShown: false }}>
-					<RootStack.Screen name="Home" component={HomeScreen} />
-					<RootStack.Screen name="ReadQrCode" component={ReadQrCodeScreen} />
-					<RootStack.Screen name="SelectAccount" component={SelectAccountScreen} />
-					<RootStack.Screen
-						name="AuthCloudApiRegistration"
-						component={AuthCloudApiRegistrationScreen}
-					/>
-					<RootStack.Screen
-						name="SelectAuthenticator"
-						component={SelectAuthenticatorScreen}
-					/>
-					<RootStack.Screen name="Pin" component={PinScreen} />
-					<RootStack.Screen
-						name="DeviceInformationChange"
-						component={DeviceInformationChangeScreen}
-					/>
-					<RootStack.Screen
-						name="UsernamePasswordLogin"
-						component={UsernamePasswordLoginScreen}
-					/>
-					<RootStack.Screen
-						name="TransactionConfirmation"
-						component={TransactionConfirmationScreen}
-					/>
-					<RootStack.Screen name="Result" component={ResultScreen} />
-				</RootStack.Navigator>
-			</NavigationContainer>
-		</View>
+		<EventProvider>
+			<View style={styles.container}>
+				<StatusBar barStyle={statusBarStyle} backgroundColor={statusBarColor} />
+				<NavigationContainer ref={navigationRef}>
+					<RootStack.Navigator screenOptions={{ headerShown: false }}>
+						<RootStack.Screen name="Home" component={HomeScreen} />
+						<RootStack.Screen name="ReadQrCode" component={ReadQrCodeScreen} />
+						<RootStack.Screen name="SelectAccount" component={SelectAccountScreen} />
+						<RootStack.Screen
+							name="AuthCloudApiRegistration"
+							component={AuthCloudApiRegistrationScreen}
+						/>
+						<RootStack.Screen
+							name="SelectAuthenticator"
+							component={SelectAuthenticatorScreen}
+						/>
+						<RootStack.Screen name="Pin" component={PinScreen} />
+						<RootStack.Screen
+							name="DeviceInformationChange"
+							component={DeviceInformationChangeScreen}
+						/>
+						<RootStack.Screen
+							name="UsernamePasswordLogin"
+							component={UsernamePasswordLoginScreen}
+						/>
+						<RootStack.Screen
+							name="TransactionConfirmation"
+							component={TransactionConfirmationScreen}
+						/>
+						<RootStack.Screen name="Result" component={ResultScreen} />
+					</RootStack.Navigator>
+				</NavigationContainer>
+			</View>
+		</EventProvider>
 	);
 }

@@ -2,8 +2,16 @@
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
 
-import { useCallback } from 'react';
-import { BackHandler, FlatList, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { useCallback, useEffect } from 'react';
+import {
+	Alert,
+	BackHandler,
+	FlatList,
+	Text,
+	TouchableOpacity,
+	useColorScheme,
+	View,
+} from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -12,6 +20,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type RootStackParamList } from './RootStackParamList';
 import useSelectAuthenticatorViewModel from './SelectAuthenticatorViewModel';
+import { EventType } from '../event/EventEmitter';
+import { useEvent } from '../event/EventProvider';
 import { AuthenticatorItemUtils } from '../model/AuthenticatorItem';
 import { darkStyle, lightStyle } from '../Styles';
 import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
@@ -60,6 +70,7 @@ const SelectAuthenticatorScreen = ({ route }: Props) => {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	const insets = useSafeAreaInsets();
+	const event = useEvent();
 
 	useFocusEffect(
 		useCallback(() => {
@@ -95,6 +106,23 @@ const SelectAuthenticatorScreen = ({ route }: Props) => {
 			/>
 		);
 	};
+
+	const showFingerprintVerificationAlert = () =>
+		Alert.alert(t('fingerprint.popup.title'), t('fingerprint.popup.description'), [
+			{
+				text: t('fingerprint.popup.cancelButtonTitle'),
+				onPress: () => event.emit(EventType.StopFingerprintVerification),
+				style: 'cancel',
+			},
+		]);
+
+	useEffect(() => {
+		event.on(EventType.StartFingerprintVerification, showFingerprintVerificationAlert);
+
+		return () => {
+			event.off(EventType.StartFingerprintVerification, showFingerprintVerificationAlert);
+		};
+	}, [showFingerprintVerificationAlert]);
 
 	return (
 		<View
