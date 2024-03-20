@@ -6,6 +6,7 @@ import {
 	AccountSelectionHandler,
 	AuthenticatorSelectionHandler,
 	BiometricUserVerificationHandler,
+	DevicePasscodeUserVerificationHandler,
 	FingerprintUserVerificationHandler,
 	PinAuthenticatorProtectionStatus,
 	PinChangeHandler,
@@ -50,7 +51,10 @@ export type RootStackParamList = {
 	UsernamePasswordLogin: undefined;
 	Confirmation: {
 		authenticator: string;
-		handler: BiometricUserVerificationHandler | FingerprintUserVerificationHandler;
+		handler:
+			| BiometricUserVerificationHandler
+			| FingerprintUserVerificationHandler
+			| DevicePasscodeUserVerificationHandler;
 	};
 	Result: {
 		operation: OperationType;
