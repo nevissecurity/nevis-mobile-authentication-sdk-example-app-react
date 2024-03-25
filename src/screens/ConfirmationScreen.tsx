@@ -68,7 +68,7 @@ const ConfirmationScreen = ({ route }: Props) => {
 					</Text>
 					{isFingerPrintVerification && (
 						<Text style={[styles.textNormal, styles.textCenter]}>
-							{t('description_fingerprint_verification')}
+							{t('confirmation.description_fingerprint_verification')}
 						</Text>
 					)}
 				</View>
