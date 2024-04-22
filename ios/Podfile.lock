@@ -74,8 +74,8 @@ PODS:
     - hermes-engine/Pre-built (= 0.72.10)
   - hermes-engine/Pre-built (0.72.10)
   - libevent (2.1.12)
-  - NevisMobileAuthentication (3.6.3)
-  - NevisMobileAuthentication-Debug (3.6.3)
+  - NevisMobileAuthentication (3.6.6)
+  - NevisMobileAuthentication-Debug (3.6.6)
   - NevisMobileAuthenticationSdkReact (3.6.0):
     - NevisMobileAuthentication (~> 3.6.0)
     - NevisMobileAuthentication-Debug (~> 3.6.0)
@@ -712,8 +712,8 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 90e4033deb00bee33330a9f15eff0f874bd82f6d
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  NevisMobileAuthentication: 26fef66b6a15c9a9d2ca72ee71061e833d7164e9
-  NevisMobileAuthentication-Debug: 450f3df8ddac4b331597062a3ee207fc4056303b
+  NevisMobileAuthentication: bfec1c848f249e7b92320b74c3b3e8d37f991b2c
+  NevisMobileAuthentication-Debug: 61854f25ebf5ce9aebc53aafb7709651061422ba
   NevisMobileAuthenticationSdkReact: 68c99c7cc2dd04c1dcd206bd1370efa7ebc4eb08
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -757,6 +757,6 @@ SPEC CHECKSUMS:
   Yoga: d0003f849d2b5224c072cef6568b540d8bb15cd3
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 0b3022aa5ba9de388cca8569f9da2ac21052ec23
+PODFILE CHECKSUM: 663a3c28752e15af779a47f7de70b4fb2a150779
 
 COCOAPODS: 1.15.2
