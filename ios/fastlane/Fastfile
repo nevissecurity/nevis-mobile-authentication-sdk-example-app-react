@@ -187,10 +187,10 @@ platform :ios do
 		)
 
 		# Gather App Review Information
-		beta_app_review_info = ""
+		beta_app_review_info = {}
 
 		begin
-			beta_app_review_info = JSON.parse(ENV["BETA_APP_REVIEW_INFO"].gsub("\n", '\\n'))
+			beta_app_review_info = JSON.parse(ENV["BETA_APP_REVIEW_INFO"]
 		rescue JSON::ParserError
 			puts "Could not parse 'BETA_APP_REVIEW_INFO', not setting beta_app_review_info for TestFlight."
 		end
