@@ -74,9 +74,9 @@ PODS:
     - hermes-engine/Pre-built (= 0.72.14)
   - hermes-engine/Pre-built (0.72.14)
   - libevent (2.1.12)
-  - NevisMobileAuthentication (3.6.7)
-  - NevisMobileAuthentication-Debug (3.6.7)
-  - NevisMobileAuthenticationSdkReact (3.6.0):
+  - NevisMobileAuthentication (3.6.9)
+  - NevisMobileAuthentication-Debug (3.6.9)
+  - NevisMobileAuthenticationSdkReact (3.6.1):
     - NevisMobileAuthentication (~> 3.6.0)
     - NevisMobileAuthentication-Debug (~> 3.6.0)
     - RCT-Folly (= 2021.07.22.00)
@@ -712,9 +712,9 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: b213bace5f31766ad1434d2d9b2cbf04cf92a2b6
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  NevisMobileAuthentication: 0225dc8f45083dbc894966be1625b5e092981285
-  NevisMobileAuthentication-Debug: a77f7726499ce85b0245a1baa45e511f893eb848
-  NevisMobileAuthenticationSdkReact: 24ab2fad261e1978ab52a56c3392e293ac634f1e
+  NevisMobileAuthentication: a2b2d76b9a3e286a15461b7fc32b67288ec66bd9
+  NevisMobileAuthentication-Debug: 1ec32fbcd0955d48033dfe7ec34048e8fbe6cee6
+  NevisMobileAuthenticationSdkReact: 39b68748f477b68f6aaff83a05f22e1bfc6d6edf
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313
