@@ -16,8 +16,8 @@
 		"formatcheck": "yarn prettier -c \"src/**/*.{ts,tsx}\"",
 		"lint": "eslint \"src/**/*.{ts,tsx}\"",
 		"start": "react-native start",
-		"check-dependencies": "rnx-align-deps",
-		"fix-dependencies": "rnx-align-deps --write"
+		"check-dependencies": "rnx-align-deps --diff-mode allow-subset",
+		"fix-dependencies": "rnx-align-deps --diff-mode allow-subset --write"
 	},
 	"dependencies": {
 		"@nevis-security/nevis-mobile-authentication-sdk-react": "3.6.1",
@@ -45,7 +45,7 @@
 		"@react-native-community/cli-platform-ios": "^11.3.2",
 		"@react-native/eslint-config": "^0.73.0",
 		"@react-native/metro-config": "^0.72.0",
-		"@rnx-kit/align-deps": "^2.3.3",
+		"@rnx-kit/align-deps": "^2.5.0",
 		"@tsconfig/react-native": "^3.0.2",
 		"@types/react": "^18.2.33",
 		"@types/react-test-renderer": "^18.0.5",
@@ -76,6 +76,8 @@
 			"capabilities": [
 				"babel-preset-react-native",
 				"community/cli",
+				"community/cli-android",
+				"community/cli-ios",
 				"core",
 				"core-android",
 				"core-ios",
