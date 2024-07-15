@@ -76,6 +76,8 @@
 			"capabilities": [
 				"babel-preset-react-native",
 				"community/cli",
+				"community/cli-android",
+				"community/cli-ios",
 				"core",
 				"core-android",
 				"core-ios",
