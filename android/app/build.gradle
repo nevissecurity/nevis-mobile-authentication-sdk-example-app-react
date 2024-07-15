@@ -88,7 +88,7 @@ android {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.6.+'
+    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.7.+'
 
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
