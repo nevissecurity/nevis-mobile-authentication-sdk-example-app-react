@@ -3,7 +3,15 @@
  */
 
 import { useCallback } from 'react';
-import { BackHandler, ScrollView, Text, useColorScheme, View } from 'react-native';
+import {
+	BackHandler,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	Text,
+	useColorScheme,
+	View,
+} from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -55,29 +63,34 @@ const DeviceInformationChangeScreen = ({ route }: Props) => {
 				},
 			]}
 		>
-			<ScrollView
-				contentContainerStyle={styles.contentContainer}
-				keyboardShouldPersistTaps={'handled'}
+			<KeyboardAvoidingView
+				behavior={Platform.OS === 'ios' ? 'height' : undefined}
+				style={styles.container}
 			>
-				<View style={styles.titleContainer}>
-					<Text style={[styles.textForeground, styles.textTitle]}>
-						{t('deviceInformationChange.title')}
-					</Text>
-				</View>
-				<View style={styles.middleContainer}>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{route.params.name}
-					</Text>
-					<InputField
-						placeholder={t('deviceInformationChange.newName')}
-						onChangeText={setDeviceName}
-					/>
-				</View>
-				<View style={styles.bottomContainer}>
-					<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
-					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-				</View>
-			</ScrollView>
+				<ScrollView
+					contentContainerStyle={styles.contentContainer}
+					keyboardShouldPersistTaps={'handled'}
+				>
+					<View style={styles.titleContainer}>
+						<Text style={[styles.textForeground, styles.textTitle]}>
+							{t('deviceInformationChange.title')}
+						</Text>
+					</View>
+					<View style={styles.middleContainer}>
+						<Text style={[styles.textForeground, styles.textNormal]}>
+							{route.params.name}
+						</Text>
+						<InputField
+							placeholder={t('deviceInformationChange.newName')}
+							onChangeText={setDeviceName}
+						/>
+					</View>
+					<View style={styles.bottomContainer}>
+						<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
+						<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+					</View>
+				</ScrollView>
+			</KeyboardAvoidingView>
 		</View>
 	);
 };

@@ -3,13 +3,22 @@
  */
 
 import { useCallback } from 'react';
-import { BackHandler, ScrollView, Text, useColorScheme, View } from 'react-native';
+import {
+	BackHandler,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	Text,
+	useColorScheme,
+	View,
+} from 'react-native';
 
 import {
 	PinAuthenticatorProtectionStatus,
 	PinProtectionStatusLastAttemptFailed,
 	PinProtectionStatusLockedOut,
 	PinProtectionStatusUnlocked,
+	RecoverableError,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -68,6 +77,15 @@ const PinScreen = ({ route }: Props) => {
 		}
 	}
 
+	function errorText(recoverableError: RecoverableError): string {
+		let text = recoverableError.description;
+		if (recoverableError.cause) {
+			text += ` ${recoverableError.cause}`;
+		}
+
+		return text;
+	}
+
 	function authenticatorProtectionText(status?: PinAuthenticatorProtectionStatus): string {
 		if (status instanceof PinProtectionStatusLastAttemptFailed) {
 			const remainingRetries = status.remainingRetries;
@@ -106,48 +124,59 @@ const PinScreen = ({ route }: Props) => {
 				},
 			]}
 		>
-			<ScrollView
-				contentContainerStyle={styles.contentContainer}
-				keyboardShouldPersistTaps={'handled'}
+			<KeyboardAvoidingView
+				behavior={Platform.OS === 'ios' ? 'height' : undefined}
+				style={styles.container}
 			>
-				<View style={styles.titleContainer}>
-					<Text style={[styles.textForeground, styles.textTitle]}>
-						{title(route.params.mode)}
-					</Text>
-				</View>
-				<View style={styles.middleContainer}>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{description(route.params.mode)}
-					</Text>
-					{isChange && (
-						<InputField
-							placeholder={t('pin.placeholder.oldPin')}
-							onChangeText={setOldPin}
-							keyboardType={'numeric'}
-						/>
-					)}
-					<InputField
-						placeholder={t('pin.placeholder.pin')}
-						onChangeText={setPin}
-						keyboardType={'numeric'}
-					/>
-					{lastRecoverableError && (
-						<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-							{lastRecoverableError.description}
+				<ScrollView
+					contentContainerStyle={styles.contentContainer}
+					keyboardShouldPersistTaps={'handled'}
+				>
+					<View style={styles.titleContainer}>
+						<Text style={[styles.textForeground, styles.textTitle]}>
+							{title(route.params.mode)}
 						</Text>
-					)}
-					{authenticatorProtectionStatus &&
-						!(authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked) && (
+					</View>
+					<View style={styles.middleContainer}>
+						<Text style={[styles.textForeground, styles.textNormal]}>
+							{description(route.params.mode)}
+						</Text>
+						{isChange && (
+							<InputField
+								placeholder={t('pin.placeholder.oldPin')}
+								onChangeText={setOldPin}
+								keyboardType={'numeric'}
+								secureTextEntry={true}
+							/>
+						)}
+						<InputField
+							placeholder={t('pin.placeholder.pin')}
+							onChangeText={setPin}
+							keyboardType={'numeric'}
+							secureTextEntry={route.params.mode !== PinMode.enrollment}
+						/>
+						{lastRecoverableError && (
 							<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
-								{authenticatorProtectionText(authenticatorProtectionStatus)}
+								{errorText(lastRecoverableError)}
 							</Text>
 						)}
-				</View>
-				<View style={styles.bottomContainer}>
-					<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
-					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-				</View>
-			</ScrollView>
+						{authenticatorProtectionStatus &&
+							!(
+								authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked
+							) && (
+								<Text
+									style={[styles.textError, styles.textNormal, styles.textCenter]}
+								>
+									{authenticatorProtectionText(authenticatorProtectionStatus)}
+								</Text>
+							)}
+					</View>
+					<View style={styles.bottomContainer}>
+						<OutlinedButton text={t('confirmButtonTitle')} onPress={onConfirm} />
+						<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+					</View>
+				</ScrollView>
+			</KeyboardAvoidingView>
 		</View>
 	);
 };
