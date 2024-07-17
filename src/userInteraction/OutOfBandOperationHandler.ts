@@ -15,6 +15,8 @@ import { AuthenticationAuthenticatorSelectorImpl } from './AuthenticationAuthent
 import { BiometricUserVerifierImpl } from './BiometricUserVerifierImpl';
 import { DevicePasscodeUserVerifierImpl } from './DevicePasscodeUserVerifierImpl';
 import { FingerprintUserVerifierImpl } from './FingerprintUserVerifierImpl';
+import { PasswordEnrollerImpl } from './PasswordEnrollerImpl';
+import { PasswordUserVerifierImpl } from './PasswordUserVerifierImpl';
 import { PinEnrollerImpl } from './PinEnrollerImpl';
 import { PinUserVerifierImpl } from './PinUserVerifierImpl';
 import { RegistrationAuthenticatorSelectorImpl } from './RegistrationAuthenticatorSelectorImpl';
@@ -31,6 +33,7 @@ async function handleRegistration(registration: OutOfBandRegistration) {
 		.deviceInformation(DeviceInformationUtils.create())
 		.authenticatorSelector(new RegistrationAuthenticatorSelectorImpl())
 		.pinEnroller(new PinEnrollerImpl())
+		.passwordEnroller(new PasswordEnrollerImpl())
 		.biometricUserVerifier(new BiometricUserVerifierImpl())
 		.devicePasscodeUserVerifier(new DevicePasscodeUserVerifierImpl())
 		.fingerprintUserVerifier(new FingerprintUserVerifierImpl())
@@ -49,6 +52,7 @@ async function handleAuthentication(authentication: OutOfBandAuthentication) {
 		.accountSelector(new AccountSelectorImpl())
 		.authenticatorSelector(new AuthenticationAuthenticatorSelectorImpl())
 		.pinUserVerifier(new PinUserVerifierImpl())
+		.passwordUserVerifier(new PasswordUserVerifierImpl())
 		.biometricUserVerifier(new BiometricUserVerifierImpl())
 		.devicePasscodeUserVerifier(new DevicePasscodeUserVerifierImpl())
 		.fingerprintUserVerifier(new FingerprintUserVerifierImpl())

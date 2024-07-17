@@ -17,6 +17,8 @@ import { AuthenticationAuthenticatorSelectorImpl } from '../userInteraction/Auth
 import { BiometricUserVerifierImpl } from '../userInteraction/BiometricUserVerifierImpl';
 import { DevicePasscodeUserVerifierImpl } from '../userInteraction/DevicePasscodeUserVerifierImpl';
 import { FingerprintUserVerifierImpl } from '../userInteraction/FingerprintUserVerifierImpl';
+import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
+import { PasswordUserVerifierImpl } from '../userInteraction/PasswordUserVerifierImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
 import { PinUserVerifierImpl } from '../userInteraction/PinUserVerifierImpl';
 import { AuthorizationUtils } from '../utility/AuthorizationUtils';
@@ -51,6 +53,9 @@ const useSelectAccountViewModel = () => {
 			case OperationType.pinChange:
 				await pinChange(username, operation);
 				break;
+			case OperationType.passwordChange:
+				await passwordChange(username, operation);
+				break;
 			default:
 				await handler?.username(username).catch((error) => {
 					ErrorHandler.handle.bind(
@@ -68,6 +73,7 @@ const useSelectAccountViewModel = () => {
 			.username(username)
 			.authenticatorSelector(new AuthenticationAuthenticatorSelectorImpl())
 			.pinUserVerifier(new PinUserVerifierImpl())
+			.passwordUserVerifier(new PasswordUserVerifierImpl())
 			.biometricUserVerifier(new BiometricUserVerifierImpl())
 			.devicePasscodeUserVerifier(new DevicePasscodeUserVerifierImpl())
 			.fingerprintUserVerifier(new FingerprintUserVerifierImpl())
@@ -137,6 +143,22 @@ const useSelectAccountViewModel = () => {
 				});
 			})
 			.onError(ErrorHandler.handle.bind(null, OperationType.pinChange))
+			.execute()
+			.catch(ErrorHandler.handle.bind(null, operation));
+	}
+
+	async function passwordChange(username: string, operation: OperationType) {
+		const client = ClientProvider.getInstance().client;
+		client?.operations.passwordChange
+			.username(username)
+			.passwordChanger(new PasswordChangerImpl())
+			.onSuccess(() => {
+				console.log('Password Change succeeded.');
+				navigation.navigate('Result', {
+					operation: operation,
+				});
+			})
+			.onError(ErrorHandler.handle.bind(null, OperationType.passwordChange))
 			.execute()
 			.catch(ErrorHandler.handle.bind(null, operation));
 	}

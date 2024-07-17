@@ -77,6 +77,16 @@ export class AppErrorPinAuthenticatorNotFound extends AppError {
 	}
 }
 
+export class AppErrorPasswordAuthenticatorNotFound extends AppError {
+	description: string = i18next.t('appError.passwordAuthenticatorNotFound');
+	cause?: string;
+
+	constructor(cause?: string) {
+		super();
+		this.cause = cause;
+	}
+}
+
 export class AppErrorDeviceInformationNotFound extends AppError {
 	description: string = i18next.t('appError.deviceInformationNotFound');
 	cause?: string;

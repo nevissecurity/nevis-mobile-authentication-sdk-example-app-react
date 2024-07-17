@@ -38,6 +38,8 @@ export class AuthenticatorUtils {
 						return '';
 					},
 				})();
+			case Aaid.PASSWORD.rawValue():
+				return i18next.t('authenticator.title.password');
 			default:
 				return `Unknown AAID: ${authenticator.aaid}`;
 		}
