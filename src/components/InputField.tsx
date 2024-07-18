@@ -11,10 +11,12 @@ function InputField({
 	placeholder,
 	onChangeText,
 	keyboardType,
+	secureTextEntry,
 }: {
-	placeholder: string;
-	onChangeText: (text: string) => void;
-	keyboardType?: KeyboardTypeOptions;
+	readonly placeholder: string;
+	readonly onChangeText: (text: string) => void;
+	readonly keyboardType?: KeyboardTypeOptions;
+	readonly secureTextEntry?: boolean;
 }) {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
@@ -23,9 +25,10 @@ function InputField({
 		<TextInput
 			style={[styles.input, styles.inputField]}
 			autoCorrect={false}
-			keyboardType={keyboardType || 'default'}
+			keyboardType={keyboardType ?? 'default'}
 			onChangeText={onChangeText}
 			placeholder={placeholder}
+			secureTextEntry={secureTextEntry}
 			placeholderTextColor={placeholderTextColor}
 		/>
 	);

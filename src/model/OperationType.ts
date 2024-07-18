@@ -13,6 +13,7 @@ export enum OperationType {
 	deviceInformationChange,
 	payloadDecode,
 	pinChange,
+	passwordChange,
 	localData,
 	unknown,
 }
@@ -36,6 +37,8 @@ export class OperationTypeUtils {
 				return i18next.t('operation.payloadDecode');
 			case OperationType.pinChange:
 				return i18next.t('operation.pinChange');
+			case OperationType.passwordChange:
+				return i18next.t('operation.passwordChange');
 			case OperationType.localData:
 				return i18next.t('operation.localData');
 			case OperationType.unknown:

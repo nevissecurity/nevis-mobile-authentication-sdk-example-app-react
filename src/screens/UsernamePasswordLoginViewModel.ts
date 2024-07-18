@@ -26,6 +26,7 @@ import { OperationType } from '../model/OperationType';
 import { BiometricUserVerifierImpl } from '../userInteraction/BiometricUserVerifierImpl';
 import { DevicePasscodeUserVerifierImpl } from '../userInteraction/DevicePasscodeUserVerifierImpl';
 import { FingerprintUserVerifierImpl } from '../userInteraction/FingerprintUserVerifierImpl';
+import { PasswordEnrollerImpl } from '../userInteraction/PasswordEnrollerImpl';
 import { PinEnrollerImpl } from '../userInteraction/PinEnrollerImpl';
 import { RegistrationAuthenticatorSelectorImpl } from '../userInteraction/RegistrationAuthenticatorSelectorImpl';
 import { ClientProvider } from '../utility/ClientProvider';
@@ -52,6 +53,7 @@ const useUsernamePasswordLoginViewModel = () => {
 			.authorizationProvider(authorizationProvider)
 			.authenticatorSelector(new RegistrationAuthenticatorSelectorImpl())
 			.pinEnroller(new PinEnrollerImpl())
+			.passwordEnroller(new PasswordEnrollerImpl())
 			.biometricUserVerifier(new BiometricUserVerifierImpl())
 			.devicePasscodeUserVerifier(new DevicePasscodeUserVerifierImpl())
 			.fingerprintUserVerifier(new FingerprintUserVerifierImpl())

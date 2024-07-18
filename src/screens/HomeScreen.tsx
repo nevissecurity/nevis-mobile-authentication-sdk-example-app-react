@@ -29,6 +29,7 @@ const HomeScreen = () => {
 		changeDeviceInformation,
 		deleteLocalAuthenticators,
 		changePin,
+		changePassword,
 	} = useHomeViewModel();
 
 	const { t } = useTranslation();
@@ -99,6 +100,7 @@ const HomeScreen = () => {
 						onPress={changeDeviceInformation}
 					/>
 					<OutlinedButton text={t('home.pinChange')} onPress={changePin} />
+					<OutlinedButton text={t('home.passwordChange')} onPress={changePassword} />
 					<OutlinedButton
 						text={t('home.authCloudApiRegistration')}
 						onPress={authCloudApiRegister}

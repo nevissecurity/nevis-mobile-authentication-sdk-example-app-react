@@ -3,7 +3,15 @@
  */
 
 import { useCallback } from 'react';
-import { BackHandler, ScrollView, Text, useColorScheme, View } from 'react-native';
+import {
+	BackHandler,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	Text,
+	useColorScheme,
+	View,
+} from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -51,36 +59,41 @@ const UsernamePasswordLoginScreen = () => {
 				},
 			]}
 		>
-			<ScrollView
-				contentContainerStyle={styles.contentContainer}
-				keyboardShouldPersistTaps={'handled'}
+			<KeyboardAvoidingView
+				behavior={Platform.OS === 'ios' ? 'height' : undefined}
+				style={styles.container}
 			>
-				<View style={styles.titleContainer}>
-					<Text style={[styles.textForeground, styles.textTitle]}>
-						{t('usernamePasswordLogin.title')}
-					</Text>
-				</View>
-				<View style={styles.middleContainer}>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{t('usernamePasswordLogin.username')}
-					</Text>
-					<InputField
-						placeholder={t('usernamePasswordLogin.username')}
-						onChangeText={setUsername}
-					/>
-					<Text style={[styles.textForeground, styles.textNormal]}>
-						{t('usernamePasswordLogin.password')}
-					</Text>
-					<InputField
-						placeholder={t('usernamePasswordLogin.password')}
-						onChangeText={setPassword}
-					/>
-				</View>
-				<View style={styles.bottomContainer}>
-					<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
-					<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
-				</View>
-			</ScrollView>
+				<ScrollView
+					contentContainerStyle={styles.contentContainer}
+					keyboardShouldPersistTaps={'handled'}
+				>
+					<View style={styles.titleContainer}>
+						<Text style={[styles.textForeground, styles.textTitle]}>
+							{t('usernamePasswordLogin.title')}
+						</Text>
+					</View>
+					<View style={styles.middleContainer}>
+						<Text style={[styles.textForeground, styles.textNormal]}>
+							{t('usernamePasswordLogin.username')}
+						</Text>
+						<InputField
+							placeholder={t('usernamePasswordLogin.username')}
+							onChangeText={setUsername}
+						/>
+						<Text style={[styles.textForeground, styles.textNormal]}>
+							{t('usernamePasswordLogin.password')}
+						</Text>
+						<InputField
+							placeholder={t('usernamePasswordLogin.password')}
+							onChangeText={setPassword}
+						/>
+					</View>
+					<View style={styles.bottomContainer}>
+						<OutlinedButton text={t('confirmButtonTitle')} onPress={confirm} />
+						<OutlinedButton text={t('cancelButtonTitle')} onPress={onCancel} />
+					</View>
+				</ScrollView>
+			</KeyboardAvoidingView>
 		</View>
 	);
 };

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2023 Nevis Security AG. All rights reserved.
+ * Copyright © 2024 Nevis Security AG. All rights reserved.
  */
 
 import { useCallback } from 'react';
@@ -14,28 +14,28 @@ import {
 } from 'react-native';
 
 import {
-	PinAuthenticatorProtectionStatus,
-	PinProtectionStatusLastAttemptFailed,
-	PinProtectionStatusLockedOut,
-	PinProtectionStatusUnlocked,
+	PasswordAuthenticatorProtectionStatus,
+	PasswordProtectionStatusLastAttemptFailed,
+	PasswordProtectionStatusLockedOut,
+	PasswordProtectionStatusUnlocked,
 	RecoverableError,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { useFocusEffect } from '@react-navigation/native';
-import { type NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import usePinViewModel from './PinViewModel';
-import { type RootStackParamList } from './RootStackParamList';
+import usePasswordViewModel from './PasswordViewModel';
+import { RootStackParamList } from './RootStackParamList';
 import InputField from '../components/InputField';
 import OutlinedButton from '../components/OutlinedButton';
-import { PinMode } from '../model/PinMode';
+import { PasswordMode } from '../model/PasswordMode';
 import { darkStyle, lightStyle } from '../Styles';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Pin'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Password'>;
 
-const PinScreen = ({ route }: Props) => {
-	const { setOldPin, setPin, confirm, cancel } = usePinViewModel();
+const PasswordScreen = ({ route }: Props) => {
+	const { setOldPassword, setPassword, confirm, cancel } = usePasswordViewModel();
 
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
@@ -55,25 +55,25 @@ const PinScreen = ({ route }: Props) => {
 		}, [route.params.mode, route.params.handler])
 	);
 
-	function title(pinMode: PinMode): string {
-		switch (pinMode) {
-			case PinMode.enrollment:
-				return t('pin.enrollment.title');
-			case PinMode.verification:
-				return t('pin.verification.title');
-			case PinMode.credentialChange:
-				return t('pin.change.title');
+	function title(passwordMode: PasswordMode): string {
+		switch (passwordMode) {
+			case PasswordMode.enrollment:
+				return t('password.enrollment.title');
+			case PasswordMode.verification:
+				return t('password.verification.title');
+			case PasswordMode.credentialChange:
+				return t('password.change.title');
 		}
 	}
 
-	function description(pinMode: PinMode): string {
-		switch (pinMode) {
-			case PinMode.enrollment:
-				return t('pin.enrollment.description');
-			case PinMode.verification:
-				return t('pin.verification.description');
-			case PinMode.credentialChange:
-				return t('pin.change.description');
+	function description(passwordMode: PasswordMode): string {
+		switch (passwordMode) {
+			case PasswordMode.enrollment:
+				return t('password.enrollment.description');
+			case PasswordMode.verification:
+				return t('password.verification.description');
+			case PasswordMode.credentialChange:
+				return t('password.change.description');
 		}
 	}
 
@@ -86,17 +86,17 @@ const PinScreen = ({ route }: Props) => {
 		return text;
 	}
 
-	function authenticatorProtectionText(status?: PinAuthenticatorProtectionStatus): string {
-		if (status instanceof PinProtectionStatusLastAttemptFailed) {
+	function authenticatorProtectionText(status?: PasswordAuthenticatorProtectionStatus): string {
+		if (status instanceof PasswordProtectionStatusLastAttemptFailed) {
 			const remainingRetries = status.remainingRetries;
 			const coolDownTimeInSec = status.coolDownTimeInSec;
 			// NOTE: if coolDownTimeInSec is not zero, a countdown timer should be started.
-			return t('pin.pinProtectionStatusDescriptionUnlocked', {
+			return t('password.passwordProtectionStatusDescriptionUnlocked', {
 				remainingRetries: remainingRetries,
 				coolDown: coolDownTimeInSec,
 			});
-		} else if (status instanceof PinProtectionStatusLockedOut) {
-			return t('pin.pinProtectionStatusDescriptionLocked');
+		} else if (status instanceof PasswordProtectionStatusLockedOut) {
+			return t('password.passwordProtectionStatusDescriptionLocked');
 		}
 		return '';
 	}
@@ -109,7 +109,7 @@ const PinScreen = ({ route }: Props) => {
 		await cancel(route.params.mode, route.params.handler);
 	}, [route.params.mode, route.params.handler]);
 
-	const isChange = route.params.mode === PinMode.credentialChange;
+	const isChange = route.params.mode === PasswordMode.credentialChange;
 	const lastRecoverableError = route.params.lastRecoverableError;
 	const authenticatorProtectionStatus = route.params.authenticatorProtectionStatus;
 	return (
@@ -143,17 +143,15 @@ const PinScreen = ({ route }: Props) => {
 						</Text>
 						{isChange && (
 							<InputField
-								placeholder={t('pin.placeholder.oldPin')}
-								onChangeText={setOldPin}
-								keyboardType={'numeric'}
+								placeholder={t('password.placeholder.oldPassword')}
+								onChangeText={setOldPassword}
 								secureTextEntry={true}
 							/>
 						)}
 						<InputField
-							placeholder={t('pin.placeholder.pin')}
-							onChangeText={setPin}
-							keyboardType={'numeric'}
-							secureTextEntry={route.params.mode !== PinMode.enrollment}
+							placeholder={t('password.placeholder.password')}
+							onChangeText={setPassword}
+							secureTextEntry={route.params.mode !== PasswordMode.enrollment}
 						/>
 						{lastRecoverableError && (
 							<Text style={[styles.textError, styles.textNormal, styles.textCenter]}>
@@ -162,7 +160,8 @@ const PinScreen = ({ route }: Props) => {
 						)}
 						{authenticatorProtectionStatus &&
 							!(
-								authenticatorProtectionStatus instanceof PinProtectionStatusUnlocked
+								authenticatorProtectionStatus instanceof
+								PasswordProtectionStatusUnlocked
 							) && (
 								<Text
 									style={[styles.textError, styles.textNormal, styles.textCenter]}
@@ -181,4 +180,4 @@ const PinScreen = ({ route }: Props) => {
 	);
 };
 
-export default PinScreen;
+export default PasswordScreen;

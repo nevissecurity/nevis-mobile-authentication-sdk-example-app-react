@@ -12,10 +12,6 @@ import { PinMode } from '../model/PinMode';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class PinUserVerifierImpl extends PinUserVerifier {
-	onValidCredentialsProvided(): void {
-		console.log('Valid pin credentials provided.');
-	}
-
 	verifyPin(
 		context: PinUserVerificationContext,
 		handler: PinUserVerificationHandler
@@ -33,5 +29,9 @@ export class PinUserVerifierImpl extends PinUserVerifier {
 			authenticatorProtectionStatus: context.authenticatorProtectionStatus,
 		});
 		return Promise.resolve();
+	}
+
+	onValidCredentialsProvided(): void {
+		console.log('Valid pin credentials provided.');
 	}
 }

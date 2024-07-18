@@ -18,12 +18,14 @@ import { AppEnvironment, ConfigurationLoader } from '../configuration/Configurat
 import {
 	AppErrorAccountsNotFound,
 	AppErrorDeviceInformationNotFound,
+	AppErrorPasswordAuthenticatorNotFound,
 	AppErrorPinAuthenticatorNotFound,
 } from '../error/AppError';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { AccountItem } from '../model/AccountItem';
 import { OperationType } from '../model/OperationType';
 import * as OutOfBandOperationHandler from '../userInteraction/OutOfBandOperationHandler';
+import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
 import { ClientProvider } from '../utility/ClientProvider';
 import * as RootNavigation from '../utility/RootNavigation';
@@ -219,7 +221,9 @@ const useHomeViewModel = () => {
 					);
 				}
 
-				console.log(`Available device info: ${deviceInformation}`);
+				console.log(
+					`Available device info: ${JSON.stringify(deviceInformation, null, ' ')}`
+				);
 				navigation.navigate('DeviceInformationChange', {
 					name: deviceInformation.name,
 				});
@@ -284,16 +288,16 @@ const useHomeViewModel = () => {
 		} else if (eligibleAccounts.length === 1) {
 			// in case that there is only one account, then we can select it automatically
 			console.log('Automatically selecting account for PIN Change');
-			await startPinChange(eligibleAccounts);
+			await startPinChange(eligibleAccounts.at(0)!);
 		} else {
 			// in case that there are multiple eligible accounts then we have to show the account selection screen
 			return selectAccount(OperationType.pinChange);
 		}
 
-		async function startPinChange(accounts: Array<Account>) {
+		async function startPinChange(account: Account) {
 			const client = ClientProvider.getInstance().client;
 			client?.operations.pinChange
-				.username(accounts.at(0)!.username)
+				.username(account.username)
 				.pinChanger(new PinChangerImpl())
 				.onSuccess(() => {
 					console.log('PIN Change succeeded.');
@@ -304,6 +308,56 @@ const useHomeViewModel = () => {
 				.onError(ErrorHandler.handle.bind(null, OperationType.pinChange))
 				.execute()
 				.catch(ErrorHandler.handle.bind(null, OperationType.pinChange));
+		}
+	}
+
+	async function changePassword() {
+		// we should only pass the accounts to the account selection that already have a password enrollment
+		const filteredAuthenticators = localAuthenticators.filter((authenticator) => {
+			return authenticator.aaid === Aaid.PASSWORD.rawValue();
+		});
+		const passwordAuthenticator = filteredAuthenticators.at(0);
+		if (!passwordAuthenticator) {
+			return ErrorHandler.handle(
+				OperationType.passwordChange,
+				new AppErrorPasswordAuthenticatorNotFound(
+					'Password change failed, there are no registered password authenticators'
+				)
+			);
+		}
+
+		const userEnrollment = passwordAuthenticator.userEnrollment;
+		const eligibleAccounts = localAccounts.filter((account) => {
+			return userEnrollment.isEnrolled(account.username);
+		});
+		if (eligibleAccounts.length === 0) {
+			return ErrorHandler.handle(
+				OperationType.passwordChange,
+				new AppErrorAccountsNotFound(`Password change failed, no eligible accounts found`)
+			);
+		} else if (eligibleAccounts.length === 1) {
+			// in case that there is only one account, then we can select it automatically
+			console.log('Automatically selecting account for password Change');
+			await startPasswordChange(eligibleAccounts.at(0)!);
+		} else {
+			// in case that there are multiple eligible accounts then we have to show the account selection screen
+			return selectAccount(OperationType.passwordChange);
+		}
+
+		async function startPasswordChange(account: Account) {
+			const client = ClientProvider.getInstance().client;
+			client?.operations.passwordChange
+				.username(account.username)
+				.passwordChanger(new PasswordChangerImpl())
+				.onSuccess(() => {
+					console.log('Password Change succeeded.');
+					RootNavigation.navigate('Result', {
+						operation: OperationType.passwordChange,
+					});
+				})
+				.onError(ErrorHandler.handle.bind(null, OperationType.passwordChange))
+				.execute()
+				.catch(ErrorHandler.handle.bind(null, OperationType.passwordChange));
 		}
 	}
 
@@ -320,6 +374,7 @@ const useHomeViewModel = () => {
 		changeDeviceInformation,
 		deleteLocalAuthenticators,
 		changePin,
+		changePassword,
 	};
 };
 

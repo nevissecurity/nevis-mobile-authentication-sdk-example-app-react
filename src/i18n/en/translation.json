@@ -8,6 +8,7 @@
 		"deregister": "Deregister",
 		"deviceInformationChange": "Change Device Information",
 		"pinChange": "PIN Change",
+		"passwordChange": "Password Change",
 		"deleteAuthenticators": "Delete Authenticators",
 		"inBandRegister": "In-Band Register",
 		"identitySuiteOnly": "Identity Suite only"
@@ -53,6 +54,26 @@
 		"pinProtectionStatusDescriptionLocked": "Authenticator is locked.",
 		"pinProtectionStatusDescriptionUnlocked": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
 	},
+	"password": {
+		"enrollment": {
+			"title": "Create password",
+			"description": "Please define a password."
+		},
+		"verification": {
+			"title": "Verify password",
+			"description": "Please enter your password to complete the process."
+		},
+		"change": {
+			"title": "Change password",
+			"description": "Please define a password."
+		},
+		"placeholder": {
+			"password": "Enter password",
+			"oldPassword": "Enter old password"
+		},
+		"passwordProtectionStatusDescriptionLocked": "Authenticator is locked.",
+		"passwordProtectionStatusDescriptionUnlocked": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+	},
 	"transactionConfirmation": {
 		"title": "Transaction Confirmation"
 	},
@@ -91,7 +112,8 @@
 			"faceID": "Face ID",
 			"devicePasscode": "Device Passcode",
 			"fingerprint": "Fingerprint",
-			"touchID": "Touch ID"
+			"touchID": "Touch ID",
+			"password": "Password"
 		},
 		"notPolicyCompliant": "This authentication method cannot be used with your application",
 		"notEnrolled": "Before using the authenticator, enroll it in the phone System Settings"
@@ -105,6 +127,7 @@
 		"deviceInformationChange": "Device Information Change",
 		"payloadDecode": "OOB Payload Decode",
 		"pinChange": "PIN Change",
+		"passwordChange": "Password Change",
 		"localData": "Local Data",
 		"unknown": "Operation",
 		"success": {

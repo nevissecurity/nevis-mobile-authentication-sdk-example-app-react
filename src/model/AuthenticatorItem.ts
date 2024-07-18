@@ -16,7 +16,10 @@ export class AuthenticatorItem {
 		this.isPolicyCompliant = isPolicyCompliant;
 		this.isUserEnrolled = isUserEnrolled;
 		this.isEnabled =
-			isPolicyCompliant && (authenticator.aaid === Aaid.PIN.rawValue() || isUserEnrolled);
+			isPolicyCompliant &&
+			(authenticator.aaid === Aaid.PIN.rawValue() ||
+				authenticator.aaid === Aaid.PASSWORD.rawValue() ||
+				isUserEnrolled);
 	}
 }
 

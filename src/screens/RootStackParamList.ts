@@ -8,6 +8,10 @@ import {
 	BiometricUserVerificationHandler,
 	DevicePasscodeUserVerificationHandler,
 	FingerprintUserVerificationHandler,
+	PasswordAuthenticatorProtectionStatus,
+	PasswordChangeHandler,
+	PasswordEnrollmentHandler,
+	PasswordUserVerificationHandler,
 	PinAuthenticatorProtectionStatus,
 	PinChangeHandler,
 	PinEnrollmentHandler,
@@ -18,6 +22,7 @@ import {
 import type { AccountItem } from '../model/AccountItem';
 import type { AuthenticatorItem } from '../model/AuthenticatorItem';
 import type { OperationType } from '../model/OperationType';
+import { PasswordMode } from '../model/PasswordMode';
 import type { PinMode } from '../model/PinMode';
 
 export type RootStackParamList = {
@@ -39,6 +44,15 @@ export type RootStackParamList = {
 		handler?: PinEnrollmentHandler | PinUserVerificationHandler | PinChangeHandler;
 		lastRecoverableError?: RecoverableError;
 		authenticatorProtectionStatus?: PinAuthenticatorProtectionStatus;
+	};
+	Password: {
+		mode: PasswordMode;
+		handler?:
+			| PasswordEnrollmentHandler
+			| PasswordUserVerificationHandler
+			| PasswordChangeHandler;
+		lastRecoverableError?: RecoverableError;
+		authenticatorProtectionStatus?: PasswordAuthenticatorProtectionStatus;
 	};
 	DeviceInformationChange: {
 		name: string;
