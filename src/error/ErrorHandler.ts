@@ -34,9 +34,6 @@ export class ErrorHandler {
 		} else {
 			description = error.message;
 		}
-		if (!(error instanceof Error)) {
-			cause = error.cause;
-		}
 		RootNavigation.navigate('Result', {
 			operation: operationType,
 			errorDescription: description,
