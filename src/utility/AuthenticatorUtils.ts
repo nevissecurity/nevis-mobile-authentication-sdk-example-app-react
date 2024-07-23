@@ -44,4 +44,19 @@ export class AuthenticatorUtils {
 				return `Unknown AAID: ${authenticator.aaid}`;
 		}
 	}
+
+	static getAaidFromRawValue(aaidString: string): Aaid | undefined {
+		switch (aaidString) {
+			case Aaid.PIN.rawValue():
+				return Aaid.PIN;
+			case Aaid.FINGERPRINT.rawValue():
+				return Aaid.FINGERPRINT;
+			case Aaid.BIOMETRIC.rawValue():
+				return Aaid.BIOMETRIC;
+			case Aaid.DEVICE_PASSCODE.rawValue():
+				return Aaid.DEVICE_PASSCODE;
+			case Aaid.PASSWORD.rawValue():
+				return Aaid.PASSWORD;
+		}
+	}
 }

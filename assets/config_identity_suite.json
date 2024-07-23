@@ -9,5 +9,17 @@
 		"authenticationResponsePath": "/auth/fidouaf/authenticationresponse/",
 		"deregistrationRequestPath": "/nevisfido/uaf/1.1/request/deregistration/",
 		"dispatchTargetResourcePath": "/nevisfido/token/dispatch/targets/"
-	}
+	},
+	"authenticatorAllowlist": [
+		"F1D0#1001",
+		"F1D0#1002",
+		"F1D0#1003",
+		"F1D0#1004",
+		"F1D0#1005",
+		"F1D0#1001",
+		"F1D0#1002",
+		"F1D0#1003",
+		"F1D0#1004",
+		"F1D0#1005"
+	]
 }

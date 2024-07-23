@@ -13,7 +13,10 @@ import type { RootStackParamList } from './RootStackParamList';
 import { AppErrorAuthorizationProviderNotFound, AppErrorUnknownError } from '../error/AppError';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
-import { AuthenticationAuthenticatorSelectorImpl } from '../userInteraction/AuthenticationAuthenticatorSelectorImpl';
+import {
+	AuthenticatorSelectorImpl,
+	AuthenticatorSelectorOperation,
+} from '../userInteraction/AuthenticatorSelectorImpl';
 import { BiometricUserVerifierImpl } from '../userInteraction/BiometricUserVerifierImpl';
 import { DevicePasscodeUserVerifierImpl } from '../userInteraction/DevicePasscodeUserVerifierImpl';
 import { FingerprintUserVerifierImpl } from '../userInteraction/FingerprintUserVerifierImpl';
@@ -71,7 +74,9 @@ const useSelectAccountViewModel = () => {
 		const client = ClientProvider.getInstance().client;
 		client?.operations.authentication
 			.username(username)
-			.authenticatorSelector(new AuthenticationAuthenticatorSelectorImpl())
+			.authenticatorSelector(
+				new AuthenticatorSelectorImpl(AuthenticatorSelectorOperation.authentication)
+			)
 			.pinUserVerifier(new PinUserVerifierImpl())
 			.passwordUserVerifier(new PasswordUserVerifierImpl())
 			.biometricUserVerifier(new BiometricUserVerifierImpl())

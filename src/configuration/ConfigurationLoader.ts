@@ -43,8 +43,8 @@ export class ConfigurationLoader {
 			return this._appConfiguration;
 		}
 
-		const json = this.configJson();
-		this._appConfiguration = Object.assign(AppConfiguration.prototype, json);
+		this._appConfiguration = AppConfiguration.fromJson(this.configJson());
+
 		if (!this._appConfiguration) {
 			ErrorHandler.handle(
 				OperationType.unknown,
