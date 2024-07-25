@@ -10,12 +10,15 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from './RootStackParamList';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
+import {
+	AuthenticatorSelectorImpl,
+	AuthenticatorSelectorOperation,
+} from '../userInteraction/AuthenticatorSelectorImpl';
 import { BiometricUserVerifierImpl } from '../userInteraction/BiometricUserVerifierImpl';
 import { DevicePasscodeUserVerifierImpl } from '../userInteraction/DevicePasscodeUserVerifierImpl';
 import { FingerprintUserVerifierImpl } from '../userInteraction/FingerprintUserVerifierImpl';
 import { PasswordEnrollerImpl } from '../userInteraction/PasswordEnrollerImpl';
 import { PinEnrollerImpl } from '../userInteraction/PinEnrollerImpl';
-import { RegistrationAuthenticatorSelectorImpl } from '../userInteraction/RegistrationAuthenticatorSelectorImpl';
 import { ClientProvider } from '../utility/ClientProvider';
 import { DeviceInformationUtils } from '../utility/DeviceInformationUtils';
 
@@ -29,7 +32,9 @@ const useAuthCloudApiRegistrationViewModel = () => {
 		const client = ClientProvider.getInstance().client;
 		const authCloudApiRegistration = client?.operations.authCloudApiRegistration
 			.deviceInformation(DeviceInformationUtils.create())
-			.authenticatorSelector(new RegistrationAuthenticatorSelectorImpl())
+			.authenticatorSelector(
+				new AuthenticatorSelectorImpl(AuthenticatorSelectorOperation.registration)
+			)
 			.pinEnroller(new PinEnrollerImpl())
 			.passwordEnroller(new PasswordEnrollerImpl())
 			.biometricUserVerifier(new BiometricUserVerifierImpl())

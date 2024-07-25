@@ -11,7 +11,10 @@ import {
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
 import { AccountSelectorImpl } from './AccountSelectorImpl';
-import { AuthenticationAuthenticatorSelectorImpl } from './AuthenticationAuthenticatorSelectorImpl';
+import {
+	AuthenticatorSelectorImpl,
+	AuthenticatorSelectorOperation,
+} from './AuthenticatorSelectorImpl';
 import { BiometricUserVerifierImpl } from './BiometricUserVerifierImpl';
 import { DevicePasscodeUserVerifierImpl } from './DevicePasscodeUserVerifierImpl';
 import { FingerprintUserVerifierImpl } from './FingerprintUserVerifierImpl';
@@ -19,7 +22,6 @@ import { PasswordEnrollerImpl } from './PasswordEnrollerImpl';
 import { PasswordUserVerifierImpl } from './PasswordUserVerifierImpl';
 import { PinEnrollerImpl } from './PinEnrollerImpl';
 import { PinUserVerifierImpl } from './PinUserVerifierImpl';
-import { RegistrationAuthenticatorSelectorImpl } from './RegistrationAuthenticatorSelectorImpl';
 import { AppErrorPayloadDecodeError, AppErrorQrCodeError } from '../error/AppError';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
@@ -31,7 +33,9 @@ import * as RootNavigation from '../utility/RootNavigation';
 async function handleRegistration(registration: OutOfBandRegistration) {
 	await registration
 		.deviceInformation(DeviceInformationUtils.create())
-		.authenticatorSelector(new RegistrationAuthenticatorSelectorImpl())
+		.authenticatorSelector(
+			new AuthenticatorSelectorImpl(AuthenticatorSelectorOperation.registration)
+		)
 		.pinEnroller(new PinEnrollerImpl())
 		.passwordEnroller(new PasswordEnrollerImpl())
 		.biometricUserVerifier(new BiometricUserVerifierImpl())
@@ -50,7 +54,9 @@ async function handleRegistration(registration: OutOfBandRegistration) {
 async function handleAuthentication(authentication: OutOfBandAuthentication) {
 	await authentication
 		.accountSelector(new AccountSelectorImpl())
-		.authenticatorSelector(new AuthenticationAuthenticatorSelectorImpl())
+		.authenticatorSelector(
+			new AuthenticatorSelectorImpl(AuthenticatorSelectorOperation.authentication)
+		)
 		.pinUserVerifier(new PinUserVerifierImpl())
 		.passwordUserVerifier(new PasswordUserVerifierImpl())
 		.biometricUserVerifier(new BiometricUserVerifierImpl())
