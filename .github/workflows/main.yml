@@ -7,6 +7,15 @@ on:
         # At 5:30 am on the 1st and 15th day of the month (every two weeks)
         - cron: '30 5 1,15 * *'
     workflow_dispatch:
+        inputs:
+            ios-runner-type:
+                type: choice
+                required: true
+                description: "Runner type"
+                default: "self-hosted"
+                options:
+                    - "self-hosted"
+                    - "macos-13"
 
 env:
     BUILD_TYPE: 'RELEASE' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE'
@@ -32,9 +41,9 @@ env:
     CONNECT_API_ISSUER_ID: ${{ secrets.CONNECT_API_ISSUER_ID }}
     CONNECT_API_KEY_CONTENT: ${{ secrets.CONNECT_API_KEY_CONTENT }}
     BETA_APP_REVIEW_INFO: ${{ vars.BETA_APP_REVIEW_INFO }}
-    XCODE_VERSION: 15.0.1
+    XCODE_VERSION: 15.4
     JAVA_VERSION: 11
-    RUBY_VERSION: 3.0
+    RUBY_VERSION: 3.1
 
 jobs:
     lint-and-format:
@@ -94,7 +103,7 @@ jobs:
                   build-number: ${{ needs.get-version-number.outputs.build-number }}
 
     release-ios:
-        runs-on: macos-13
+        runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
         needs: [get-version-number]
         steps:
             - name: Checkout
