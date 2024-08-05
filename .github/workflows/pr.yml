@@ -4,14 +4,23 @@ on:
     pull_request:
         branches: ['main']
     workflow_dispatch:
+        inputs:
+            ios-runner-type:
+                type: choice
+                required: true
+                description: "Runner type"
+                default: "self-hosted"
+                options:
+                    - "self-hosted"
+                    - "macos-13"
 
 env:
     BUILD_TYPE: 'SNAPSHOT' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE'
     GITHUB_USERNAME: ${{ secrets.PERSONAL_GITHUB_USERNAME }}
     GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_GITHUB_ACCESS_TOKEN }}
-    XCODE_VERSION: 15.0.1
+    XCODE_VERSION: 15.4
     JAVA_VERSION: 11
-    RUBY_VERSION: 3.0
+    RUBY_VERSION: 3.1
 
 jobs:
     lint-and-format:
@@ -67,7 +76,7 @@ jobs:
                   new-arch-enabled: false
 
     build-ios-new-arch:
-        runs-on: macos-13
+        runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
         needs: [install-and-check-dependencies]
         steps:
             - name: Checkout
@@ -79,7 +88,7 @@ jobs:
                   new-arch-enabled: true
 
     build-ios-old-arch:
-        runs-on: macos-13
+        runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
         needs: [install-and-check-dependencies]
         steps:
             - name: Checkout
