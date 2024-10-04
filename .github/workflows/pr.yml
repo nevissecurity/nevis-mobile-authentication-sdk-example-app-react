@@ -27,7 +27,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Set up Node
               uses: ./.github/actions/setup-node
@@ -43,7 +43,7 @@ jobs:
         needs: [lint-and-format]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Install dependencies
               run: yarn install
@@ -56,7 +56,7 @@ jobs:
         needs: [install-and-check-dependencies]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Build Android App with new arch
               uses: ./.github/actions/build-android
@@ -68,7 +68,7 @@ jobs:
         needs: [install-and-check-dependencies]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Build Android App with old arch
               uses: ./.github/actions/build-android
@@ -80,7 +80,7 @@ jobs:
         needs: [install-and-check-dependencies]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Build iOS App with new arch
               uses: ./.github/actions/build-ios
@@ -92,7 +92,7 @@ jobs:
         needs: [install-and-check-dependencies]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Build iOS App with old arch
               uses: ./.github/actions/build-ios

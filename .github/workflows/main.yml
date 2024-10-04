@@ -50,7 +50,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Set up Node
               uses: ./.github/actions/setup-node
@@ -66,7 +66,7 @@ jobs:
         needs: [lint-and-format]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Install dependencies
               run: yarn install
@@ -82,7 +82,7 @@ jobs:
             build-number: ${{ steps.get_version.outputs.build-number }}
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Get version
               id: get_version
@@ -93,7 +93,7 @@ jobs:
         needs: [get-version-number]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Release Android App with old arch
               uses: ./.github/actions/release-android
@@ -107,7 +107,7 @@ jobs:
         needs: [get-version-number]
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Release iOS App with old arch
               uses: ./.github/actions/release-ios
@@ -121,7 +121,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Create git tag
               uses: ./.github/actions/git-tag

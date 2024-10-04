@@ -16,11 +16,11 @@ runs:
     using: composite
     steps:
         - name: Setup Node.js
-          uses: actions/setup-node@v3
+          uses: actions/setup-node@v4
 
         - name: Cache dependencies
           id: yarn-cache
-          uses: actions/cache@v3
+          uses: actions/cache@v4
           with:
               path: node_modules
               key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/package.json') }}-${{ inputs.new-arch-enabled == 'true' && 'new-arch' || 'old-arch' }}

@@ -59,7 +59,7 @@ runs:
               FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
               FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
               SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
-          uses: maierj/fastlane-action@v3.0.0
+          uses: maierj/fastlane-action@v3.1.0
           with:
               lane: 'main'
               subdirectory: 'android'
