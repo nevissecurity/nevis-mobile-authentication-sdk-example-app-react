@@ -13,7 +13,7 @@ runs:
     using: composite
     steps:
         - name: Create Tag
-          uses: actions/github-script@v6
+          uses: actions/github-script@v7
           env:
               TAG_NAME: release/${{ inputs.version-number }}/${{ inputs.build-number }}
               TAG_MESSAGE: "Release NMA SDK Example App React ${{ inputs.version-number }}/${{ inputs.build-number }}"

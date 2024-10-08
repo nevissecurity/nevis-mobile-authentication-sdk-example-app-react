@@ -10,7 +10,7 @@ runs:
     using: composite
     steps:
         - name: Install JDK
-          uses: actions/setup-java@v3
+          uses: actions/setup-java@v4
           with:
               distribution: 'zulu'
               java-version: ${{ env.JAVA_VERSION }}
@@ -21,7 +21,7 @@ runs:
 
         - name: Cache Gradle
           if: ${{ inputs.cache-gradle == 'true' }}
-          uses: actions/cache@v3
+          uses: actions/cache@v4
           with:
               path: |
                   ~/.gradle/wrapper
