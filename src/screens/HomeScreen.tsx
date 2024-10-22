@@ -27,6 +27,8 @@ const HomeScreen = () => {
 		inBandAuthenticate,
 		deregister,
 		changeDeviceInformation,
+		checkAndSyncDeviceInformation,
+		removeAuthenticator,
 		deleteLocalAuthenticators,
 		changePin,
 		changePassword,
@@ -98,6 +100,14 @@ const HomeScreen = () => {
 					<OutlinedButton
 						text={t('home.deviceInformationChange')}
 						onPress={changeDeviceInformation}
+					/>
+					<OutlinedButton
+						text={'Check & Sync Device Information'}
+						onPress={checkAndSyncDeviceInformation}
+					/>
+					<OutlinedButton
+						text={'Remove an Authenticator'}
+						onPress={removeAuthenticator}
 					/>
 					<OutlinedButton text={t('home.pinChange')} onPress={changePin} />
 					<OutlinedButton text={t('home.passwordChange')} onPress={changePassword} />

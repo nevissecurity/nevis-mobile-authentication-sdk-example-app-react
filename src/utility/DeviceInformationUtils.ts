@@ -4,8 +4,9 @@
 
 import { Platform } from 'react-native';
 
-import { DeviceInformation } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import DeviceInfo from 'react-native-device-info';
+
+import { DeviceInformation } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
 export class DeviceInformationUtils {
 	static create() {

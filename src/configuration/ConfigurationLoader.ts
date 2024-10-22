@@ -23,7 +23,7 @@ export class ConfigurationLoader {
 	private _sdkConfiguration?: Configuration;
 
 	private constructor() {
-		this._appEnvironment = AppEnvironment.AuthenticationCloud;
+		this._appEnvironment = AppEnvironment.IdentitySuite;
 	}
 
 	static getInstance(): ConfigurationLoader {
@@ -78,6 +78,7 @@ export class ConfigurationLoader {
 					.authenticationResponsePath(appConfiguration.sdk.authenticationResponsePath!)
 					.deregistrationRequestPath(appConfiguration.sdk.deregistrationRequestPath!)
 					.dispatchTargetResourcePath(appConfiguration.sdk.dispatchTargetResourcePath!)
+					.deviceResourcePath(appConfiguration.sdk.deviceResourcePath!)
 					.build();
 				break;
 		}

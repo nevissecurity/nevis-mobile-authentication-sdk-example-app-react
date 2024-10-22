@@ -4,14 +4,15 @@
 
 import { useState } from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import {
 	Aaid,
 	Account,
 	Authenticator,
 	MobileAuthenticationClientInitializer,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import type { RootStackParamList } from './RootStackParamList';
 import { AppEnvironment, ConfigurationLoader } from '../configuration/ConfigurationLoader';
@@ -231,6 +232,70 @@ const useHomeViewModel = () => {
 			.catch(ErrorHandler.handle.bind(null, OperationType.deviceInformationChange));
 	}
 
+	async function checkAndSyncDeviceInformation() {
+		const client = ClientProvider.getInstance().client;
+		await client?.operations.deviceInformationCheck
+			.onResult(async (checkResult) => {
+				if (checkResult.mismatches.length > 0) {
+					console.log('Mismatches found during device information check!');
+					checkResult.mismatches.forEach((mismatch) => {
+						console.log(`   ${mismatch.constructor.name}:`);
+						console.log(`   ${JSON.stringify(mismatch, null, ' ')}`);
+					});
+					console.log('Start syncing device information mismatches...');
+					await client?.operations.deviceInformationSync
+						.mismatches(checkResult.mismatches)
+						.onResult((syncResult) => {
+							if (syncResult.errors.length == 0) {
+								console.log('Syncing device information mismatches succeeded!');
+								fetchData();
+								return;
+							}
+
+							console.log('Failed to sync device information mismatches!');
+							syncResult.errors.forEach((error) => {
+								console.log(`   ${error.constructor.name}:`);
+								console.log(`   ${JSON.stringify(error, null, ' ')}`);
+							});
+						})
+						.execute()
+						.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+				} else if (checkResult.errors.length == 0) {
+					console.log('No mismatches found during device information check!');
+				} else {
+					console.log('Failed to check device information mismatches!');
+					checkResult.errors.forEach((error) => {
+						console.log(`   ${error.constructor.name}:`);
+						console.log(`   ${JSON.stringify(error, null, ' ')}`);
+					});
+				}
+			})
+			.execute()
+			.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+	}
+
+	async function removeAuthenticator() {
+		if (localAccounts.length === 0) {
+			return ErrorHandler.handle(
+				OperationType.unknown,
+				new AppErrorAccountsNotFound('There are no registered accounts')
+			);
+		}
+
+		const client = ClientProvider.getInstance().client;
+		const account = localAccounts[0];
+		const authenticator = localAuthenticators.filter((authenticator) => {
+			return authenticator.registration.isRegistered(account.username);
+		});
+
+		await client?.localData
+			.deleteAuthenticator(account.username, authenticator[0].aaid)
+			.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+		console.log(
+			`Deleted authenticator with AAID ${authenticator[0].aaid} for username ${account.username}`
+		);
+	}
+
 	async function deleteLocalAuthenticators() {
 		const client = ClientProvider.getInstance().client;
 		if (localAccounts.length === 0) {
@@ -372,6 +437,8 @@ const useHomeViewModel = () => {
 		inBandAuthenticate,
 		deregister,
 		changeDeviceInformation,
+		checkAndSyncDeviceInformation,
+		removeAuthenticator,
 		deleteLocalAuthenticators,
 		changePin,
 		changePassword,

@@ -30,9 +30,14 @@ import { ClientProvider } from '../utility/ClientProvider';
 import { DeviceInformationUtils } from '../utility/DeviceInformationUtils';
 import * as RootNavigation from '../utility/RootNavigation';
 
-async function handleRegistration(registration: OutOfBandRegistration) {
+async function handleRegistration(
+	registration: OutOfBandRegistration,
+	client?: MobileAuthenticationClient
+) {
+	const deviceInformation =
+		(await client?.localData.deviceInformation()) ?? DeviceInformationUtils.create();
 	await registration
-		.deviceInformation(DeviceInformationUtils.create())
+		.deviceInformation(deviceInformation)
 		.authenticatorSelector(
 			new AuthenticatorSelectorImpl(AuthenticatorSelectorOperation.registration)
 		)
@@ -80,7 +85,7 @@ async function handleOutOfBandPayload(
 	client?.operations.outOfBandOperation
 		.payload(payload)
 		.onRegistration(async (registration) => {
-			await handleRegistration(registration).catch(
+			await handleRegistration(registration, client).catch(
 				ErrorHandler.handle.bind(null, OperationType.registration)
 			);
 		})
