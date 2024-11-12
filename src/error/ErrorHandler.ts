@@ -31,6 +31,7 @@ export class ErrorHandler {
 			cause = error.cause;
 		} else if (error instanceof AppError || error instanceof MobileAuthenticationClientError) {
 			description = error.description;
+			cause = error.cause;
 		} else {
 			description = error.message;
 		}
