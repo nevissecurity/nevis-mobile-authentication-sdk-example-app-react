@@ -198,8 +198,9 @@ platform :ios do
 		# Upload App to TestFlight
 		upload_to_testflight(
 			beta_app_review_info: beta_app_review_info,
+			beta_app_description: "https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react",
 			groups: "Nevis testers",
-			changelog: "https://docs.nevis.net/authcloud/access-app/test-access-app",
+			changelog: "https://docs.nevis.net/mobilesdk/quickstart",
 			distribute_external: true
 		)
 	end
