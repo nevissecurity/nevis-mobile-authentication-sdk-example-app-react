@@ -78,6 +78,7 @@ export class ConfigurationLoader {
 					.authenticationResponsePath(appConfiguration.sdk.authenticationResponsePath!)
 					.deregistrationRequestPath(appConfiguration.sdk.deregistrationRequestPath!)
 					.dispatchTargetResourcePath(appConfiguration.sdk.dispatchTargetResourcePath!)
+					.deviceResourcePath(appConfiguration.sdk.deviceResourcePath!)
 					.build();
 				break;
 		}

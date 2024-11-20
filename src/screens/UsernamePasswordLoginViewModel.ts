@@ -50,9 +50,11 @@ const useUsernamePasswordLoginViewModel = () => {
 		// see {@link Registration.serverUrl}. If no server base URL is provided, then the base URL
 		// defined in {@link Configuration.baseUrl} will be used.
 		const client = ClientProvider.getInstance().client;
+		const deviceInformation =
+			(await client?.localData.deviceInformation()) ?? DeviceInformationUtils.create();
 		await client?.operations.registration
 			.username(usernameToRegister)
-			.deviceInformation(DeviceInformationUtils.create())
+			.deviceInformation(deviceInformation)
 			.authorizationProvider(authorizationProvider)
 			.authenticatorSelector(
 				new AuthenticatorSelectorImpl(AuthenticatorSelectorOperation.registration)
