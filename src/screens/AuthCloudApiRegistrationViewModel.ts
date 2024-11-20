@@ -30,8 +30,10 @@ const useAuthCloudApiRegistrationViewModel = () => {
 
 	async function confirm() {
 		const client = ClientProvider.getInstance().client;
+		const deviceInformation =
+			(await client?.localData.deviceInformation()) ?? DeviceInformationUtils.create();
 		const authCloudApiRegistration = client?.operations.authCloudApiRegistration
-			.deviceInformation(DeviceInformationUtils.create())
+			.deviceInformation(deviceInformation)
 			.authenticatorSelector(
 				new AuthenticatorSelectorImpl(AuthenticatorSelectorOperation.registration)
 			)

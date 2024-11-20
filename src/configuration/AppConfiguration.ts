@@ -15,6 +15,7 @@ export class SdkConfiguration {
 	authenticationResponsePath?: string;
 	deregistrationRequestPath?: string;
 	dispatchTargetResourcePath?: string;
+	deviceResourcePath?: string;
 
 	private constructor(
 		baseUrl: string,
@@ -25,7 +26,8 @@ export class SdkConfiguration {
 		authenticationRequestPath?: string,
 		authenticationResponsePath?: string,
 		deregistrationRequestPath?: string,
-		dispatchTargetResourcePath?: string
+		dispatchTargetResourcePath?: string,
+		deviceResourcePath?: string
 	) {
 		this.baseUrl = baseUrl;
 		this.hostname = hostname;
@@ -36,6 +38,7 @@ export class SdkConfiguration {
 		this.authenticationResponsePath = authenticationResponsePath;
 		this.deregistrationRequestPath = deregistrationRequestPath;
 		this.dispatchTargetResourcePath = dispatchTargetResourcePath;
+		this.deviceResourcePath = deviceResourcePath;
 	}
 
 	static fromJson(json: any): SdkConfiguration {
@@ -48,7 +51,8 @@ export class SdkConfiguration {
 			json.authenticationRequestPath,
 			json.authenticationResponsePath,
 			json.deregistrationRequestPath,
-			json.dispatchTargetResourcePath
+			json.dispatchTargetResourcePath,
+			json.deviceResourcePath
 		);
 	}
 }
