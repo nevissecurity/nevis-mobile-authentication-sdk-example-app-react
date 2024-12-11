@@ -32,15 +32,15 @@ Before you can actually start compiling and using the example application please
 
 Your development setup has to meet the following prerequisites:
 
-* iOS 12.4 or later
-* Xcode 14.x, including Swift 5.7
-* Android 6 or later, with API level 23
+* iOS 15.1 or later
+* Xcode 15.4, including Swift 5.10
+* Android 7 or later, with API level 24
 * Android 10 or later, with API level 29, for the biometric authenticator to work
 * Android 11 or later, with API level 30, for the device passcode authenticator to work
-* Gradle 7.4 or later
-* Android Gradle Plugin `com.android.tools.build:gradle` 7.4.2 or later
-* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.21 or later
-* React Native 0.72.x
+* Gradle 8.6 or later
+* Android Gradle Plugin `com.android.tools.build:gradle` 8.2.1 or later
+* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.9.22 or later
+* React Native 0.74.6
 
 ### Initialization
 
