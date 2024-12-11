@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/buck,node,ruby,macos,xcode,android,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,fastlane,yalc
-# Edit at https://www.toptal.com/developers/gitignore?templates=buck,node,ruby,macos,xcode,android,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,fastlane,yalc
+# Created by https://www.toptal.com/developers/gitignore/api/buck,node,ruby,yalc,macos,xcode,android,fastlane,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,yarn
+# Edit at https://www.toptal.com/developers/gitignore?templates=buck,node,ruby,yalc,macos,xcode,android,fastlane,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,yarn
 
 ### Android ###
 # Gradle files
@@ -371,61 +371,6 @@ dist
 .expo
 __generated__
 
-### ReactNative.Android Stack ###
-# Gradle files
-
-# Local configuration file (sdk path, etc)
-
-# Log/OS Files
-
-# Android Studio generated files and folders
-
-# IntelliJ
-
-# Keystore files
-
-# Google Services (e.g. APIs or Firebase)
-
-# Android Profiling
-
-### ReactNative.Linux Stack ###
-*~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
-.nfs*
-
-### ReactNative.Gradle Stack ###
-.gradle
-**/build/
-!src/**/build/
-
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Avoid ignore Gradle wrappper properties
-!gradle-wrapper.properties
-
-# Cache of project
-.gradletasknamecache
-
-# Eclipse Gradle plugin generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
-
 ### ReactNative.Node Stack ###
 # Logs
 
@@ -498,16 +443,6 @@ gradle-app.setting
 
 # yarn v2
 
-### ReactNative.Xcode Stack ###
-## User settings
-xcuserdata/
-
-## Xcode 8 and earlier
-*.xcscmblueprint
-*.xccheckout
-
-### ReactNative.Buck Stack ###
-
 ### ReactNative.macOS Stack ###
 # General
 
@@ -518,6 +453,71 @@ xcuserdata/
 # Files that might appear in the root of a volume
 
 # Directories potentially created on remote AFP share
+
+### ReactNative.Android Stack ###
+# Gradle files
+
+# Local configuration file (sdk path, etc)
+
+# Log/OS Files
+
+# Android Studio generated files and folders
+
+# IntelliJ
+
+# Keystore files
+
+# Google Services (e.g. APIs or Firebase)
+
+# Android Profiling
+
+### ReactNative.Xcode Stack ###
+## User settings
+xcuserdata/
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
+
+### ReactNative.Buck Stack ###
+
+### ReactNative.Gradle Stack ###
+.gradle
+**/build/
+!src/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Avoid ignore Gradle wrappper properties
+!gradle-wrapper.properties
+
+# Cache of project
+.gradletasknamecache
+
+# Eclipse Gradle plugin generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+### ReactNative.Linux Stack ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ### Ruby ###
 *.gem
@@ -576,6 +576,11 @@ build-iPhoneSimulator/
 
 ### VisualStudioCode ###
 .vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -592,6 +597,7 @@ build-iPhoneSimulator/
 
 
 ### Xcode Patch ###
+.xcode.env.local
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/
@@ -606,6 +612,23 @@ build-iPhoneSimulator/
 
 .yalc
 yalc.lock
+
+### yarn ###
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+
+.yarn/*
+!.yarn/releases
+!.yarn/patches
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# if you are NOT using Zero-installs, then:
+# comment the following lines
+#!.yarn/cache
+
+# and uncomment the following lines
+# .pnp.*
 
 ### AndroidStudio ###
 # Covers files to be ignored for android development using Android Studio.
@@ -717,4 +740,4 @@ hs_err_pid*
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/buck,node,ruby,macos,xcode,android,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,fastlane,yalc
+# End of https://www.toptal.com/developers/gitignore/api/buck,node,ruby,yalc,macos,xcode,android,fastlane,intellij,cocoapods,reactnative,androidstudio,visualstudiocode,yarn
