@@ -37,7 +37,7 @@ export class PasswordPolicyImpl extends PasswordPolicy {
 						this.errorMessage,
 						this.cause
 					)
-			  );
+				);
 	}
 
 	_isValid(password: string): boolean {
