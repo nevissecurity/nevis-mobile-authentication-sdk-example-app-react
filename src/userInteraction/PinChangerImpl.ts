@@ -8,7 +8,8 @@ import {
 	PinChanger,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { PinMode } from '../model/PinMode';
+import { CredentialKind } from '../model/CredentialKind';
+import { CredentialMode } from '../model/CredentialMode';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class PinChangerImpl extends PinChanger {
@@ -19,11 +20,12 @@ export class PinChangerImpl extends PinChanger {
 				: 'Please start PIN change.'
 		);
 
-		RootNavigation.navigate('Pin', {
-			mode: PinMode.credentialChange,
+		RootNavigation.navigate('Credential', {
+			mode: CredentialMode.change,
+			kind: CredentialKind.pin,
 			handler: handler,
 			lastRecoverableError: context.lastRecoverableError,
-			authenticatorProtectionStatus: context.authenticatorProtectionStatus,
+			pinProtectionStatus: context.authenticatorProtectionStatus,
 		});
 	}
 

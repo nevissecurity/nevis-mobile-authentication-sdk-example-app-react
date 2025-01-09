@@ -15,10 +15,6 @@ runs:
               distribution: 'zulu'
               java-version: ${{ env.JAVA_VERSION }}
 
-        - name: Finalize Android SDK
-          shell: bash
-          run: /bin/bash -c "yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null"
-
         - name: Cache Gradle
           if: ${{ inputs.cache-gradle == 'true' }}
           uses: actions/cache@v4

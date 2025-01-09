@@ -9,10 +9,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AuthCloudApiRegistrationScreen from './screens/AuthCloudApiRegistrationScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
+import CredentialScreen from './screens/CredentialScreen';
 import DeviceInformationChangeScreen from './screens/DeviceInformationChangeScreen';
 import HomeScreen from './screens/HomeScreen';
-import PasswordScreen from './screens/PasswordScreen';
-import PinScreen from './screens/PinScreen';
 import ReadQrCodeScreen from './screens/ReadQrCodeScreen';
 import ResultScreen from './screens/ResultScreen';
 import type { RootStackParamList } from './screens/RootStackParamList';
@@ -49,8 +48,7 @@ export default function App() {
 						name="SelectAuthenticator"
 						component={SelectAuthenticatorScreen}
 					/>
-					<RootStack.Screen name="Pin" component={PinScreen} />
-					<RootStack.Screen name="Password" component={PasswordScreen} />
+					<RootStack.Screen name="Credential" component={CredentialScreen} />
 					<RootStack.Screen
 						name="DeviceInformationChange"
 						component={DeviceInformationChangeScreen}

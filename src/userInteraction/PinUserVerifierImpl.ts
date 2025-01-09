@@ -8,7 +8,8 @@ import {
 	PinUserVerifier,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { PinMode } from '../model/PinMode';
+import { CredentialKind } from '../model/CredentialKind';
+import { CredentialMode } from '../model/CredentialMode';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class PinUserVerifierImpl extends PinUserVerifier {
@@ -22,12 +23,14 @@ export class PinUserVerifierImpl extends PinUserVerifier {
 				: 'Please start PIN user verification.'
 		);
 
-		RootNavigation.navigate('Pin', {
-			mode: PinMode.verification,
+		RootNavigation.navigate('Credential', {
+			mode: CredentialMode.verification,
+			kind: CredentialKind.pin,
 			handler: handler,
 			lastRecoverableError: context.lastRecoverableError,
-			authenticatorProtectionStatus: context.authenticatorProtectionStatus,
+			pinProtectionStatus: context.authenticatorProtectionStatus,
 		});
+
 		return Promise.resolve();
 	}
 
