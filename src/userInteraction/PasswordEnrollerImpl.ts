@@ -9,7 +9,8 @@ import {
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
 import { PasswordPolicyImpl } from './PasswordPolicyImpl';
-import { PasswordMode } from '../model/PasswordMode';
+import { CredentialKind } from '../model/CredentialKind';
+import { CredentialMode } from '../model/CredentialMode';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class PasswordEnrollerImpl extends PasswordEnroller {
@@ -20,8 +21,9 @@ export class PasswordEnrollerImpl extends PasswordEnroller {
 				: 'Please start password enrollment.'
 		);
 
-		RootNavigation.navigate('Password', {
-			mode: PasswordMode.enrollment,
+		RootNavigation.navigate('Credential', {
+			mode: CredentialMode.enrollment,
+			kind: CredentialKind.password,
 			handler: handler,
 			lastRecoverableError: context.lastRecoverableError,
 		});

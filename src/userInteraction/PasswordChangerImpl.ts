@@ -9,7 +9,8 @@ import {
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
 import { PasswordPolicyImpl } from './PasswordPolicyImpl';
-import { PasswordMode } from '../model/PasswordMode';
+import { CredentialKind } from '../model/CredentialKind';
+import { CredentialMode } from '../model/CredentialMode';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class PasswordChangerImpl extends PasswordChanger {
@@ -20,11 +21,12 @@ export class PasswordChangerImpl extends PasswordChanger {
 				: 'Please start password change.'
 		);
 
-		RootNavigation.navigate('Password', {
-			mode: PasswordMode.credentialChange,
+		RootNavigation.navigate('Credential', {
+			mode: CredentialMode.change,
+			kind: CredentialKind.password,
 			handler: handler,
 			lastRecoverableError: context.lastRecoverableError,
-			authenticatorProtectionStatus: context.authenticatorProtectionStatus,
+			passwordProtectionStatus: context.authenticatorProtectionStatus,
 		});
 	}
 

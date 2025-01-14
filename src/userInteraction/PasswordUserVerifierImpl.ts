@@ -8,7 +8,8 @@ import {
 	PasswordUserVerifier,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { PasswordMode } from '../model/PasswordMode';
+import { CredentialKind } from '../model/CredentialKind';
+import { CredentialMode } from '../model/CredentialMode';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class PasswordUserVerifierImpl extends PasswordUserVerifier {
@@ -22,12 +23,14 @@ export class PasswordUserVerifierImpl extends PasswordUserVerifier {
 				: 'Please start password user verification.'
 		);
 
-		RootNavigation.navigate('Password', {
-			mode: PasswordMode.verification,
+		RootNavigation.navigate('Credential', {
+			mode: CredentialMode.verification,
+			kind: CredentialKind.password,
 			handler: handler,
 			lastRecoverableError: context.lastRecoverableError,
-			authenticatorProtectionStatus: context.authenticatorProtectionStatus,
+			passwordProtectionStatus: context.authenticatorProtectionStatus,
 		});
+
 		return Promise.resolve();
 	}
 

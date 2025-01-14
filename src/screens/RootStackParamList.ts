@@ -21,9 +21,9 @@ import {
 
 import type { AccountItem } from '../model/AccountItem';
 import type { AuthenticatorItem } from '../model/AuthenticatorItem';
+import { CredentialKind } from '../model/CredentialKind';
+import { CredentialMode } from '../model/CredentialMode';
 import type { OperationType } from '../model/OperationType';
-import { PasswordMode } from '../model/PasswordMode';
-import type { PinMode } from '../model/PinMode';
 
 export type RootStackParamList = {
 	Home: undefined;
@@ -39,20 +39,19 @@ export type RootStackParamList = {
 		items: Array<AuthenticatorItem>;
 		handler?: AuthenticatorSelectionHandler;
 	};
-	Pin: {
-		mode: PinMode;
-		handler?: PinEnrollmentHandler | PinUserVerificationHandler | PinChangeHandler;
-		lastRecoverableError?: RecoverableError;
-		authenticatorProtectionStatus?: PinAuthenticatorProtectionStatus;
-	};
-	Password: {
-		mode: PasswordMode;
+	Credential: {
+		mode: CredentialMode;
+		kind: CredentialKind;
 		handler?:
+			| PinEnrollmentHandler
+			| PinUserVerificationHandler
+			| PinChangeHandler
 			| PasswordEnrollmentHandler
 			| PasswordUserVerificationHandler
 			| PasswordChangeHandler;
+		pinProtectionStatus?: PinAuthenticatorProtectionStatus;
+		passwordProtectionStatus?: PasswordAuthenticatorProtectionStatus;
 		lastRecoverableError?: RecoverableError;
-		authenticatorProtectionStatus?: PasswordAuthenticatorProtectionStatus;
 	};
 	DeviceInformationChange: {
 		name: string;

@@ -8,7 +8,8 @@ import {
 	PinEnrollmentHandler,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { PinMode } from '../model/PinMode';
+import { CredentialKind } from '../model/CredentialKind';
+import { CredentialMode } from '../model/CredentialMode';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class PinEnrollerImpl extends PinEnroller {
@@ -19,8 +20,9 @@ export class PinEnrollerImpl extends PinEnroller {
 				: 'Please start PIN enrollment.'
 		);
 
-		RootNavigation.navigate('Pin', {
-			mode: PinMode.enrollment,
+		RootNavigation.navigate('Credential', {
+			mode: CredentialMode.enrollment,
+			kind: CredentialKind.pin,
 			handler: handler,
 			lastRecoverableError: context.lastRecoverableError,
 		});

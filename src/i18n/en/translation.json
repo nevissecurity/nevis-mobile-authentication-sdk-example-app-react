@@ -51,8 +51,10 @@
 			"pin": "Enter PIN",
 			"oldPin": "Enter old PIN"
 		},
-		"pinProtectionStatusDescriptionLocked": "Authenticator is locked.",
-		"pinProtectionStatusDescriptionUnlocked": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+		"protectionStatus": {
+			"locked": "Authenticator is locked.",
+			"lastAttemptFailed": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+		}
 	},
 	"password": {
 		"enrollment": {
@@ -71,15 +73,17 @@
 			"password": "Enter password",
 			"oldPassword": "Enter old password"
 		},
-		"passwordProtectionStatusDescriptionLocked": "Authenticator is locked.",
-		"passwordProtectionStatusDescriptionUnlocked": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+		"protectionStatus": {
+			"locked": "Authenticator is locked.",
+			"lastAttemptFailed": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+		}
 	},
 	"transactionConfirmation": {
 		"title": "Transaction Confirmation"
 	},
 	"confirmation": {
 		"description": "Authenticate using {{authenticator}}",
-		"description_fingerprint_verification": "Use Fingerprint sensor to authenticate."
+		"fingerprintVerification": "Use Fingerprint sensor to authenticate."
 	},
 	"deviceInformationChange": {
 		"title": "Change Device Information",
