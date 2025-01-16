@@ -27,5 +27,6 @@ runs:
           run: yarn pods:new
 
         - name: Install Cocoapods - old architecture
+          if: inputs.new-arch-enabled == 'false'
           shell: bash
           run: yarn pods:old
