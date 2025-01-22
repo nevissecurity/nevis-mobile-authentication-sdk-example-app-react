@@ -1,5 +1,5 @@
 /**
- * Copyright © 2023 Nevis Security AG. All rights reserved.
+ * Copyright © 2025 Nevis Security AG. All rights reserved.
  */
 
 import { memo } from 'react';
@@ -10,17 +10,26 @@ import debounce from 'debounce';
 import { darkStyle, lightStyle } from '../Styles';
 import Constants from '../utility/Constants';
 
-function OutlinedButton({ text, onPress }: { text: string; onPress: () => void }) {
+function ListItem({
+	title,
+	details,
+	onPress,
+}: {
+	title: string;
+	details?: string;
+	onPress: () => void;
+}) {
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	return (
 		<TouchableOpacity
-			style={[styles.input, styles.roundedButton]}
+			style={styles.listContainer}
 			onPress={debounce(onPress, Constants.bounceRate, { immediate: true })}
 		>
-			<Text style={[styles.textForeground, styles.textNormal]}>{text}</Text>
+			<Text style={[styles.textForeground, styles.textNormal]}>{title}</Text>
+			{details && <Text style={[styles.textForeground, styles.textDetail]}>{details}</Text>}
 		</TouchableOpacity>
 	);
 }
 
-export default memo(OutlinedButton);
+export default memo(ListItem);

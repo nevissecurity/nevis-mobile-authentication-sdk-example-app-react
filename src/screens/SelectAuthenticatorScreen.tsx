@@ -3,7 +3,7 @@
  */
 
 import { useCallback } from 'react';
-import { BackHandler, FlatList, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { BackHandler, FlatList, Text, useColorScheme, View } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type RootStackParamList } from './RootStackParamList';
 import useSelectAuthenticatorViewModel from './SelectAuthenticatorViewModel';
+import ListItem from '../components/ListItem';
 import { AuthenticatorItemUtils } from '../model/AuthenticatorItem';
 import { darkStyle, lightStyle } from '../Styles';
 import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
@@ -30,27 +31,8 @@ type SelectAuthenticatorItemProps = {
 	onPress: () => void;
 };
 
-const SelectAuthenticatorListItem = ({
-	title,
-	details,
-	onPress,
-}: {
-	title: string;
-	details?: string;
-	onPress: () => void;
-}) => {
-	const colorScheme = useColorScheme();
-	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
-	return (
-		<TouchableOpacity style={styles.listContainer} onPress={onPress}>
-			<Text style={[styles.textForeground, styles.textNormal]}>{title}</Text>
-			{details && <Text style={[styles.textForeground, styles.textDetail]}>{details}</Text>}
-		</TouchableOpacity>
-	);
-};
-
 const SelectAuthenticatorItem = ({ item, onPress }: SelectAuthenticatorItemProps) => (
-	<SelectAuthenticatorListItem title={item.title} details={item.details} onPress={onPress} />
+	<ListItem title={item.title} details={item.details} onPress={onPress} />
 );
 
 const SelectAuthenticatorScreen = ({ route }: Props) => {
