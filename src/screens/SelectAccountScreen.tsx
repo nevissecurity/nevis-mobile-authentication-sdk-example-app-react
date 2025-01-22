@@ -1,7 +1,8 @@
 /**
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
-import { FlatList, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+
+import { FlatList, Text, useColorScheme, View } from 'react-native';
 
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type RootStackParamList } from './RootStackParamList';
 import useSelectAccountViewModel from './SelectAccountViewModel';
+import ListItem from '../components/ListItem';
 import { darkStyle, lightStyle } from '../Styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectAccount'>;
@@ -22,18 +24,8 @@ type SelectAccountItemProps = {
 	onPress: () => void;
 };
 
-const SelectAccountListItem = ({ title, onPress }: { title: string; onPress: () => void }) => {
-	const colorScheme = useColorScheme();
-	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
-	return (
-		<TouchableOpacity style={styles.listContainer} onPress={onPress}>
-			<Text style={[styles.textForeground, styles.textNormal]}>{title}</Text>
-		</TouchableOpacity>
-	);
-};
-
 const SelectAccountItem = ({ item, onPress }: SelectAccountItemProps) => (
-	<SelectAccountListItem title={item.username} onPress={onPress} />
+	<ListItem title={item.username} onPress={onPress} />
 );
 
 const SelectAccountScreen = ({ route }: Props) => {
