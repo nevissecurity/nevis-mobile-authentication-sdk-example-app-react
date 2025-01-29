@@ -10,6 +10,7 @@ import {
 	DevicePasscodePromptOptions,
 	DevicePasscodeUserVerificationHandler,
 	FingerprintUserVerificationHandler,
+	OsAuthenticationListenHandler,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import i18next from 'i18next';
 
@@ -19,6 +20,33 @@ import { OperationType } from '../model/OperationType';
 
 const useConfirmationViewModel = () => {
 	const [isFingerPrintVerification, setIsFingerPrintVerification] = useState(false);
+	const [listenHandler, setListenHandler] = useState<OsAuthenticationListenHandler>();
+
+	async function onPause() {
+		if (listenHandler !== undefined) {
+			console.log('OS authentication listen handler exists, pausing...');
+			await listenHandler
+				.pauseListening()
+				.then((newListenHandler) => {
+					setListenHandler(newListenHandler);
+					console.log('Listening paused.');
+				})
+				.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+		}
+	}
+
+	async function onResume() {
+		if (listenHandler !== undefined) {
+			console.log('OS authentication listen handler exists, resuming...');
+			await listenHandler
+				.resumeListening()
+				.then((newListenHandler) => {
+					setListenHandler(newListenHandler);
+					console.log('Listening resumed.');
+				})
+				.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
+		}
+	}
 
 	async function confirm(
 		handler:
@@ -37,6 +65,9 @@ const useConfirmationViewModel = () => {
 							i18next.t('biometric.popup.description')
 						)
 					)
+					.then((listenHandler) => {
+						setListenHandler(listenHandler);
+					})
 					.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 				break;
 			case handler instanceof FingerprintUserVerificationHandler:
@@ -44,6 +75,9 @@ const useConfirmationViewModel = () => {
 				setIsFingerPrintVerification(true);
 				await handler
 					.listenForOsCredentials()
+					.then((listenHandler) => {
+						setListenHandler(listenHandler);
+					})
 					.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 				break;
 			case handler instanceof DevicePasscodeUserVerificationHandler:
@@ -55,6 +89,9 @@ const useConfirmationViewModel = () => {
 							i18next.t('devicePasscode.popup.description')
 						)
 					)
+					.then((listenHandler) => {
+						setListenHandler(listenHandler);
+					})
 					.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 				break;
 			default:
@@ -77,6 +114,8 @@ const useConfirmationViewModel = () => {
 
 	return {
 		isFingerPrintVerification,
+		onPause,
+		onResume,
 		confirm,
 		cancel,
 	};

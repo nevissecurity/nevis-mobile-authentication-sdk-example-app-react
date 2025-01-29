@@ -2,8 +2,16 @@
  * Copyright © 2024 Nevis Security AG. All rights reserved.
  */
 
-import { useCallback } from 'react';
-import { BackHandler, ScrollView, Text, useColorScheme, View } from 'react-native';
+import { useCallback, useRef } from 'react';
+import {
+	AppState,
+	AppStateStatus,
+	BackHandler,
+	ScrollView,
+	Text,
+	useColorScheme,
+	View,
+} from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import { type NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -18,23 +26,50 @@ import { darkStyle, lightStyle } from '../Styles';
 type Props = NativeStackScreenProps<RootStackParamList, 'Confirmation'>;
 
 const ConfirmationScreen = ({ route }: Props) => {
-	const { isFingerPrintVerification, confirm, cancel } = useConfirmationViewModel();
+	const { isFingerPrintVerification, onPause, onResume, confirm, cancel } =
+		useConfirmationViewModel();
 
 	const { t } = useTranslation();
 	const colorScheme = useColorScheme();
 	const styles = colorScheme === 'dark' ? darkStyle : lightStyle;
 	const insets = useSafeAreaInsets();
+	const appState = useRef(AppState.currentState);
+
+	function subscribeToBackPress() {
+		const onBackPress = () => {
+			cancel(route.params.handler);
+			return true;
+		};
+
+		return BackHandler.addEventListener('hardwareBackPress', onBackPress);
+	}
+
+	function subscribeToAppStateChange() {
+		const onStateChange = async (nextAppState: AppStateStatus) => {
+			console.log(`New app state is ${nextAppState}`);
+			if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+				console.log('App has come to the foreground!');
+				await onResume();
+			} else if (appState.current === 'active' && nextAppState.match(/inactive|background/)) {
+				console.log('App will enter to the background!');
+				await onPause();
+			}
+
+			appState.current = nextAppState;
+		};
+
+		return AppState.addEventListener('change', onStateChange);
+	}
 
 	useFocusEffect(
 		useCallback(() => {
-			const onBackPress = () => {
-				cancel(route.params.handler);
-				return true;
+			const backSubscription = subscribeToBackPress();
+			const stateSubscription = subscribeToAppStateChange();
+
+			return () => {
+				backSubscription.remove();
+				stateSubscription.remove();
 			};
-
-			const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-			return () => subscription.remove();
 		}, [route.params.handler])
 	);
 
