@@ -1,0 +1,23 @@
+name: Run Ruby linter
+description: Run Ruby linter on the project
+
+inputs:
+  working-directory:
+    description: 'The working directory to run the linter in'
+    required: false
+    default: '.'
+
+runs:
+  using: composite
+  steps:
+      - name: Setup RubyGem Dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+          working-directory: ${{ inputs.working-directory }}
+
+      - name: Run Ruby Linter
+        shell: bash
+        working-directory: ${{ inputs.working-directory }}
+        run: bundle exec rubocop -c ${{ github.workspace }}/.rubocop.yml
