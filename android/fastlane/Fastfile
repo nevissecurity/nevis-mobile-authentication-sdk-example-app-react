@@ -13,14 +13,14 @@ display_name = "Nevis Mobile Authentication SDK Example App React Android"
 def report_on_success(message)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL']
-	) if ENV['SLACK_WEBHOOK_URL']
+		slack_url: ENV["SLACK_WEBHOOK_URL"]
+	) if ENV["SLACK_WEBHOOK_URL"]
 end
 
 def report_on_error(message, exception)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL'],
+		slack_url: ENV["SLACK_WEBHOOK_URL"],
 		success: false,
 		attachment_properties: {
 			fields: [
@@ -31,17 +31,15 @@ def report_on_error(message, exception)
 				}
 			]
 		}
-	) if ENV['SLACK_WEBHOOK_URL']
-	UI.user_error!("#{exception}")
+	) if ENV["SLACK_WEBHOOK_URL"]
+	UI.user_error!(exception.to_s)
 end
 
 def get_boolean?(input)
-	if input.nil?
-		return false
-	else
-		bool_input = input.to_s.downcase
-		return bool_input == "true" || bool_input == "1"
-	end
+	return false if input.nil?
+
+	bool_input = input.to_s.downcase
+	["true", "1"].include?(bool_input)
 end
 
 platform :android do
@@ -52,49 +50,47 @@ platform :android do
 	desc " * **`new_arch_enabled`**: The build number of the application."
 	desc ""
 	lane :main do |options|
-		begin
-			version = options[:version]
-			build_number = options[:build_number]
-			new_arch_enabled = !options[:new_arch_enabled].nil? ? get_boolean?(options[:new_arch_enabled]) : false
-			UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
+		version = options[:version]
+		build_number = options[:build_number]
+		new_arch_enabled = options[:new_arch_enabled].nil? ? false : get_boolean?(options[:new_arch_enabled])
+		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
-			modify_gradle_file(
-				constant: "versionName",
-				value: version,
-			)
+		modify_gradle_file(
+			constant: "versionName",
+			value: version,
+		)
 
-			modify_gradle_file(
-				constant: "versionCode",
-				value: build_number,
-			)
+		modify_gradle_file(
+			constant: "versionCode",
+			value: build_number,
+		)
 
-			sh("echo \"#{ENV["SIGNING_CONFIGS"]}\" > #{signing_configs_gradle}")
+		sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
 
-			modify_gradle_file(
-				constant: "signingConfig",
-				value: "signingConfigs.signing",
-			)
+		modify_gradle_file(
+			constant: "signingConfig",
+			value: "signingConfigs.signing",
+		)
 
-			modify_gradle_file(
-				constant: "apply plugin: 'com.facebook.react'",
-				value: "apply from: 'signing_configs.gradle'",
-				mode: 'append'
-			)
+		modify_gradle_file(
+			constant: "apply plugin: 'com.facebook.react'",
+			value: "apply from: 'signing_configs.gradle'",
+			mode: "append"
+		)
 
-			gradle(
-				task: "clean assembleDebug",
-				properties: {
-					"newArchEnabled" => new_arch_enabled
-				}
-			)
+		gradle(
+			task: "clean assembleDebug",
+			properties: {
+				"newArchEnabled" => new_arch_enabled
+			}
+		)
 
-			firebase_app_distribution(
-				app: ENV["FIREBASE_APP_ID_ANDROID"],
-				groups: 'developers, internal-testers, presales'
-			)
-			report_on_success("#{display_name} build completed: #{version} (#{build_number}) ✅")
-		rescue => exception
-			report_on_error("#{display_name} build failed ❌", exception)
-		end
+		firebase_app_distribution(
+			app: ENV["FIREBASE_APP_ID_ANDROID"],
+			groups: "developers, internal-testers, presales"
+		)
+		report_on_success("#{display_name} build completed: #{version} (#{build_number}) ✅")
+	rescue => e
+		report_on_error("#{display_name} build failed ❌", e)
 	end
 end

@@ -3,8 +3,8 @@
 ## See https://docs.fastlane.tools
 ##
 
-require 'securerandom'
-require 'json'
+require "securerandom"
+require "json"
 
 default_platform(:ios)
 
@@ -20,8 +20,8 @@ end
 
 def create_temp_keychain(name, password)
 	create_keychain(
-		name: name,
-		password: password,
+		name:,
+		password:,
 		unlock: true,
 		timeout: 0,
 		lock_when_sleeps: true
@@ -29,22 +29,20 @@ def create_temp_keychain(name, password)
 end
 
 def delete_temp_keychain(name)
-	delete_keychain(
-		name: name
-	) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+	delete_keychain(name:) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
 end
 
 def report_on_success(message)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL']
-	) if ENV['SLACK_WEBHOOK_URL']
+		slack_url: ENV["SLACK_WEBHOOK_URL"]
+	) if ENV["SLACK_WEBHOOK_URL"]
 end
 
 def report_on_error(message, exception)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL'],
+		slack_url: ENV["SLACK_WEBHOOK_URL"],
 		success: false,
 		attachment_properties: {
 			fields: [
@@ -55,8 +53,8 @@ def report_on_error(message, exception)
 				}
 			]
 		}
-	) if ENV['SLACK_WEBHOOK_URL']
-	UI.user_error!("#{exception}")
+	) if ENV["SLACK_WEBHOOK_URL"]
+	UI.user_error!(exception.to_s)
 end
 
 platform :ios do
@@ -66,35 +64,33 @@ platform :ios do
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :main do |options|
-		begin
-			version = options[:version]
-			build_number = options[:build_number]
+		version = options[:version]
+		build_number = options[:build_number]
 
-			keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
-			ensure_temp_keychain(
-				keychain_name,
-				keychain_password
-			)
+		keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
+		ensure_temp_keychain(
+			keychain_name,
+			keychain_password
+		)
 
-			UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
+		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
-			increment_version_number(
-				version_number: version
-			)
+		increment_version_number(
+			version_number: version
+		)
 
-			increment_build_number(
-				build_number: build_number
-			)
+		increment_build_number(
+			build_number:
+		)
 
-			distribute(destination: Destination::FIREBASE)
-			distribute(destination: Destination::TESTFLIGHT)
+		distribute(destination: Destination::FIREBASE)
+		distribute(destination: Destination::TESTFLIGHT)
 
-			delete_temp_keychain(keychain_name)
-			report_on_success("#{display_name} build completed: #{version} (#{build_number}) ✅")
-		rescue => exception
-			delete_temp_keychain(keychain_name)
-			report_on_error("#{display_name} build failed ❌", exception)
-		end
+		delete_temp_keychain(keychain_name)
+		report_on_success("#{display_name} build completed: #{version} (#{build_number}) ✅")
+	rescue => e
+		delete_temp_keychain(keychain_name)
+		report_on_error("#{display_name} build failed ❌", e)
 	end
 
 	private_lane :distribute do |options|
@@ -104,14 +100,14 @@ platform :ios do
 		begin
 			# Setup code signing
 			match(
-				type: getConfig(destination: destination, step: Step::MATCH),
+				type: getConfig(destination:, step: Step::MATCH),
 				readonly: true,
-				app_identifier: app_identifier,
+				app_identifier:,
 				git_url: ENV["MATCH_GIT_URL"],
 				git_branch: "main",
 				git_basic_authorization: Base64.strict_encode64(ENV["MATCH_GIT_AUTHORIZATION"]),
-				keychain_name: keychain_name,
-				keychain_password: keychain_password
+				keychain_name:,
+				keychain_password:
 			)
 
 			update_code_signing_settings(
@@ -120,7 +116,7 @@ platform :ios do
 				use_automatic_signing: false,
 				team_id: ENV["DEVELOPER_PORTAL_TEAM_ID"],
 				code_sign_identity: ENV["CODE_SIGNING_IDENTITY"],
-				profile_name: ENV["sigh_#{app_identifier}_#{getConfig(destination: destination, step: Step::CODE_SIGN)}_profile-name"],
+				profile_name: ENV["sigh_#{app_identifier}_#{getConfig(destination:, step: Step::CODE_SIGN)}_profile-name"],
 			)
 
 			# Build
@@ -131,10 +127,10 @@ platform :ios do
 				clean: true,
 				skip_profile_detection: true,
 				skip_package_dependencies_resolution: true,
-				export_method: getConfig(destination: destination, step: Step::GYM),
+				export_method: getConfig(destination:, step: Step::GYM),
 				export_options: {
 					provisioningProfiles: {
-						app_identifier => "match #{getConfig(destination: destination, step: Step::PROVISIONING_PROFILE)} #{app_identifier}"
+						app_identifier => "match #{getConfig(destination:, step: Step::PROVISIONING_PROFILE)} #{app_identifier}"
 					}
 				},
 				xcargs: "OTHER_CODE_SIGN_FLAGS=\"--keychain=#{keychain_name}\""
@@ -151,13 +147,13 @@ platform :ios do
 				)
 			when Destination::TESTFLIGHT
 				# Upload to TestFlight
-				testflight_app_distribution()
+				testflight_app_distribution
 			else
 				UI.user_error!("⚠️ provided destination: #{destination} is not supported")
 			end
-		rescue => exception
+		rescue => e
 			delete_temp_keychain(keychain_name)
-			report_on_error("#{display_name} build failed ❌", exception)
+			report_on_error("#{display_name} build failed ❌", e)
 		end
 	end
 
@@ -166,18 +162,18 @@ platform :ios do
 	##
 
 	module Step
-		MATCH = 'match'
-		CODE_SIGN = 'code_sign'
-		GYM = 'gym'
-		PROVISIONING_PROFILE = 'prov_profile'
+		MATCH = "match".freeze
+		CODE_SIGN = "code_sign".freeze
+		GYM = "gym".freeze
+		PROVISIONING_PROFILE = "prov_profile".freeze
 	end
 
 	module Destination
-		FIREBASE = 'firebase'
-		TESTFLIGHT = 'testflight'
+		FIREBASE = "firebase".freeze
+		TESTFLIGHT = "testflight".freeze
 	end
 
-	private_lane :testflight_app_distribution do |options|
+	private_lane :testflight_app_distribution do |_options|
 		# Get AppStoreConnect Credentials
 		app_store_connect_api_key(
 			key_id: ENV["CONNECT_API_KEY_ID"],
@@ -197,7 +193,7 @@ platform :ios do
 
 		# Upload App to TestFlight
 		upload_to_testflight(
-			beta_app_review_info: beta_app_review_info,
+			beta_app_review_info:,
 			beta_app_description: "https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react",
 			groups: "Nevis testers",
 			changelog: "https://docs.nevis.net/mobilesdk/quickstart",
@@ -211,18 +207,18 @@ platform :ios do
 		destination = options[:destination]
 		step = options[:step]
 
-		case true
-		when ((step == Step::MATCH || step == Step::CODE_SIGN) && (destination == Destination::FIREBASE))
+		case [step, destination]
+		when [Step::MATCH, Destination::FIREBASE], [Step::CODE_SIGN, Destination::FIREBASE]
 			config = "adhoc"
-		when ((step == Step::MATCH || step == Step::CODE_SIGN) && (destination == Destination::TESTFLIGHT))
+		when [Step::MATCH, Destination::TESTFLIGHT], [Step::CODE_SIGN, Destination::TESTFLIGHT]
 			config = "appstore"
-		when (step == Step::GYM && (destination == Destination::FIREBASE))
+		when [Step::GYM, Destination::FIREBASE]
 			config = "ad-hoc"
-		when (step == Step::GYM && (destination == Destination::TESTFLIGHT))
+		when [Step::GYM, Destination::TESTFLIGHT]
 			config = "app-store"
-		when ((step == Step::PROVISIONING_PROFILE) && (destination == Destination::FIREBASE))
+		when [Step::PROVISIONING_PROFILE, Destination::FIREBASE]
 			config = "AdHoc"
-		when ((step == Step::PROVISIONING_PROFILE) && (destination == Destination::TESTFLIGHT))
+		when [Step::PROVISIONING_PROFILE, Destination::TESTFLIGHT]
 			config = "AppStore"
 		else
 			UI.user_error!("⚠️ Could not get configuration value for: Step - #{step}, Destination - #{destination}")

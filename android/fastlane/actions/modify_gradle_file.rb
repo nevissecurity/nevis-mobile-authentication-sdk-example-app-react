@@ -1,5 +1,5 @@
-require 'tempfile'
-require 'fileutils'
+require "tempfile"
+require "fileutils"
 
 module Fastlane
 	module Actions
@@ -10,31 +10,29 @@ module Fastlane
 				value = params[:value]
 				mode ||= params[:mode]
 
-				if gradle_file_path != nil
-					UI.message(" Using gradle file (#{gradle_file_path})!")
-					modify(gradle_file_path, constant, value, mode)
-				else
+				if gradle_file_path.nil?
 					app_folder_name ||= params[:app_folder_name]
 					UI.message("Using project folder `#{app_folder_name}`!")
 
 					Dir.glob("**/#{app_folder_name}/build.gradle") do |path|
 						modify(path, constant, value, mode)
 					end
+				else
+					UI.message(" Using gradle file (#{gradle_file_path})!")
+					modify(gradle_file_path, constant, value, mode)
 				end
 			end
 
 			def self.modify(path, constant_name, constant_value, mode)
-				unless File.file?(path)
-					raise "No file exist at path: (#{path})!"
-				end
+				raise "No file exist at path: (#{path})!" unless File.file?(path)
 
 				begin
-					temp_file = Tempfile.new('fastlaneModifyGradleFile')
-					File.open(path, 'r') do |file|
+					temp_file = Tempfile.new("fastlaneModifyGradleFile")
+					File.open(path, "r") do |file|
 						file.each_line do |line|
 							if line.include? constant_name
 								if mode == "replace"
-									components = line.strip.split(' ')
+									components = line.strip.split
 									current_value = components[components.length - 1].tr("\"", "")
 									line.replace line.sub(current_value, constant_value)
 									temp_file.puts line
@@ -53,7 +51,7 @@ module Fastlane
 					FileUtils.mv(temp_file.path, path)
 					temp_file.unlink
 				rescue
-					raise 'Modifying gradle file failed!'
+					raise "Modifying gradle file failed!"
 				end
 			end
 
@@ -63,29 +61,39 @@ module Fastlane
 
 			def self.available_options
 				[
-					FastlaneCore::ConfigItem.new(key: :app_folder_name,
-																			 description: "The name of the application source folder in the Android project (default: app)",
-																			 optional: true,
-																			 type: String,
-																			 default_value: "app"),
-					FastlaneCore::ConfigItem.new(key: :gradle_file_path,
-																			 description: "The relative path to the gradle file containing the constant parameter (default:app/build.gradle)",
-																			 optional: true,
-																			 type: String,
-																			 default_value: nil),
-					FastlaneCore::ConfigItem.new(key: :constant,
-																			 description: "The constant whose value is to be replaced or appended after",
-																			 optional: false,
-																			 type: String),
-					FastlaneCore::ConfigItem.new(key: :value,
-																			 description: "The new value",
-																			 optional: false,
-																			 type: String),
-					FastlaneCore::ConfigItem.new(key: :mode,
-																			 description: "The working mode. Possible values are replace or append (default: replace)",
-																			 optional: true,
-																			 type: String,
-																			 default_value: "replace"),
+					FastlaneCore::ConfigItem.new(
+						key: :app_folder_name,
+						description: "The name of the application source folder in the Android project (default: app)",
+						optional: true,
+						type: String,
+						default_value: "app"
+					),
+					FastlaneCore::ConfigItem.new(
+						key: :gradle_file_path,
+						description: "The relative path to the gradle file containing the constant parameter (default:app/build.gradle)",
+						optional: true,
+						type: String,
+						default_value: nil
+					),
+					FastlaneCore::ConfigItem.new(
+						key: :constant,
+						description: "The constant whose value is to be replaced or appended after",
+						optional: false,
+						type: String
+					),
+					FastlaneCore::ConfigItem.new(
+						key: :value,
+						description: "The new value",
+						optional: false,
+						type: String
+					),
+					FastlaneCore::ConfigItem.new(
+						key: :mode,
+						description: "The working mode. Possible values are replace or append (default: replace)",
+						optional: true,
+						type: String,
+						default_value: "replace"
+					),
 				]
 			end
 
