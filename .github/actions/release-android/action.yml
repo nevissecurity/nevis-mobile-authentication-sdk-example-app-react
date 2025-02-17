@@ -54,8 +54,8 @@ runs:
           env:
               GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
               SIGNING_CONFIGS: ${{ env.SIGNING_CONFIGS }}
-              GITHUB_USERNAME: ${{ env.GITHUB_USERNAME }}
-              GITHUB_PERSONAL_ACCESS_TOKEN: ${{ env.GITHUB_PERSONAL_ACCESS_TOKEN }}
+              GH_USERNAME: ${{ env.GH_USERNAME }}
+              GH_PERSONAL_ACCESS_TOKEN: ${{ env.GH_PERSONAL_ACCESS_TOKEN }}
               FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
               FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
               SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
