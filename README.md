@@ -53,8 +53,8 @@ First open a terminal and run the `yarn` command in the root directory to get th
     * as environment variables.
     * in `gradle.properties` in `GRADLE_USER_HOME` directory or in Gradle installation directory.
     ```properties
-    GITHUB_USERNAME=<YOUR USERNAME>
-    GITHUB_PERSONAL_ACCESS_TOKEN=<YOUR PERSONAL ACCESS TOKEN>
+    GH_USERNAME=<YOUR USERNAME>
+    GH_PERSONAL_ACCESS_TOKEN=<YOUR PERSONAL ACCESS TOKEN>
     ```
 
 2. To choose between the Old and the [new architecture](https://reactnative.dev/docs/the-new-architecture/landing-page), you have to set the `newArchEnabled` property to `false` or `true` respectively by either (Note that if you use the yarn scripts described in the Build & run section, this will be done automatically for the selected architecture via setting the environment variable):
