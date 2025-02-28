@@ -33,7 +33,7 @@ Before you can actually start compiling and using the example application please
 Your development setup has to meet the following prerequisites:
 
 * iOS 15.1 or later
-* Xcode 15.4, including Swift 5.10
+* Xcode 16.2, including Swift 6.0.3 or later
 * Android 7 or later, with API level 24
 * Android 10 or later, with API level 29, for the biometric authenticator to work
 * Android 11 or later, with API level 30, for the device passcode authenticator to work

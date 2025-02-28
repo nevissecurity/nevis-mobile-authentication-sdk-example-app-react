@@ -15,7 +15,7 @@ on:
                 default: "self-hosted"
                 options:
                     - "self-hosted"
-                    - "macos-13"
+                    - "macos-15"
 
 env:
     BUILD_TYPE: 'RELEASE' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE'
@@ -41,7 +41,7 @@ env:
     CONNECT_API_ISSUER_ID: ${{ secrets.CONNECT_API_ISSUER_ID }}
     CONNECT_API_KEY_CONTENT: ${{ secrets.CONNECT_API_KEY_CONTENT }}
     BETA_APP_REVIEW_INFO: ${{ vars.BETA_APP_REVIEW_INFO }}
-    XCODE_VERSION: 15.4
+    XCODE_VERSION: 16.2
     JAVA_VERSION: 17
     RUBY_VERSION: 3.1
 
