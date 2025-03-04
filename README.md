@@ -65,8 +65,8 @@ First open a terminal and run the `yarn` command in the root directory to get th
 
 4. Synchronize your [android](/android) project with Gradle if opened in Android Studio.
 
-> [!WARNING]
-> The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
+:warning: **Warning**\
+The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
 
 </details>
 
@@ -173,8 +173,8 @@ yarn ios:old
 
 Or by choosing Product > Run from Xcode, or by clicking the Run button in your project’s toolbar, similarly how you would run a native iOS application.
 
-> [!NOTE]
-> Running the app on an iOS device requires codesign setup.
+:point_up: **Note**\
+Running the app on an iOS device requires codesign setup.
 
 </details>
 
@@ -256,6 +256,12 @@ With the change PIN operation you can modify the PIN of a registered PIN authent
 * in case of a single registered user see the [HomeViewModel](src/screens/HomeViewModel.ts) class.
 * in case of multiple registered users see the [SelectAccountViewModel](src/screens/SelectAccountViewModel.ts) class.
 
+#### Change password
+
+With the change password operation you can modify the password of a registered Password authenticator for a given user. It is implemented in:
+* in case of a single registered user see the [HomeViewModel](src/screens/HomeViewModel.ts) class.
+* in case of multiple registered users see the [SelectAccountViewModel](src/screens/SelectAccountViewModel.ts) class.
+
 #### Decode out-of-band payload
 
 Out-of-band operations occur when a message is delivered to the application through an alternate channel like a push notification, a QR code, or a deep link. With the help of the [OutOfBandOperationHandler](src/userInteraction/OutOfBandOperationHandler.ts) class the application can create an `OutOfBandPayload` either from a JSON or a Base64 URL encoded String. The `OutOfBandPayload` is then used to start an `OutOfBandOperation`, see chapters [Out-of-Band Registration](#out-of-band-registration) and [Out-of-Band Authentication](#out-of-band-authentication).
@@ -266,8 +272,8 @@ During registration, the device information can be provided that contains the na
 
 Firebase Cloud Messaging is not supported in the example app.
 
-## License
+### Error handling
 
-Nevis Mobile Authentication Client SDK for React Native is released under a commercial license. See [LICENSE](LICENSE) for details.
+As this is an example app, we are directly showing the technical error occurring. Be aware that this is not to be considered best practice. Your own production app should handle the errors in a more appropriate manner such as providing translations for all your supported languages as well as simplifying the error message presented to the end-user in a way non-technical adverse people can understand and act upon them.
 
 © 2023 made with ❤ by Nevis
