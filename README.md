@@ -178,6 +178,33 @@ Running the app on an iOS device requires codesign setup.
 
 </details>
 
+#### Speed up local builds with ccache
+
+To speed up local builds you can enable `ccache`, a compiler cache that speeds up recompilation by caching previous compilations.
+
+To enable `ccache`, follow these instructions:
+
+- Install `ccache` on your machine. On macOS, you can use Homebrew:
+```shell
+brew install ccache
+```
+
+- Add the following environment variables:
+```bash
+ export USE_CCACHE=1\n
+ export NDK_CCACHE=ccache\n
+```
+- Uncomment the `ccache_enabled: true` line in the Podfile
+
+> **Warning** Pay attention not to commit the changes caused in the .pbxproj file!\
+> The following values should be empty!\
+> CC = "";\
+> CXX = "";\
+> LD = "";\
+> LDPLUSPLUS = "";
+
+Further information can be found in the [ccache documentation](https://ccache.dev/).
+
 ### Try it out
 
 Now that the React Native example app is up and running, it's time to try it out!
