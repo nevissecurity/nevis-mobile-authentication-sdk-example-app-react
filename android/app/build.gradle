@@ -80,6 +80,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            externalNativeBuild {
+                ndkBuild {
+                    cFlags "-O0 -g"
+                    cppFlags "-O0 -g"
+                }
+            }
+        }
         configureEach {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -89,7 +97,7 @@ android {
 }
 
 kotlin {
-	jvmToolchain(17)
+    jvmToolchain(17)
 }
 
 dependencies {
