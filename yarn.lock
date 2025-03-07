@@ -1767,9 +1767,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nevis-security/nevis-mobile-authentication-sdk-react@npm:~3.9.1":
-  version: 3.9.1
-  resolution: "@nevis-security/nevis-mobile-authentication-sdk-react@npm:3.9.1"
+"@nevis-security/nevis-mobile-authentication-sdk-react@npm:~3.10.0":
+  version: 3.10.0
+  resolution: "@nevis-security/nevis-mobile-authentication-sdk-react@npm:3.10.0"
   dependencies:
     "@eslint/compat": ^1.2.5
     "@eslint/eslintrc": ^3.2.0
@@ -1778,7 +1778,7 @@ __metadata:
   peerDependencies:
     react: 18.2.0 || 18.3.1
     react-native: ^0.74.6 || ^0.75.0 || ^0.76.0 || ^0.77.0
-  checksum: 664f8c37b926c78f29cddb2858e44f1d08e777ff18e5f30bbfcfb350296627497a17054d7035fbb7889cad7f556474568f363bc6567550133c2f40223a227343
+  checksum: ec8c75e3f2c0661aa030333b654716141611f3659c1473aab4628c46eccb1f65c6520042157489e81a34d2708a360e7ac035371de89740f78168a217eb11b279
   languageName: node
   linkType: hard
 
@@ -6929,7 +6929,7 @@ __metadata:
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.23.2
     "@babel/runtime": ^7.23.2
-    "@nevis-security/nevis-mobile-authentication-sdk-react": ~3.9.1
+    "@nevis-security/nevis-mobile-authentication-sdk-react": ~3.10.0
     "@react-native-community/cli": ^13.6.9
     "@react-native-community/cli-platform-android": ^13.6.9
     "@react-native-community/cli-platform-ios": ^13.6.9

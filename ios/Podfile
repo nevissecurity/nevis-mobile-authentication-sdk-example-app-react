@@ -21,8 +21,8 @@ unless linkage.nil?
 end
 
 target "nevis_mobile_authentication_sdk_example_app_react" do
-	pod "NevisMobileAuthentication-Debug", "~> 3.8.2", configurations: ["Debug"]
-	pod "NevisMobileAuthentication", "~> 3.8.2", configurations: ["Release"]
+	pod "NevisMobileAuthentication-Debug", "~> 3.9.0", configurations: ["Debug"]
+	pod "NevisMobileAuthentication", "~> 3.9.0", configurations: ["Release"]
 
 	config = use_native_modules!
 
