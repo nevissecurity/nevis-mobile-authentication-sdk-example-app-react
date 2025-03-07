@@ -7,14 +7,14 @@ PODS:
   - hermes-engine (0.74.6):
     - hermes-engine/Pre-built (= 0.74.6)
   - hermes-engine/Pre-built (0.74.6)
-  - NevisMobileAuthentication (3.8.2)
-  - NevisMobileAuthentication-Debug (3.8.2)
-  - NevisMobileAuthenticationSdkReact (3.9.1):
+  - NevisMobileAuthentication (3.9.0)
+  - NevisMobileAuthentication-Debug (3.9.0)
+  - NevisMobileAuthenticationSdkReact (3.10.0):
     - DoubleConversion
     - glog
     - hermes-engine
-    - NevisMobileAuthentication (~> 3.8.0)
-    - NevisMobileAuthentication-Debug (~> 3.8.0)
+    - NevisMobileAuthentication (~> 3.9.0)
+    - NevisMobileAuthentication-Debug (~> 3.9.0)
     - RCT-Folly (= 2024.01.01.00)
     - RCTRequired
     - RCTTypeSafety
@@ -1339,8 +1339,8 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
-  - NevisMobileAuthentication (~> 3.8.2)
-  - NevisMobileAuthentication-Debug (~> 3.8.2)
+  - NevisMobileAuthentication (~> 3.9.0)
+  - NevisMobileAuthentication-Debug (~> 3.9.0)
   - "NevisMobileAuthenticationSdkReact (from `../node_modules/@nevis-security/nevis-mobile-authentication-sdk-react`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -1534,9 +1534,9 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
   hermes-engine: 2102c92e54a031a270fd1fe84169ec8a0901b7bd
-  NevisMobileAuthentication: 0d2ca71d5d84c6b70fd1c1a9391ad4675ef299a1
-  NevisMobileAuthentication-Debug: d7caeccf12d6f36d1138f804cbbf8f147ef83fe7
-  NevisMobileAuthenticationSdkReact: a6057ec09b26f3b117d14ab37d7e90d7cea3fa3b
+  NevisMobileAuthentication: f1b09d4afa100e8c86878584cee8997489079ecc
+  NevisMobileAuthentication-Debug: 89cbbd37aa2971d23b8a46cb992cee12793af8ad
+  NevisMobileAuthenticationSdkReact: 405871d7c95b6da9a729fd1a78ba84a6f1229b64
   RCT-Folly: 5dc73daec3476616d19e8a53f0156176f7b55461
   RCTDeprecation: 5f1d7e1f8ef6c53f0207e3ac0d0ca23575e8a6ab
   RCTRequired: dcfd24ece09940bbf24b7c2974f4eb68a9baee55
@@ -1592,6 +1592,6 @@ SPEC CHECKSUMS:
   VisionCamera: 030bcbf22791d698926e7c0e3b804126165e62e3
   Yoga: dbb1bd5faecc60d38ed0a2f2a75db536c759b334
 
-PODFILE CHECKSUM: 180ae6cf584edc7a016af4b672f853ec64c7a9cc
+PODFILE CHECKSUM: f4fa4d590fe1adb4bae014a49ad60b4e7dc51b13
 
 COCOAPODS: 1.16.2
