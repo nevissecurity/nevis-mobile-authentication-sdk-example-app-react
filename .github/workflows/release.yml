@@ -1,8 +1,8 @@
-name: Pull Request
+name: Release Candidate Build
 
 on:
     pull_request:
-        branches: ['develop']
+        branches: ['main']
     workflow_dispatch:
         inputs:
             ios-runner-type:
@@ -15,17 +15,13 @@ on:
                     - "macos-15"
 
 env:
-    BUILD_TYPE: 'SNAPSHOT' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
+    BUILD_TYPE: 'RELEASE_CANDIDATE' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
     XCODE_VERSION: 16.2
     JAVA_VERSION: 17
     RUBY_VERSION: 3.1
 
     GH_USERNAME: ${{ vars.GH_USERNAME }}
     GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-    KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
-    PRIVATE_NATIVE_IOS_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
-    PRIVATE_NATIVE_IOS_REPOSITORY_NAME: ${{ vars.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }}
-    PRIVATE_NATIVE_ANDROID_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
 
 jobs:
     lint-and-format:

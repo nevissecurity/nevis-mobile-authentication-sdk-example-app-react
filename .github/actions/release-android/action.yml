@@ -35,22 +35,8 @@ runs:
           shell: bash
           run: yarn react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
 
-        - name: Cache RubyGem Dependencies
-          uses: ruby/setup-ruby@v1
-          with:
-              ruby-version: ${{ env.RUBY_VERSION }}
-              bundler-cache: true
-              working-directory: 'android'
-
-        - name: Decode Keystore
-          uses: timheuer/base64-to-file@v1
-          with:
-              fileName: 'keystore-example-app.jks'
-              fileDir: './android/etc'
-              encodedString: ${{ env.KEYSTORE_FILE }}
-
         - name: Publish Android App
-          if: ${{ env.BUILD_TYPE == 'RELEASE' }}
+          if: ${{ env.BUILD_TYPE == 'RELEASE' || env.BUILD_TYPE == 'SNAPSHOT' }}
           env:
               GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
               SIGNING_CONFIGS: ${{ env.SIGNING_CONFIGS }}
@@ -59,11 +45,13 @@ runs:
               FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
               FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
               SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+              NEW_ARCH_ENABLED: ${{ inputs.new-arch-enabled }}
           uses: maierj/fastlane-action@v3.1.0
           with:
-              lane: 'main'
+              lane: ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }}
               subdirectory: 'android'
-              options: '{ "version": "${{ inputs.version-number }}",
-                          "build_number": "${{ inputs.build-number }}",
-                          "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
-                        }'
+              options: |
+                {
+                  "version": "${{ inputs.version-number }}",
+                  "build_number": "${{ inputs.build-number }}"
+                }

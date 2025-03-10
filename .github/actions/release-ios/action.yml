@@ -48,8 +48,10 @@ runs:
               SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
           uses: maierj/fastlane-action@v3.1.0
           with:
-              lane: 'main'
+              lane: ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }}
               subdirectory: 'ios'
-              options: '{ "version": "${{ inputs.version-number }}",
-                          "build_number": "${{ inputs.build-number }}"
-                        }'
+              options: |
+                {
+                  "version": "${{ inputs.version-number }}",
+                  "build_number": "${{ inputs.build-number }}"
+                }

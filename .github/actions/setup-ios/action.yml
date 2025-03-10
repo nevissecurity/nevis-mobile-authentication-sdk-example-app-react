@@ -21,6 +21,13 @@ runs:
               bundler-cache: true
               working-directory: 'ios'
 
+        - name: Add Private Cocoapods Repo
+          if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
+          shell: bash
+          run: |
+              pod repo remove ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} &> /dev/null || true
+              pod repo add ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
+
         - name: Install Cocoapods - new architecture
           if: inputs.new-arch-enabled == 'true'
           shell: bash
