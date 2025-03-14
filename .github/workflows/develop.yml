@@ -15,12 +15,36 @@ on:
                     - "macos-15"
 
 env:
-    BUILD_TYPE: 'SNAPSHOT' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE'
-    GH_USERNAME: ${{ vars.GH_USERNAME }}
-    GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+    BUILD_TYPE: 'SNAPSHOT' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
     XCODE_VERSION: 16.2
     JAVA_VERSION: 17
     RUBY_VERSION: 3.1
+
+    PRIVATE_NATIVE_IOS_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
+    PRIVATE_NATIVE_IOS_REPOSITORY_NAME: ${{ vars.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }}
+    PRIVATE_NATIVE_ANDROID_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
+    CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    GH_USERNAME: ${{ vars.GH_USERNAME }}
+    GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+    MATCH_GIT_URL: ${{ vars.MATCH_GIT_URL }}
+    MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+    DEVELOPER_PORTAL_TEAM_ID: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
+    CODE_SIGNING_IDENTITY: ${{ secrets.CODE_SIGNING_IDENTITY }}
+    PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}
+    KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+    SIGNING_CONFIGS: ${{ secrets.SIGNING_CONFIGS }}
+    FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+    FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
+    TEMP_KEYCHAIN_NAME: ${{ vars.TEMP_KEYCHAIN_NAME }}
+    HOST_NAME: ${{ vars.HOST_NAME }}
+    SLACK_WEBHOOK_URL: ${{ vars.SLACK_WEBHOOK_URL }}
+    CONNECT_API_KEY_ID: ${{ secrets.CONNECT_API_KEY_ID }}
+    CONNECT_API_ISSUER_ID: ${{ secrets.CONNECT_API_ISSUER_ID }}
+    CONNECT_API_KEY_CONTENT: ${{ secrets.CONNECT_API_KEY_CONTENT }}
+    BETA_APP_REVIEW_INFO: ${{ vars.BETA_APP_REVIEW_INFO }}
 
 jobs:
     lint-and-format:
@@ -38,12 +62,71 @@ jobs:
             - name: Run formatter
               run: yarn formatcheck
 
-            - name: Run Ruby linter for Android
-              uses: ./.github/actions/run-ruby-linter
-              with:
-                  working-directory: 'android'
+    install-and-check-dependencies:
+        runs-on: ubuntu-latest
+        needs: [lint-and-format]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
-            - name: Run Ruby linter for iOS
-              uses: ./.github/actions/run-ruby-linter
+            - name: Install dependencies
+              run: yarn install
+
+            - name: Check dependencies
+              run: yarn check-dependencies
+
+    get-version-number:
+        needs: [install-and-check-dependencies]
+        runs-on: ubuntu-latest
+        outputs:
+            version-number: ${{ steps.get_version.outputs.version-number }}
+            build-number: ${{ steps.get_version.outputs.build-number }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Get version
+              id: get_version
+              uses: ./.github/actions/get-version
+
+    release-android:
+        runs-on: ubuntu-latest
+        needs: [get-version-number]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Release Android App with new arch
+              uses: ./.github/actions/release-android
               with:
-                  working-directory: 'ios'
+                  new-arch-enabled: true
+                  version-number: ${{ needs.get-version-number.outputs.version-number }}
+                  build-number: ${{ needs.get-version-number.outputs.build-number }}
+
+    release-ios:
+      runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
+      needs: [get-version-number]
+      steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+
+          - name: Release iOS App with new arch
+            uses: ./.github/actions/release-ios
+            with:
+                new-arch-enabled: true
+                version-number: ${{ needs.get-version-number.outputs.version-number }}
+                build-number: ${{ needs.get-version-number.outputs.build-number }}
+
+    create-tag:
+        needs: [get-version-number, release-android, release-ios]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Create git tag
+              uses: ./.github/actions/create-tag
+              with:
+                  build-category: 'build'
+                  app-version: ${{ needs.get-version-number.outputs.version-number }}
+                  build-number: ${{ needs.get-version-number.outputs.build-number }}

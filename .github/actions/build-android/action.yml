@@ -21,12 +21,9 @@ runs:
               cache-gradle: ${{ steps.setup-node.outputs.cache-hit == 'true' }}
 
         - name: Build Android App
-          shell: bash
-          run: |
-              if [[ ${{ inputs.new-arch-enabled }} == 'true' ]]; then
-                  NEW_ARCH_ENABLED=true
-              else
-                  NEW_ARCH_ENABLED=false
-              fi
-
-              yarn react-native build-android --mode Debug --extra-params -PnewArchEnabled=$NEW_ARCH_ENABLED
+          env:
+              PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
+          uses: maierj/fastlane-action@v3.1.0
+          with:
+              lane: 'pr'
+              subdirectory: 'android'
