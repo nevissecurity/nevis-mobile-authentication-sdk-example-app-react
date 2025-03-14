@@ -8,9 +8,7 @@ default_platform(:android)
 root_dir = File.expand_path(File.join(File.dirname(__FILE__), "../"))
 signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
 display_name = "Nevis Mobile Authentication SDK Example App React Android"
-app_build_gradle = File.join(root_dir, "app/build.gradle")
 build_gradle = File.join(root_dir, "build.gradle")
-public_maven_repository_url = "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
 
 def report_on_success(message)
 	slack(
@@ -79,10 +77,10 @@ platform :android do
 	desc ""
 	private_lane :utilize_private_repos do
 		private_maven_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
-		modify_file(
-			file_path: build_gradle,
-			old_value: "url \"#{public_maven_repository_url}\"",
-			new_value: "url \"#{private_maven_repository_url}\"",
+		modify_gradle_file(
+			gradle_file_path: build_gradle,
+			constant: "url",
+			value: private_maven_repository_url
 		) if private_maven_repository_url
 	end
 
@@ -116,17 +114,15 @@ platform :android do
 
 		sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
 
-		modify_file(
-			file_path: app_build_gradle,
-			old_value: "signingConfig signingConfigs.debug",
-			new_value: "signingConfig signingConfigs.signing",
+		modify_gradle_file(
+			constant: "signingConfig",
+			value: "signingConfigs.signing"
 		)
 
-		modify_file(
-			file_path: app_build_gradle,
-			old_value: "android {",
-			new_value: "apply from: 'signing_configs.gradle'\n",
-			mode: "prepend"
+		modify_gradle_file(
+			constant: "apply plugin: 'com.facebook.react'",
+			value: "apply from: 'signing_configs.gradle'",
+			mode: "append"
 		)
 
 		gradle(
