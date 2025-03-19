@@ -13,12 +13,13 @@ runs:
           id: setup-node
           uses: ./.github/actions/setup-node
           with:
+              registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
               new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Set up Android
           uses: ./.github/actions/setup-android
           with:
-              cache-gradle: ${{ steps.setup-node.outputs.cache-hit == 'true' }}
+              new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Build Android App
           env:
@@ -27,3 +28,7 @@ runs:
           with:
               lane: 'pr'
               subdirectory: 'android'
+              options: |
+                  {
+                    "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
+                  }

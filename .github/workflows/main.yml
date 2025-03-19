@@ -23,6 +23,7 @@ env:
     JAVA_VERSION: 17
     RUBY_VERSION: 3.1
 
+    YARN_ENABLE_IMMUTABLE_INSTALLS: false
     CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     GH_USERNAME: ${{ vars.GH_USERNAME }}
     GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -69,8 +70,8 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: yarn install
+            - name: Set up Node
+              uses: ./.github/actions/setup-node
 
             - name: Check dependencies
               run: yarn check-dependencies

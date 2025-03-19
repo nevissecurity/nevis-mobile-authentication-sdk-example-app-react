@@ -44,10 +44,12 @@ end
 
 platform :android do
 	desc "Pull request build"
+	desc "#### Options"
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
 	desc ""
-	lane :pr do
+	lane :pr do |options|
 		utilize_private_repos
-		build
+		build(options)
 	end
 
 	desc "Continuous build"
@@ -85,10 +87,17 @@ platform :android do
 	end
 
 	desc "Build the application"
+	desc "#### Options"
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
 	desc ""
-	private_lane :build do
-		new_arch_enabled = ENV["NEW_ARCH_ENABLED"].nil? ? true : get_boolean?(ENV["NEW_ARCH_ENABLED"])
-		sh("yarn react-native build-android --mode Debug --extra-params -PnewArchEnabled=#{new_arch_enabled}")
+	private_lane :build do |options|
+		new_arch_enabled = options[:new_arch_enabled].nil? ? true : get_boolean?(options[:new_arch_enabled])
+		UI.message("Build Debug version")
+		Dir.chdir("..") do
+			Actions.sh("yarn android:build:#{new_arch_enabled ? 'new' : 'old'}", error_callback: ->(result) {
+				raise "❌ Build Debug version failed! Result: #{result}"
+			})
+		end
 	end
 
 	desc "Distribute the application"
@@ -99,7 +108,7 @@ platform :android do
 	private_lane :distribute do |options|
 		version = options[:version]
 		build_number = options[:build_number]
-		new_arch_enabled = ENV["NEW_ARCH_ENABLED"].nil? ? true : get_boolean?(ENV["NEW_ARCH_ENABLED"])
+		new_arch_enabled = options[:new_arch_enabled].nil? ? true : get_boolean?(options[:new_arch_enabled])
 		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
 		modify_gradle_file(
@@ -112,7 +121,7 @@ platform :android do
 			value: build_number,
 		)
 
-		sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
+		Actions.sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
 
 		modify_gradle_file(
 			constant: "signingConfig",
@@ -139,5 +148,28 @@ platform :android do
 		report_on_success("#{display_name} build completed: #{version} (#{build_number}) ✅")
 	rescue => e
 		report_on_error("#{display_name} build failed ❌", e)
+	end
+
+	desc "Determines the boolean value of the provided input parameter."
+	desc "Returns true for 'true', 1, '1' and true values."
+	desc ""
+	desc "puts get_boolean?(nil)            -> false"
+	desc "puts get_boolean?(1)              -> true"
+	desc "puts get_boolean?(0)              -> false"
+	desc "puts get_boolean?('')             -> false"
+	desc "puts get_boolean?(false)          -> false"
+	desc "puts get_boolean?(true)           -> true"
+	desc "puts get_boolean?('false')        -> false"
+	desc "puts get_boolean?('true')         -> true"
+	desc "puts get_boolean?('some text')    -> false"
+	desc "puts get_boolean?('1')            -> true"
+	desc ""
+	desc "@param [String, Boolean, #read] input the input to determine the boolean value of"
+	desc "@return [boolean] the boolean value of the input"
+	def get_boolean?(input)
+		return false if input.nil?
+
+		bool_input = input.to_s.downcase
+		["true", "1"].include?(bool_input)
 	end
 end

@@ -2,8 +2,8 @@ name: Setup Android
 description: Setup Android resources and install dependencies
 
 inputs:
-    cache-gradle:
-        description: "Flag that tells whether need to cache Gradle dependencies."
+    new-arch-enabled:
+        description: "Flag that tells whether enable support to the new architecture."
         required: true
 
 runs:
@@ -30,7 +30,6 @@ runs:
               encodedString: ${{ env.KEYSTORE_FILE }}
 
         - name: Cache Gradle
-          if: ${{ inputs.cache-gradle == 'true' }}
           uses: actions/cache@v4
           with:
               path: |

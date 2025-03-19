@@ -144,12 +144,12 @@ If you configured everything properly, you can run the app on an Android device 
 
 * Using the new architecture
 ```
-yarn android:new
+yarn android:run:new
 ```
 
 * Using the old architecture
 ```
-yarn android:old
+yarn android:run:old
 ```
 
 </details>
@@ -162,13 +162,13 @@ If you configured everything properly, you're ready to build and run the example
 * Using the new architecture
 
 ```
-yarn ios:new
+yarn ios:run:new
 ```
 
 * Using the old architecture
 
 ```
-yarn ios:old
+yarn ios:run:old
 ```
 
 Or by choosing Product > Run from Xcode, or by clicking the Run button in your project’s toolbar, similarly how you would run a native iOS application.
