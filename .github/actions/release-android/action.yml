@@ -19,12 +19,14 @@ runs:
           id: setup-node
           uses: ./.github/actions/setup-node
           with:
+              registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
               new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Set up Android
           uses: ./.github/actions/setup-android
           with:
-              cache-gradle: ${{ steps.setup-node.outputs.cache-hit == 'true' }}
+              new-arch-enabled: ${{ inputs.new-arch-enabled }}
+
 
         - name: Update Configuration
           uses: ./.github/actions/update-config
@@ -45,7 +47,7 @@ runs:
               FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
               FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
               SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
-              NEW_ARCH_ENABLED: ${{ inputs.new-arch-enabled }}
+              PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
           uses: maierj/fastlane-action@v3.1.0
           with:
               lane: ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }}
@@ -53,5 +55,6 @@ runs:
               options: |
                 {
                   "version": "${{ inputs.version-number }}",
-                  "build_number": "${{ inputs.build-number }}"
+                  "build_number": "${{ inputs.build-number }}",
+                  "new-arch-enabled": "${{ inputs.new-arch-enabled }}"
                 }

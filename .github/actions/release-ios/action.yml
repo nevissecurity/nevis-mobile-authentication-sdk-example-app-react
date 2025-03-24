@@ -18,12 +18,11 @@ runs:
         - name: Set up Node
           uses: ./.github/actions/setup-node
           with:
+              registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
               new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Set up iOS
           uses: ./.github/actions/setup-ios
-          with:
-              new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Update Configuration
           uses: ./.github/actions/update-config
@@ -46,6 +45,7 @@ runs:
               FIREBASE_APP_ID_IOS: ${{ env.FIREBASE_APP_ID_IOS }}
               TEMP_KEYCHAIN_NAME: ${{ env.TEMP_KEYCHAIN_NAME }}
               SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+              PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
           uses: maierj/fastlane-action@v3.1.0
           with:
               lane: ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }}
@@ -53,5 +53,6 @@ runs:
               options: |
                 {
                   "version": "${{ inputs.version-number }}",
-                  "build_number": "${{ inputs.build-number }}"
+                  "build_number": "${{ inputs.build-number }}",
+                  "new-arch-enabled": "${{ inputs.new-arch-enabled }}"
                 }

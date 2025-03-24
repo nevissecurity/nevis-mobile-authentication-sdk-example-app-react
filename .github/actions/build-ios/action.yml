@@ -12,12 +12,11 @@ runs:
         - name: Set up Node
           uses: ./.github/actions/setup-node
           with:
+              registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
               new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Set up iOS
           uses: ./.github/actions/setup-ios
-          with:
-              new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Build iOS App
           env:
@@ -26,3 +25,7 @@ runs:
           with:
             lane: 'pr'
             subdirectory: 'ios'
+            options: |
+                {
+                  "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
+                }

@@ -20,12 +20,15 @@ env:
     JAVA_VERSION: 17
     RUBY_VERSION: 3.1
 
+    YARN_ENABLE_IMMUTABLE_INSTALLS: false
     GH_USERNAME: ${{ vars.GH_USERNAME }}
     GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
     KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
     PRIVATE_NATIVE_IOS_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
     PRIVATE_NATIVE_IOS_REPOSITORY_NAME: ${{ vars.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }}
     PRIVATE_NATIVE_ANDROID_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
+    PRIVATE_NPM_REPOSITORY_URL: ${{ vars.PRIVATE_NPM_REPOSITORY_URL }}
+    NODE_AUTH_TOKEN: ${{ secrets.PRIVATE_NPM_REPOSITORY_TOKEN }}
 
 jobs:
     lint-and-format:
@@ -36,6 +39,8 @@ jobs:
 
             - name: Set up Node
               uses: ./.github/actions/setup-node
+              with:
+                  registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
 
             - name: Lint files
               run: yarn lint
@@ -60,8 +65,10 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: yarn install
+            - name: Set up Node
+              uses: ./.github/actions/setup-node
+              with:
+                  registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
 
             - name: Check dependencies
               run: yarn check-dependencies
