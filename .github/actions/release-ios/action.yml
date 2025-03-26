@@ -54,5 +54,5 @@ runs:
                 {
                   "version": "${{ inputs.version-number }}",
                   "build_number": "${{ inputs.build-number }}",
-                  "new-arch-enabled": "${{ inputs.new-arch-enabled }}"
+                  "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
                 }

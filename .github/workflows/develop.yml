@@ -111,18 +111,18 @@ jobs:
                   build-number: ${{ needs.get-version-number.outputs.build-number }}
 
     release-ios:
-      runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
-      needs: [get-version-number]
-      steps:
-          - name: Checkout
-            uses: actions/checkout@v4
+        runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
+        needs: [get-version-number]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
-          - name: Release iOS App with new arch
-            uses: ./.github/actions/release-ios
-            with:
-                new-arch-enabled: true
-                version-number: ${{ needs.get-version-number.outputs.version-number }}
-                build-number: ${{ needs.get-version-number.outputs.build-number }}
+            - name: Release iOS App with new arch
+              uses: ./.github/actions/release-ios
+              with:
+                  new-arch-enabled: true
+                  version-number: ${{ needs.get-version-number.outputs.version-number }}
+                  build-number: ${{ needs.get-version-number.outputs.build-number }}
 
     create-tag:
         needs: [get-version-number, release-android, release-ios]

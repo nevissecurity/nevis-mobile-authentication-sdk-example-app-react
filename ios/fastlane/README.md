@@ -23,6 +23,10 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Pull request build
 
+#### Options
+
+ * **`new_arch_enabled`**: Enable new architecture for the build.
+
 
 
 ### ios develop
