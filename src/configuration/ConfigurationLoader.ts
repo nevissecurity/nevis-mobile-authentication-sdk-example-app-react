@@ -69,16 +69,9 @@ export class ConfigurationLoader {
 					.build();
 				break;
 			case AppEnvironment.IdentitySuite:
-				this._sdkConfiguration = Configuration.builder()
-					.baseUrl(appConfiguration.sdk.baseUrl)
+				this._sdkConfiguration = Configuration.admin4PatternBuilder()
+					.hostname(appConfiguration.sdk.hostname)
 					.facetId(appConfiguration.sdk.facetId)
-					.registrationRequestPath(appConfiguration.sdk.registrationRequestPath!)
-					.registrationResponsePath(appConfiguration.sdk.registrationResponsePath!)
-					.authenticationRequestPath(appConfiguration.sdk.authenticationRequestPath!)
-					.authenticationResponsePath(appConfiguration.sdk.authenticationResponsePath!)
-					.deregistrationRequestPath(appConfiguration.sdk.deregistrationRequestPath!)
-					.dispatchTargetResourcePath(appConfiguration.sdk.dispatchTargetResourcePath!)
-					.deviceResourcePath(appConfiguration.sdk.deviceResourcePath!)
 					.build();
 				break;
 		}
