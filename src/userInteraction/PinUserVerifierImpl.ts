@@ -3,6 +3,8 @@
  */
 
 import {
+	PinProtectionStatusLastAttemptFailed,
+	PinProtectionStatusUnlocked,
 	PinUserVerificationContext,
 	PinUserVerificationHandler,
 	PinUserVerifier,
@@ -17,17 +19,22 @@ export class PinUserVerifierImpl extends PinUserVerifier {
 		context: PinUserVerificationContext,
 		handler: PinUserVerificationHandler
 	): Promise<void> {
-		console.log(
-			context.lastRecoverableError
-				? 'PIN user verification failed. Please try again.'
-				: 'Please start PIN user verification.'
-		);
+		const status = context.authenticatorProtectionStatus;
+		if (status instanceof PinProtectionStatusUnlocked)
+			console.log('Please start PIN user verification.');
+		else if (
+			status instanceof PinProtectionStatusLastAttemptFailed &&
+			status.remainingRetries > 0
+		) {
+			console.log('Last PIN user verification attempt failed. Please try again.');
+		} else {
+			console.log('Last PIN user verification attempt failed.');
+		}
 
 		RootNavigation.navigate('Credential', {
 			mode: CredentialMode.verification,
 			kind: CredentialKind.pin,
 			handler: handler,
-			lastRecoverableError: context.lastRecoverableError,
 			pinProtectionStatus: context.authenticatorProtectionStatus,
 		});
 
