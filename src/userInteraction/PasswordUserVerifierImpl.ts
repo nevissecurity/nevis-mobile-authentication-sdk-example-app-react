@@ -3,6 +3,8 @@
  */
 
 import {
+	PasswordProtectionStatusLastAttemptFailed,
+	PasswordProtectionStatusUnlocked,
 	PasswordUserVerificationContext,
 	PasswordUserVerificationHandler,
 	PasswordUserVerifier,
@@ -17,17 +19,22 @@ export class PasswordUserVerifierImpl extends PasswordUserVerifier {
 		context: PasswordUserVerificationContext,
 		handler: PasswordUserVerificationHandler
 	): Promise<void> {
-		console.log(
-			context.lastRecoverableError
-				? 'Password user verification failed. Please try again.'
-				: 'Please start password user verification.'
-		);
+		const status = context.authenticatorProtectionStatus;
+		if (status instanceof PasswordProtectionStatusUnlocked)
+			console.log('Please start password user verification.');
+		else if (
+			status instanceof PasswordProtectionStatusLastAttemptFailed &&
+			status.remainingRetries > 0
+		) {
+			console.log('Last password user verification attempt failed. Please try again.');
+		} else {
+			console.log('Last password user verification attempt failed.');
+		}
 
 		RootNavigation.navigate('Credential', {
 			mode: CredentialMode.verification,
 			kind: CredentialKind.password,
 			handler: handler,
-			lastRecoverableError: context.lastRecoverableError,
 			passwordProtectionStatus: context.authenticatorProtectionStatus,
 		});
 

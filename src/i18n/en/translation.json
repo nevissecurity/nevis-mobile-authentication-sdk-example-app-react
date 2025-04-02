@@ -53,7 +53,7 @@
 		},
 		"protectionStatus": {
 			"locked": "Authenticator is locked.",
-			"lastAttemptFailed": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+			"lastAttemptFailed": "Invalid PIN was provided previously. Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
 		}
 	},
 	"password": {
@@ -75,7 +75,7 @@
 		},
 		"protectionStatus": {
 			"locked": "Authenticator is locked.",
-			"lastAttemptFailed": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+			"lastAttemptFailed": "Invalid password was provided previously. Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
 		}
 	},
 	"transactionConfirmation": {
