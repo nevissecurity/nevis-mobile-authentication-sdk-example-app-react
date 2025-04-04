@@ -43,10 +43,11 @@ env:
     BETA_APP_REVIEW_INFO: ${{ vars.BETA_APP_REVIEW_INFO }}
     XCODE_VERSION: 16.2
     JAVA_VERSION: 17
-    RUBY_VERSION: 3.1
+    RUBY_VERSION: 3.4.2
 
 jobs:
     lint-and-format:
+        name: Lint & Format
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -55,26 +56,28 @@ jobs:
             - name: Set up Node
               uses: ./.github/actions/setup-node
 
-            - name: Lint files
+            - name: Lint Files
               run: yarn lint
 
-            - name: Run formatter
+            - name: Run Formatter
               run: yarn formatcheck
 
     install-and-check-dependencies:
+        name: Check Dependencies
         runs-on: ubuntu-latest
         needs: [lint-and-format]
         steps:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Install dependencies
+            - name: Install Dependencies
               run: yarn install
 
-            - name: Check dependencies
+            - name: Check Dependencies
               run: yarn check-dependencies
 
     get-version-number:
+        name: Get Version
         needs: [install-and-check-dependencies]
         runs-on: ubuntu-latest
         outputs:
@@ -84,18 +87,19 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Get version
+            - name: Get Version
               id: get_version
               uses: ./.github/actions/get-version
 
     release-android:
+        name: Release Android App (old arch)
         runs-on: ubuntu-latest
         needs: [get-version-number]
         steps:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Release Android App with old arch
+            - name: Release Android App (old arch)
               uses: ./.github/actions/release-android
               with:
                   new-arch-enabled: false
@@ -103,13 +107,14 @@ jobs:
                   build-number: ${{ needs.get-version-number.outputs.build-number }}
 
     release-ios:
+        name: Release iOS App (old arch)
         runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
         needs: [get-version-number]
         steps:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Release iOS App with old arch
+            - name: Release iOS App (old arch)
               uses: ./.github/actions/release-ios
               with:
                   new-arch-enabled: false
@@ -117,13 +122,14 @@ jobs:
                   build-number: ${{ needs.get-version-number.outputs.build-number }}
 
     create-tag:
+        name: Create Tag
         needs: [get-version-number, release-android, release-ios]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Create git tag
+            - name: Create Tag
               uses: ./.github/actions/git-tag
               with:
                   version-number: ${{ needs.get-version-number.outputs.version-number }}

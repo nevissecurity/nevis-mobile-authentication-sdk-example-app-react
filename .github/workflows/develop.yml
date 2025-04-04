@@ -20,10 +20,11 @@ env:
     GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
     XCODE_VERSION: 16.2
     JAVA_VERSION: 17
-    RUBY_VERSION: 3.1
+    RUBY_VERSION: 3.4.2
 
 jobs:
     lint-and-format:
+        name: Lint & Format
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -32,10 +33,10 @@ jobs:
             - name: Set up Node
               uses: ./.github/actions/setup-node
 
-            - name: Lint files
+            - name: Lint Files
               run: yarn lint
 
-            - name: Run formatter
+            - name: Run Formatter
               run: yarn formatcheck
 
             - name: Run Ruby linter for Android
