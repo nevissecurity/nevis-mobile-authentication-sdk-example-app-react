@@ -9,7 +9,7 @@ PODS:
   - hermes-engine/Pre-built (0.74.6)
   - NevisMobileAuthentication (3.9.0)
   - NevisMobileAuthentication-Debug (3.9.0)
-  - NevisMobileAuthenticationSdkReact (3.10.0):
+  - NevisMobileAuthenticationSdkReact (3.11.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1536,7 +1536,7 @@ SPEC CHECKSUMS:
   hermes-engine: 2102c92e54a031a270fd1fe84169ec8a0901b7bd
   NevisMobileAuthentication: f1b09d4afa100e8c86878584cee8997489079ecc
   NevisMobileAuthentication-Debug: 89cbbd37aa2971d23b8a46cb992cee12793af8ad
-  NevisMobileAuthenticationSdkReact: 405871d7c95b6da9a729fd1a78ba84a6f1229b64
+  NevisMobileAuthenticationSdkReact: b71c5ab57a7f6098e569abc480c99ef9094ba30c
   RCT-Folly: 5dc73daec3476616d19e8a53f0156176f7b55461
   RCTDeprecation: 5f1d7e1f8ef6c53f0207e3ac0d0ca23575e8a6ab
   RCTRequired: dcfd24ece09940bbf24b7c2974f4eb68a9baee55
@@ -1592,6 +1592,6 @@ SPEC CHECKSUMS:
   VisionCamera: 030bcbf22791d698926e7c0e3b804126165e62e3
   Yoga: dbb1bd5faecc60d38ed0a2f2a75db536c759b334
 
-PODFILE CHECKSUM: f4fa4d590fe1adb4bae014a49ad60b4e7dc51b13
+PODFILE CHECKSUM: 742fa2b2481d2938cbee843cebc1603c551c1627
 
 COCOAPODS: 1.16.2
