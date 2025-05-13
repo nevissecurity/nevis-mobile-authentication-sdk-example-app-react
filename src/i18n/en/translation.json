@@ -11,7 +11,10 @@
 		"passwordChange": "Password Change",
 		"deleteAuthenticators": "Delete Authenticators",
 		"inBandRegister": "In-Band Register",
-		"identitySuiteOnly": "Identity Suite only"
+		"identitySuiteOnly": "Identity Suite only",
+		"nevisMobileAuthenticationSdk": "Nevis Mobile Authentication SDK",
+		"additionalInfo": "Additional information",
+		"unknown": "Unknown"
 	},
 	"readQrCode": {
 		"title": "Read Qr Code",

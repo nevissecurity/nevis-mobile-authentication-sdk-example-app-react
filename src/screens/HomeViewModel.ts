@@ -3,11 +3,13 @@
  */
 
 import { useState } from 'react';
+import { Platform } from 'react-native';
 
 import {
 	Aaid,
 	Account,
 	Authenticator,
+	MetaData,
 	MobileAuthenticationClientInitializer,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { useNavigation } from '@react-navigation/native';
@@ -29,6 +31,7 @@ import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
 import { ClientProvider } from '../utility/ClientProvider';
 import * as RootNavigation from '../utility/RootNavigation';
+import { VersionUtils } from '../utility/VersionUtils.ts';
 
 const useHomeViewModel = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -36,6 +39,8 @@ const useHomeViewModel = () => {
 	const [localAccounts, setLocalAccounts] = useState<Array<Account>>([]);
 	const [localAuthenticators, setLocalAuthenticators] = useState<Array<Authenticator>>([]);
 	const [numberOfAccounts, setNumberOfAccounts] = useState<number>(0);
+	const [sdkVersion, setSdkVersion] = useState<string | undefined>();
+	const [additionalInfo, setAdditionalInfo] = useState<string | undefined>();
 
 	async function initClient() {
 		console.log('Initializing the client...');
@@ -70,7 +75,7 @@ const useHomeViewModel = () => {
 	}
 
 	function fetchData() {
-		getAccounts().then(getAuthenticators).then(getDeviceInformation);
+		getAccounts().then(getAuthenticators).then(getDeviceInformation).then(getMetaData);
 	}
 
 	async function getAccounts() {
@@ -127,6 +132,28 @@ const useHomeViewModel = () => {
 				);
 			})
 			.catch(ErrorHandler.handle.bind(null, OperationType.localData));
+	}
+
+	async function getMetaData() {
+		Platform.select({
+			android: async () => {
+				const metaData = await MetaData.androidMetaData();
+				if (metaData !== undefined) {
+					setSdkVersion(VersionUtils.formatted(metaData.mobileAuthenticationVersion));
+					setAdditionalInfo(metaData.signingCertificateSha256);
+				}
+			},
+			ios: async () => {
+				const metaData = await MetaData.iosMetaData();
+				if (metaData !== undefined) {
+					setSdkVersion(VersionUtils.formatted(metaData.mobileAuthenticationVersion));
+					setAdditionalInfo(metaData.applicationFacetId);
+				}
+			},
+			default: () => {
+				// do nothing
+			},
+		})();
 	}
 
 	function readQrCode() {
@@ -363,6 +390,8 @@ const useHomeViewModel = () => {
 
 	return {
 		numberOfAccounts,
+		sdkVersion,
+		additionalInfo,
 		initClient,
 		fetchData,
 		handleDeepLink,

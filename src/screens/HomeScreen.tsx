@@ -19,6 +19,8 @@ const HomeScreen = () => {
 	const {
 		numberOfAccounts,
 		initClient,
+		sdkVersion,
+		additionalInfo,
 		fetchData,
 		handleDeepLink,
 		readQrCode,
@@ -113,6 +115,22 @@ const HomeScreen = () => {
 						{t('home.identitySuiteOnly')}
 					</Text>
 					<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
+					<View style={styles.sectionContainer}>
+						<Text style={[styles.textForeground, styles.textNormal]}>
+							{t('home.nevisMobileAuthenticationSdk')}
+						</Text>
+						<Text style={[styles.textForeground, styles.textInfo]}>
+							{sdkVersion ?? t('home.unknown')}
+						</Text>
+					</View>
+					<View style={styles.sectionContainer}>
+						<Text style={[styles.textForeground, styles.textNormal]}>
+							{t('home.additionalInfo')}
+						</Text>
+						<Text style={[styles.textForeground, styles.textInfo]}>
+							{additionalInfo ?? t('home.unknown')}
+						</Text>
+					</View>
 				</View>
 			</ScrollView>
 		</View>
