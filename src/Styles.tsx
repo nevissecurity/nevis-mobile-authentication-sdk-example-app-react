@@ -39,6 +39,11 @@ const listContainerStyle: ViewStyle = {
 	paddingBottom: 16,
 };
 
+const sectionContainerStyle: ViewStyle = {
+	flex: 1,
+	rowGap: 8,
+};
+
 const textTitleStyle: TextStyle = {
 	textAlign: 'center',
 	fontWeight: 'bold',
@@ -105,6 +110,7 @@ export const darkStyle = StyleSheet.create({
 	middleContainer: middleContainerStyle,
 	bottomContainer: bottomContainerStyle,
 	listContainer: listContainerStyle,
+	sectionContainer: sectionContainerStyle,
 	textForeground: {
 		color: white,
 	},
@@ -141,6 +147,7 @@ export const lightStyle = StyleSheet.create({
 	middleContainer: middleContainerStyle,
 	bottomContainer: bottomContainerStyle,
 	listContainer: listContainerStyle,
+	sectionContainer: sectionContainerStyle,
 	textForeground: {
 		color: black,
 	},
