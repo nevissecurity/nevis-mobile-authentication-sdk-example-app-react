@@ -3,6 +3,8 @@
 # Nevis Mobile Authentication React Native Example Application
 
 [![Main Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/main.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/main.yml)
+[![Release Candidate Build](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/release.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/release.yml)
+[![Develop Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/develop.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/develop.yml)
 [![Pull Request](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/pr.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-react/actions/workflows/pr.yml)
 
 This repository contains the example app demonstrating how to use the _Nevis Mobile Authentication Client SDK for React Native_ in a React Native application.
@@ -40,7 +42,7 @@ Your development setup has to meet the following prerequisites:
 * Gradle 8.6 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 8.2.1 or later
 * Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.9.22 or later
-* React Native 0.74.6
+* React Native 0.76.9
 
 ### Initialization
 
