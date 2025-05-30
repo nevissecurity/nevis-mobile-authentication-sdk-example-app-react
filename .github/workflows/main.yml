@@ -19,7 +19,7 @@ on:
 
 env:
     BUILD_TYPE: 'RELEASE' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
-    XCODE_VERSION: 16.2
+    XCODE_VERSION: 16.3
     JAVA_VERSION: 17
     RUBY_VERSION: 3.4.2
 
