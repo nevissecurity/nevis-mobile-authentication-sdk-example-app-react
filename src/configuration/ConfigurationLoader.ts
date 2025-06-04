@@ -65,13 +65,11 @@ export class ConfigurationLoader {
 			case AppEnvironment.AuthenticationCloud:
 				this._sdkConfiguration = Configuration.authCloudBuilder()
 					.hostname(appConfiguration.sdk.hostname)
-					.facetId(appConfiguration.sdk.facetId)
 					.build();
 				break;
 			case AppEnvironment.IdentitySuite:
 				this._sdkConfiguration = Configuration.admin4PatternBuilder()
 					.hostname(appConfiguration.sdk.hostname)
-					.facetId(appConfiguration.sdk.facetId)
 					.build();
 				break;
 		}

@@ -1,21 +1,20 @@
 /**
  * Copyright © 2023 Nevis Security AG. All rights reserved.
  */
+
 import { Aaid } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
 import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
 
 export class SdkConfiguration {
 	hostname: string;
-	facetId: string;
 
-	private constructor(hostname: string, facetId: string) {
+	private constructor(hostname: string) {
 		this.hostname = hostname;
-		this.facetId = facetId;
 	}
 
 	static fromJson(json: any): SdkConfiguration {
-		return new SdkConfiguration(json.hostname, json.facetId);
+		return new SdkConfiguration(json.hostname);
 	}
 }
 export class AppConfiguration {

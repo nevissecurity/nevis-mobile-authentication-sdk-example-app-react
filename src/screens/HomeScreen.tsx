@@ -20,7 +20,8 @@ const HomeScreen = () => {
 		numberOfAccounts,
 		initClient,
 		sdkVersion,
-		additionalInfo,
+		facetId,
+		certificateFingerprint,
 		fetchData,
 		handleDeepLink,
 		readQrCode,
@@ -125,12 +126,22 @@ const HomeScreen = () => {
 					</View>
 					<View style={styles.sectionContainer}>
 						<Text style={[styles.textForeground, styles.textNormal]}>
-							{t('home.additionalInfo')}
+							{t('home.facetId')}
 						</Text>
 						<Text style={[styles.textForeground, styles.textInfo]}>
-							{additionalInfo ?? t('home.unknown')}
+							{facetId ?? t('home.unknown')}
 						</Text>
 					</View>
+					{certificateFingerprint && (
+						<View style={styles.sectionContainer}>
+							<Text style={[styles.textForeground, styles.textNormal]}>
+								{t('home.certificateFingerprint')}
+							</Text>
+							<Text style={[styles.textForeground, styles.textInfo]}>
+								{certificateFingerprint}
+							</Text>
+						</View>
+					)}
 				</View>
 			</ScrollView>
 		</View>
