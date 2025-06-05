@@ -13,7 +13,8 @@
 		"inBandRegister": "In-Band Register",
 		"identitySuiteOnly": "Identity Suite only",
 		"nevisMobileAuthenticationSdk": "Nevis Mobile Authentication SDK",
-		"additionalInfo": "Additional information",
+		"facetId": "Facet Id",
+		"certificateFingerprint": "Certificate Fingerprint",
 		"unknown": "Unknown"
 	},
 	"readQrCode": {

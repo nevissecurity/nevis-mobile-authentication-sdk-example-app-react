@@ -40,7 +40,8 @@ const useHomeViewModel = () => {
 	const [localAuthenticators, setLocalAuthenticators] = useState<Array<Authenticator>>([]);
 	const [numberOfAccounts, setNumberOfAccounts] = useState<number>(0);
 	const [sdkVersion, setSdkVersion] = useState<string | undefined>();
-	const [additionalInfo, setAdditionalInfo] = useState<string | undefined>();
+	const [facetId, setFacetId] = useState<string | undefined>();
+	const [certificateFingerprint, setCertificateFingerprint] = useState<string | undefined>();
 
 	async function initClient() {
 		console.log('Initializing the client...');
@@ -140,14 +141,15 @@ const useHomeViewModel = () => {
 				const metaData = await MetaData.androidMetaData();
 				if (metaData !== undefined) {
 					setSdkVersion(VersionUtils.formatted(metaData.mobileAuthenticationVersion));
-					setAdditionalInfo(metaData.signingCertificateSha256);
+					setFacetId(metaData.applicationFacetId);
+					setCertificateFingerprint(metaData.signingCertificateSha256);
 				}
 			},
 			ios: async () => {
 				const metaData = await MetaData.iosMetaData();
 				if (metaData !== undefined) {
 					setSdkVersion(VersionUtils.formatted(metaData.mobileAuthenticationVersion));
-					setAdditionalInfo(metaData.applicationFacetId);
+					setFacetId(metaData.applicationFacetId);
 				}
 			},
 			default: () => {
@@ -391,7 +393,8 @@ const useHomeViewModel = () => {
 	return {
 		numberOfAccounts,
 		sdkVersion,
-		additionalInfo,
+		facetId,
+		certificateFingerprint,
 		initClient,
 		fetchData,
 		handleDeepLink,
