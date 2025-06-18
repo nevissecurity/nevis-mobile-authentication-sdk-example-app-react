@@ -15,7 +15,10 @@
 		"nevisMobileAuthenticationSdk": "Nevis Mobile Authentication SDK",
 		"facetId": "Facet Id",
 		"certificateFingerprint": "Certificate Fingerprint",
-		"unknown": "Unknown"
+		"supportedAttestation": "FIDO UAF Attestation Supported by Device",
+		"surrogateBasic": "Surrogate basic",
+		"fullBasicDefault": "Full basic default mode",
+		"basicStrict": "Full basic strict mode"
 	},
 	"readQrCode": {
 		"title": "Read Qr Code",
