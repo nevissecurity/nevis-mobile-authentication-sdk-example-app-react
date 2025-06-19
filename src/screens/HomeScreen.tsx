@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useHomeViewModel from './HomeViewModel';
+import AttestationInformationSection from '../components/AttestationInformationSection';
+import MetaDataSection from '../components/MetaDataSection';
 import OutlinedButton from '../components/OutlinedButton';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
@@ -19,9 +21,8 @@ const HomeScreen = () => {
 	const {
 		numberOfAccounts,
 		initClient,
-		sdkVersion,
-		facetId,
-		certificateFingerprint,
+		sdkMetaData,
+		sdkAttestationInformation,
 		fetchData,
 		handleDeepLink,
 		readQrCode,
@@ -116,31 +117,11 @@ const HomeScreen = () => {
 						{t('home.identitySuiteOnly')}
 					</Text>
 					<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
-					<View style={styles.sectionContainer}>
-						<Text style={[styles.textForeground, styles.textNormal]}>
-							{t('home.nevisMobileAuthenticationSdk')}
-						</Text>
-						<Text style={[styles.textForeground, styles.textInfo]}>
-							{sdkVersion ?? t('home.unknown')}
-						</Text>
-					</View>
-					<View style={styles.sectionContainer}>
-						<Text style={[styles.textForeground, styles.textNormal]}>
-							{t('home.facetId')}
-						</Text>
-						<Text style={[styles.textForeground, styles.textInfo]}>
-							{facetId ?? t('home.unknown')}
-						</Text>
-					</View>
-					{certificateFingerprint && (
-						<View style={styles.sectionContainer}>
-							<Text style={[styles.textForeground, styles.textNormal]}>
-								{t('home.certificateFingerprint')}
-							</Text>
-							<Text style={[styles.textForeground, styles.textInfo]}>
-								{certificateFingerprint}
-							</Text>
-						</View>
+					{sdkMetaData && <MetaDataSection metaData={sdkMetaData} />}
+					{sdkAttestationInformation && (
+						<AttestationInformationSection
+							attestationInformation={sdkAttestationInformation}
+						/>
 					)}
 				</View>
 			</ScrollView>

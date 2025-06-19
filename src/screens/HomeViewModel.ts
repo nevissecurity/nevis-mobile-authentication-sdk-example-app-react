@@ -11,6 +11,9 @@ import {
 	Authenticator,
 	MetaData,
 	MobileAuthenticationClientInitializer,
+	OnlyDefaultMode,
+	OnlySurrogateBasicSupported,
+	StrictMode,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -26,6 +29,8 @@ import {
 import { ErrorHandler } from '../error/ErrorHandler';
 import { AccountItem } from '../model/AccountItem';
 import { OperationType } from '../model/OperationType';
+import { SdkAttestationInformation } from '../model/SdkAttestationInformation';
+import { SdkMetaData } from '../model/SdkMetaData';
 import * as OutOfBandOperationHandler from '../userInteraction/OutOfBandOperationHandler';
 import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
@@ -39,9 +44,10 @@ const useHomeViewModel = () => {
 	const [localAccounts, setLocalAccounts] = useState<Array<Account>>([]);
 	const [localAuthenticators, setLocalAuthenticators] = useState<Array<Authenticator>>([]);
 	const [numberOfAccounts, setNumberOfAccounts] = useState<number>(0);
-	const [sdkVersion, setSdkVersion] = useState<string | undefined>();
-	const [facetId, setFacetId] = useState<string | undefined>();
-	const [certificateFingerprint, setCertificateFingerprint] = useState<string | undefined>();
+	const [sdkMetaData, setSdkMetaData] = useState<SdkMetaData | undefined>();
+	const [sdkAttestationInformation, setSdkAttestationInformation] = useState<
+		SdkAttestationInformation | undefined
+	>();
 
 	async function initClient() {
 		console.log('Initializing the client...');
@@ -76,7 +82,11 @@ const useHomeViewModel = () => {
 	}
 
 	function fetchData() {
-		getAccounts().then(getAuthenticators).then(getDeviceInformation).then(getMetaData);
+		getAccounts()
+			.then(getAuthenticators)
+			.then(getDeviceInformation)
+			.then(getMetaData)
+			.then(getAttestationInformation);
 	}
 
 	async function getAccounts() {
@@ -138,24 +148,103 @@ const useHomeViewModel = () => {
 	async function getMetaData() {
 		Platform.select({
 			android: async () => {
-				const metaData = await MetaData.androidMetaData();
-				if (metaData !== undefined) {
-					setSdkVersion(VersionUtils.formatted(metaData.mobileAuthenticationVersion));
-					setFacetId(metaData.applicationFacetId);
-					setCertificateFingerprint(metaData.signingCertificateSha256);
+				const androidMetaData = await MetaData.androidMetaData().catch((error) => {
+					console.log(`Failed to get Android meta data. Error: ${error.message}`);
+				});
+
+				if (androidMetaData === undefined) {
+					return;
 				}
+
+				const sdkMetaData = new SdkMetaData(
+					VersionUtils.formatted(androidMetaData.mobileAuthenticationVersion),
+					androidMetaData.applicationFacetId,
+					androidMetaData.signingCertificateSha256
+				);
+				setSdkMetaData(sdkMetaData);
 			},
 			ios: async () => {
-				const metaData = await MetaData.iosMetaData();
-				if (metaData !== undefined) {
-					setSdkVersion(VersionUtils.formatted(metaData.mobileAuthenticationVersion));
-					setFacetId(metaData.applicationFacetId);
+				const iosMetaData = await MetaData.iosMetaData().catch((error) => {
+					console.log(`Failed to get iOS meta data. Error: ${error.message}`);
+				});
+
+				if (iosMetaData === undefined) {
+					return;
 				}
+
+				const sdkMetaData = new SdkMetaData(
+					VersionUtils.formatted(iosMetaData.mobileAuthenticationVersion),
+					iosMetaData.applicationFacetId,
+					undefined
+				);
+				setSdkMetaData(sdkMetaData);
 			},
 			default: () => {
 				// do nothing
 			},
 		})();
+	}
+
+	async function getAttestationInformation() {
+		const client = ClientProvider.getInstance().client;
+		if (client === undefined) {
+			console.log('There is no client...');
+			return;
+		}
+
+		return new Promise<void>((resolve) => {
+			client.deviceCapabilities.androidDeviceCapabilities.fidoUafAttestationInformationGetter
+				.onSuccess((information?) => {
+					console.log('Getting attestation information succeeded.');
+					if (information === undefined) {
+						console.log('No attestation information received.');
+						resolve();
+						return;
+					}
+
+					let sdkAttestationInformation: SdkAttestationInformation | undefined;
+					if (information instanceof OnlySurrogateBasicSupported) {
+						console.log('Only basic surrogate supported.');
+						console.log(`Cause: ${information.cause}.`);
+						sdkAttestationInformation = new SdkAttestationInformation({
+							onlySurrogateBasic: true,
+							onlyDefault: false,
+							strict: false,
+						});
+					} else if (information instanceof OnlyDefaultMode) {
+						console.log('Only default mode supported.');
+						console.log(`Cause: ${information.cause}.`);
+						sdkAttestationInformation = new SdkAttestationInformation({
+							onlySurrogateBasic: true,
+							onlyDefault: true,
+							strict: false,
+						});
+					} else if (information instanceof StrictMode) {
+						console.log('Strict mode supported.');
+						sdkAttestationInformation = new SdkAttestationInformation({
+							onlySurrogateBasic: true,
+							onlyDefault: true,
+							strict: true,
+						});
+					}
+
+					setSdkAttestationInformation(sdkAttestationInformation);
+					resolve();
+				})
+				.onError((error) => {
+					console.log(
+						`Getting FIDO UAF attestation information failed. Error: ${error.description}`
+					);
+					resolve();
+				})
+				.execute()
+				.catch((error) => {
+					console.log(
+						`Getting FIDO UAF attestation information failed. Error: ${error.message}`
+					);
+					resolve();
+				});
+		});
 	}
 
 	function readQrCode() {
@@ -392,9 +481,8 @@ const useHomeViewModel = () => {
 
 	return {
 		numberOfAccounts,
-		sdkVersion,
-		facetId,
-		certificateFingerprint,
+		sdkMetaData,
+		sdkAttestationInformation,
 		initClient,
 		fetchData,
 		handleDeepLink,
