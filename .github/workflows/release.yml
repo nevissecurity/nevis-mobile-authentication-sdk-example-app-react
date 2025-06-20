@@ -23,6 +23,7 @@ env:
     YARN_ENABLE_IMMUTABLE_INSTALLS: false
     GH_USERNAME: ${{ vars.GH_USERNAME }}
     GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+    KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
 
 jobs:
     lint-and-format:

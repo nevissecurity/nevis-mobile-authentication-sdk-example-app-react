@@ -104,7 +104,7 @@ platform :ios do
 	desc "Utilize private repositories"
 	desc ""
 	private_lane :utilize_private_repos do
-		private_pod_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
+		private_pod_repository_url = ENV["PRIVATE_NATIVE_IOS_REPOSITORY_URL"]
 		prepare_podfile(private_pod_repository_url) if private_pod_repository_url
 	end
 

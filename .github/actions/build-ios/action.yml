@@ -19,8 +19,6 @@ runs:
           uses: ./.github/actions/setup-ios
 
         - name: Build iOS App
-          env:
-            PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
           uses: maierj/fastlane-action@v3.1.0
           with:
             lane: 'pr'
