@@ -12,13 +12,20 @@ runs:
         - name: Set up Node
           uses: ./.github/actions/setup-node
           with:
+              registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
               new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Set up iOS
           uses: ./.github/actions/setup-ios
-          with:
-              new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Build iOS App
-          shell: bash
-          run: yarn react-native build-ios --mode Debug --verbose
+          env:
+            PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
+          uses: maierj/fastlane-action@v3.1.0
+          with:
+            lane: 'pr'
+            subdirectory: 'ios'
+            options: |
+                {
+                  "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
+                }

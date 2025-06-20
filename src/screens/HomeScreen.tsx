@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useHomeViewModel from './HomeViewModel';
+import AttestationInformationSection from '../components/AttestationInformationSection';
+import MetaDataSection from '../components/MetaDataSection';
 import OutlinedButton from '../components/OutlinedButton';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
@@ -19,6 +21,8 @@ const HomeScreen = () => {
 	const {
 		numberOfAccounts,
 		initClient,
+		sdkMetaData,
+		sdkAttestationInformation,
 		fetchData,
 		handleDeepLink,
 		readQrCode,
@@ -113,6 +117,12 @@ const HomeScreen = () => {
 						{t('home.identitySuiteOnly')}
 					</Text>
 					<OutlinedButton text={t('home.inBandRegister')} onPress={inBandRegister} />
+					{sdkMetaData && <MetaDataSection metaData={sdkMetaData} />}
+					{sdkAttestationInformation && (
+						<AttestationInformationSection
+							attestationInformation={sdkAttestationInformation}
+						/>
+					)}
 				</View>
 			</ScrollView>
 		</View>

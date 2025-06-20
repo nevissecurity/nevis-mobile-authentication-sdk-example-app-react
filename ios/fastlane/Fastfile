@@ -57,13 +57,79 @@ def report_on_error(message, exception)
 	UI.user_error!(exception.to_s)
 end
 
+def prepare_podfile(private_pod_repository_url)
+	filename = File.join("./../Podfile")
+	File.open(filename, "r") do |original_lines|
+		File.unlink(filename)
+		File.open(filename, "w") do |new_lines|
+			new_lines.write "source '#{private_pod_repository_url}'\n"
+			new_lines.write(original_lines.read)
+		end
+	end
+end
+
 platform :ios do
-	desc "Build and distribute the application"
+	desc "Pull request build"
+	desc "#### Options"
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
+	desc ""
+	lane :pr do |options|
+		utilize_private_repos
+		build(options)
+	end
+
+	desc "Continuous build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	lane :develop do |options|
+		utilize_private_repos
+		distribute(options)
+	end
+
+	desc "Release build"
 	desc "#### Options"
 	desc " * **`version`**: The version of the application."
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :main do |options|
+		distribute(options)
+	end
+
+	####
+	#### Private lanes
+	####
+
+	desc "Utilize private repositories"
+	desc ""
+	private_lane :utilize_private_repos do
+		private_pod_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
+		prepare_podfile(private_pod_repository_url) if private_pod_repository_url
+	end
+
+	desc "Build the application"
+	desc "#### Options"
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
+	desc ""
+	private_lane :build do |options|
+		new_arch_enabled = options[:new_arch_enabled].nil? ? true : get_boolean?(options[:new_arch_enabled])
+		UI.message("Build Debug version")
+		Dir.chdir("..") do
+			Actions.sh("yarn ios:build:#{new_arch_enabled ? 'new' : 'old'}", error_callback: ->(result) {
+				raise "❌ Build Debug version failed! Result: #{result}"
+			})
+		end
+	end
+
+	desc "Distribute the application"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
+	desc ""
+	private_lane :distribute do |options|
+		new_arch_enabled = options[:new_arch_enabled].nil? ? true : get_boolean?(options[:new_arch_enabled])
 		version = options[:version]
 		build_number = options[:build_number]
 
@@ -83,8 +149,8 @@ platform :ios do
 			build_number:
 		)
 
-		distribute(destination: Destination::FIREBASE)
-		distribute(destination: Destination::TESTFLIGHT)
+		upload(destination: Destination::FIREBASE, new_arch_enabled:)
+		upload(destination: Destination::TESTFLIGHT, new_arch_enabled:)
 
 		delete_temp_keychain(keychain_name)
 		report_on_success("#{display_name} build completed: #{version} (#{build_number}) ✅")
@@ -93,7 +159,13 @@ platform :ios do
 		report_on_error("#{display_name} build failed ❌", e)
 	end
 
-	private_lane :distribute do |options|
+	desc "Upload the application to the specified destination"
+	desc "#### Options"
+	desc " * **`destination`**: The destination to upload the application to."
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
+	desc ""
+	private_lane :upload do |options|
+		new_arch_enabled = options[:new_arch_enabled].nil? ? true : get_boolean?(options[:new_arch_enabled])
 		destination = options[:destination]
 		keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
 
@@ -117,6 +189,12 @@ platform :ios do
 				code_sign_identity: ENV["CODE_SIGNING_IDENTITY"],
 				profile_name: ENV["sigh_#{app_identifier}_#{getConfig(destination:, step: Step::CODE_SIGN)}_profile-name"],
 			)
+
+			Dir.chdir("..") do
+				Actions.sh("yarn pods:#{new_arch_enabled ? 'new' : 'old'}", error_callback: ->(result) {
+					raise "❌ Pod install failed! Result: #{result}"
+				})
+			end
 
 			# Build
 			gym(
@@ -156,23 +234,9 @@ platform :ios do
 		end
 	end
 
-	##
-	## Utilities
-	##
-
-	module Step
-		MATCH = "match".freeze
-		CODE_SIGN = "code_sign".freeze
-		GYM = "gym".freeze
-		PROVISIONING_PROFILE = "prov_profile".freeze
-	end
-
-	module Destination
-		FIREBASE = "firebase".freeze
-		TESTFLIGHT = "testflight".freeze
-	end
-
-	private_lane :testflight_app_distribution do |_options|
+	desc "Upload the application to TestFlight"
+	desc ""
+	private_lane :testflight_app_distribution do
 		# Get AppStoreConnect Credentials
 		app_store_connect_api_key(
 			key_id: ENV["CONNECT_API_KEY_ID"],
@@ -200,6 +264,27 @@ platform :ios do
 		)
 	end
 
+	####
+	#### Utilities
+	####
+
+	module Step
+		MATCH = "match".freeze
+		CODE_SIGN = "code_sign".freeze
+		GYM = "gym".freeze
+		PROVISIONING_PROFILE = "prov_profile".freeze
+	end
+
+	module Destination
+		FIREBASE = "firebase".freeze
+		TESTFLIGHT = "testflight".freeze
+	end
+
+	desc "Get configuration value"
+	desc "#### Options"
+	desc " * **`destination`**: The destination to upload the application to. Possible values, see Destination module."
+	desc " * **`step`**: The step to get the configuration value for. Possible values, see Step module."
+	desc ""
 	private_lane :getConfig do |options|
 		UI.user_error!("⚠️ destination is not provided") unless options[:destination]
 		UI.user_error!("⚠️ step is not provided") unless options[:step]
@@ -223,5 +308,28 @@ platform :ios do
 			UI.user_error!("⚠️ Could not get configuration value for: Step - #{step}, Destination - #{destination}")
 		end
 		config
+	end
+
+	desc "Determines the boolean value of the provided input parameter."
+	desc "Returns true for 'true', 1, '1' and true values."
+	desc ""
+	desc "puts get_boolean?(nil)            -> false"
+	desc "puts get_boolean?(1)              -> true"
+	desc "puts get_boolean?(0)              -> false"
+	desc "puts get_boolean?('')             -> false"
+	desc "puts get_boolean?(false)          -> false"
+	desc "puts get_boolean?(true)           -> true"
+	desc "puts get_boolean?('false')        -> false"
+	desc "puts get_boolean?('true')         -> true"
+	desc "puts get_boolean?('some text')    -> false"
+	desc "puts get_boolean?('1')            -> true"
+	desc ""
+	desc "@param [String, Boolean, #read] input the input to determine the boolean value of"
+	desc "@return [boolean] the boolean value of the input"
+	def get_boolean?(input)
+		return false if input.nil?
+
+		bool_input = input.to_s.downcase
+		["true", "1"].include?(bool_input)
 	end
 end

@@ -11,7 +11,14 @@
 		"passwordChange": "Password Change",
 		"deleteAuthenticators": "Delete Authenticators",
 		"inBandRegister": "In-Band Register",
-		"identitySuiteOnly": "Identity Suite only"
+		"identitySuiteOnly": "Identity Suite only",
+		"nevisMobileAuthenticationSdk": "Nevis Mobile Authentication SDK",
+		"facetId": "Facet Id",
+		"certificateFingerprint": "Certificate Fingerprint",
+		"supportedAttestation": "FIDO UAF Attestation Supported by Device",
+		"surrogateBasic": "Surrogate basic",
+		"fullBasicDefault": "Full basic default mode",
+		"basicStrict": "Full basic strict mode"
 	},
 	"readQrCode": {
 		"title": "Read Qr Code",
@@ -53,7 +60,7 @@
 		},
 		"protectionStatus": {
 			"locked": "Authenticator is locked.",
-			"lastAttemptFailed": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+			"lastAttemptFailed": "Invalid PIN was provided previously. Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
 		}
 	},
 	"password": {
@@ -75,7 +82,7 @@
 		},
 		"protectionStatus": {
 			"locked": "Authenticator is locked.",
-			"lastAttemptFailed": "Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
+			"lastAttemptFailed": "Invalid password was provided previously. Authenticator is unlocked. You have {{remainingRetries}} try left.\nPlease retry in {{coolDown}} seconds."
 		}
 	},
 	"transactionConfirmation": {

@@ -7,8 +7,8 @@ default_platform(:android)
 
 root_dir = File.expand_path(File.join(File.dirname(__FILE__), "../"))
 signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
-apk_path = File.join(root_dir, "../build/app/outputs/flutter-apk/app-debug.apk")
 display_name = "Nevis Mobile Authentication SDK Example App React Android"
+build_gradle = File.join(root_dir, "build.gradle")
 
 def report_on_success(message)
 	slack(
@@ -43,16 +43,72 @@ def get_boolean?(input)
 end
 
 platform :android do
-	desc "Build and distribute the application"
+	desc "Pull request build"
+	desc "#### Options"
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
+	desc ""
+	lane :pr do |options|
+		utilize_private_repos
+		build(options)
+	end
+
+	desc "Continuous build"
 	desc "#### Options"
 	desc " * **`version`**: The version of the application."
 	desc " * **`build_number`**: The build number of the application."
-	desc " * **`new_arch_enabled`**: The build number of the application."
+	desc ""
+	lane :develop do |options|
+		utilize_private_repos
+		distribute(options)
+	end
+
+	desc "Release build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :main do |options|
+		distribute(options)
+	end
+
+	####
+	#### Private lanes
+	####
+
+	desc "Utilize private repositories"
+	desc ""
+	private_lane :utilize_private_repos do
+		private_maven_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
+		modify_gradle_file(
+			gradle_file_path: build_gradle,
+			constant: "url",
+			value: private_maven_repository_url
+		) if private_maven_repository_url
+	end
+
+	desc "Build the application"
+	desc "#### Options"
+	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
+	desc ""
+	private_lane :build do |options|
+		new_arch_enabled = options[:new_arch_enabled].nil? ? true : get_boolean?(options[:new_arch_enabled])
+		UI.message("Build Debug version")
+		Dir.chdir("..") do
+			Actions.sh("yarn android:build:#{new_arch_enabled ? 'new' : 'old'}", error_callback: ->(result) {
+				raise "❌ Build Debug version failed! Result: #{result}"
+			})
+		end
+	end
+
+	desc "Distribute the application"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	private_lane :distribute do |options|
 		version = options[:version]
 		build_number = options[:build_number]
-		new_arch_enabled = options[:new_arch_enabled].nil? ? false : get_boolean?(options[:new_arch_enabled])
+		new_arch_enabled = options[:new_arch_enabled].nil? ? true : get_boolean?(options[:new_arch_enabled])
 		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
 		modify_gradle_file(
@@ -65,11 +121,11 @@ platform :android do
 			value: build_number,
 		)
 
-		sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
+		Actions.sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
 
 		modify_gradle_file(
 			constant: "signingConfig",
-			value: "signingConfigs.signing",
+			value: "signingConfigs.signing"
 		)
 
 		modify_gradle_file(
@@ -92,5 +148,28 @@ platform :android do
 		report_on_success("#{display_name} build completed: #{version} (#{build_number}) ✅")
 	rescue => e
 		report_on_error("#{display_name} build failed ❌", e)
+	end
+
+	desc "Determines the boolean value of the provided input parameter."
+	desc "Returns true for 'true', 1, '1' and true values."
+	desc ""
+	desc "puts get_boolean?(nil)            -> false"
+	desc "puts get_boolean?(1)              -> true"
+	desc "puts get_boolean?(0)              -> false"
+	desc "puts get_boolean?('')             -> false"
+	desc "puts get_boolean?(false)          -> false"
+	desc "puts get_boolean?(true)           -> true"
+	desc "puts get_boolean?('false')        -> false"
+	desc "puts get_boolean?('true')         -> true"
+	desc "puts get_boolean?('some text')    -> false"
+	desc "puts get_boolean?('1')            -> true"
+	desc ""
+	desc "@param [String, Boolean, #read] input the input to determine the boolean value of"
+	desc "@return [boolean] the boolean value of the input"
+	def get_boolean?(input)
+		return false if input.nil?
+
+		bool_input = input.to_s.downcase
+		["true", "1"].include?(bool_input)
 	end
 end

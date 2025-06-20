@@ -1,11 +1,6 @@
 name: Setup iOS
 description: Setup iOS resources and install dependencies
 
-inputs:
-    new-arch-enabled:
-        description: "Flag that tells whether enable support to the new architecture."
-        required: true
-
 runs:
     using: composite
     steps:
@@ -21,12 +16,10 @@ runs:
               bundler-cache: true
               working-directory: 'ios'
 
-        - name: Install Cocoapods - new architecture
-          if: inputs.new-arch-enabled == 'true'
+        - name: Add Private Cocoapods Repo
+          if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
           shell: bash
-          run: yarn pods:new
-
-        - name: Install Cocoapods - old architecture
-          if: inputs.new-arch-enabled == 'false'
-          shell: bash
-          run: yarn pods:old
+          working-directory: 'ios'
+          run: |
+              bundle exec pod repo remove ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} &> /dev/null || true
+              bundle exec pod repo add ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}

@@ -1,7 +1,6 @@
 {
 	"sdk": {
-		"hostname": "myinstance.mauth.nevis.cloud",
-		"facetId": "android:apk-key-hash:ch.nevis.mobile.authentication.sdk.react.example"
+		"hostname": "myinstance.mauth.nevis.cloud"
 	},
 	"authenticatorAllowlist": [
 		"F1D0#0001",

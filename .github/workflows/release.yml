@@ -1,8 +1,8 @@
-name: Pull Request
+name: Release Candidate Build
 
 on:
     pull_request:
-        branches: ['develop']
+        branches: ['main']
     workflow_dispatch:
         inputs:
             ios-runner-type:
@@ -15,7 +15,7 @@ on:
                     - "macos-15"
 
 env:
-    BUILD_TYPE: 'SNAPSHOT' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
+    BUILD_TYPE: 'RELEASE_CANDIDATE' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
     XCODE_VERSION: 16.3
     JAVA_VERSION: 17
     RUBY_VERSION: 3.4.2
@@ -23,12 +23,6 @@ env:
     YARN_ENABLE_IMMUTABLE_INSTALLS: false
     GH_USERNAME: ${{ vars.GH_USERNAME }}
     GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-    KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
-    PRIVATE_NATIVE_IOS_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
-    PRIVATE_NATIVE_IOS_REPOSITORY_NAME: ${{ vars.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }}
-    PRIVATE_NATIVE_ANDROID_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
-    PRIVATE_NPM_REPOSITORY_URL: ${{ vars.PRIVATE_NPM_REPOSITORY_URL }}
-    NODE_AUTH_TOKEN: ${{ secrets.PRIVATE_NPM_REPOSITORY_TOKEN }}
 
 jobs:
     lint-and-format:
@@ -40,21 +34,19 @@ jobs:
 
             - name: Set up Node
               uses: ./.github/actions/setup-node
-              with:
-                  registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
 
-            - name: Lint Files
+            - name: Lint files
               run: yarn lint
 
-            - name: Run Formatter
+            - name: Run formatter
               run: yarn formatcheck
 
-            - name: Run Ruby Linter for Android
+            - name: Run Ruby linter for Android
               uses: ./.github/actions/run-ruby-linter
               with:
                   working-directory: 'android'
 
-            - name: Run Ruby Linter for iOS
+            - name: Run Ruby linter for iOS
               uses: ./.github/actions/run-ruby-linter
               with:
                   working-directory: 'ios'
@@ -69,8 +61,6 @@ jobs:
 
             - name: Set up Node
               uses: ./.github/actions/setup-node
-              with:
-                  registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
 
             - name: Check Dependencies
               run: yarn check-dependencies
