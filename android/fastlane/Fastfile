@@ -78,7 +78,7 @@ platform :android do
 	desc "Utilize private repositories"
 	desc ""
 	private_lane :utilize_private_repos do
-		private_maven_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
+		private_maven_repository_url = ENV["PRIVATE_NATIVE_ANDROID_REPOSITORY_URL"]
 		modify_gradle_file(
 			gradle_file_path: build_gradle,
 			constant: "url",

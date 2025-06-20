@@ -39,15 +39,6 @@ runs:
 
         - name: Publish Android App
           if: ${{ env.BUILD_TYPE == 'RELEASE' || env.BUILD_TYPE == 'SNAPSHOT' }}
-          env:
-              GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-              SIGNING_CONFIGS: ${{ env.SIGNING_CONFIGS }}
-              GH_USERNAME: ${{ env.GH_USERNAME }}
-              GH_PERSONAL_ACCESS_TOKEN: ${{ env.GH_PERSONAL_ACCESS_TOKEN }}
-              FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
-              FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
-              SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
-              PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
           uses: maierj/fastlane-action@v3.1.0
           with:
               lane: ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }}
