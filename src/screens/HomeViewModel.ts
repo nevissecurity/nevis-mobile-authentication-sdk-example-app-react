@@ -3,12 +3,17 @@
  */
 
 import { useState } from 'react';
+import { Platform } from 'react-native';
 
 import {
 	Aaid,
 	Account,
 	Authenticator,
+	MetaData,
 	MobileAuthenticationClientInitializer,
+	OnlyDefaultMode,
+	OnlySurrogateBasicSupported,
+	StrictMode,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -24,11 +29,14 @@ import {
 import { ErrorHandler } from '../error/ErrorHandler';
 import { AccountItem } from '../model/AccountItem';
 import { OperationType } from '../model/OperationType';
+import { SdkAttestationInformation } from '../model/SdkAttestationInformation';
+import { SdkMetaData } from '../model/SdkMetaData';
 import * as OutOfBandOperationHandler from '../userInteraction/OutOfBandOperationHandler';
 import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
 import { ClientProvider } from '../utility/ClientProvider';
 import * as RootNavigation from '../utility/RootNavigation';
+import { VersionUtils } from '../utility/VersionUtils.ts';
 
 const useHomeViewModel = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -36,6 +44,10 @@ const useHomeViewModel = () => {
 	const [localAccounts, setLocalAccounts] = useState<Array<Account>>([]);
 	const [localAuthenticators, setLocalAuthenticators] = useState<Array<Authenticator>>([]);
 	const [numberOfAccounts, setNumberOfAccounts] = useState<number>(0);
+	const [sdkMetaData, setSdkMetaData] = useState<SdkMetaData | undefined>();
+	const [sdkAttestationInformation, setSdkAttestationInformation] = useState<
+		SdkAttestationInformation | undefined
+	>();
 
 	async function initClient() {
 		console.log('Initializing the client...');
@@ -70,7 +82,11 @@ const useHomeViewModel = () => {
 	}
 
 	function fetchData() {
-		getAccounts().then(getAuthenticators).then(getDeviceInformation);
+		getAccounts()
+			.then(getAuthenticators)
+			.then(getDeviceInformation)
+			.then(getMetaData)
+			.then(getAttestationInformation);
 	}
 
 	async function getAccounts() {
@@ -127,6 +143,108 @@ const useHomeViewModel = () => {
 				);
 			})
 			.catch(ErrorHandler.handle.bind(null, OperationType.localData));
+	}
+
+	async function getMetaData() {
+		Platform.select({
+			android: async () => {
+				const androidMetaData = await MetaData.androidMetaData().catch((error) => {
+					console.log(`Failed to get Android meta data. Error: ${error.message}`);
+				});
+
+				if (androidMetaData === undefined) {
+					return;
+				}
+
+				const sdkMetaData = new SdkMetaData(
+					VersionUtils.formatted(androidMetaData.mobileAuthenticationVersion),
+					androidMetaData.applicationFacetId,
+					androidMetaData.signingCertificateSha256
+				);
+				setSdkMetaData(sdkMetaData);
+			},
+			ios: async () => {
+				const iosMetaData = await MetaData.iosMetaData().catch((error) => {
+					console.log(`Failed to get iOS meta data. Error: ${error.message}`);
+				});
+
+				if (iosMetaData === undefined) {
+					return;
+				}
+
+				const sdkMetaData = new SdkMetaData(
+					VersionUtils.formatted(iosMetaData.mobileAuthenticationVersion),
+					iosMetaData.applicationFacetId,
+					undefined
+				);
+				setSdkMetaData(sdkMetaData);
+			},
+			default: () => {
+				// do nothing
+			},
+		})();
+	}
+
+	async function getAttestationInformation() {
+		const client = ClientProvider.getInstance().client;
+		if (client === undefined) {
+			console.log('There is no client...');
+			return;
+		}
+
+		return new Promise<void>((resolve) => {
+			client.deviceCapabilities.androidDeviceCapabilities.fidoUafAttestationInformationGetter
+				.onSuccess((information?) => {
+					console.log('Getting attestation information succeeded.');
+					if (information === undefined) {
+						console.log('No attestation information received.');
+						resolve();
+						return;
+					}
+
+					let sdkAttestationInformation: SdkAttestationInformation | undefined;
+					if (information instanceof OnlySurrogateBasicSupported) {
+						console.log('Only basic surrogate supported.');
+						console.log(`Cause: ${information.cause}.`);
+						sdkAttestationInformation = new SdkAttestationInformation({
+							onlySurrogateBasic: true,
+							onlyDefault: false,
+							strict: false,
+						});
+					} else if (information instanceof OnlyDefaultMode) {
+						console.log('Only default mode supported.');
+						console.log(`Cause: ${information.cause}.`);
+						sdkAttestationInformation = new SdkAttestationInformation({
+							onlySurrogateBasic: true,
+							onlyDefault: true,
+							strict: false,
+						});
+					} else if (information instanceof StrictMode) {
+						console.log('Strict mode supported.');
+						sdkAttestationInformation = new SdkAttestationInformation({
+							onlySurrogateBasic: true,
+							onlyDefault: true,
+							strict: true,
+						});
+					}
+
+					setSdkAttestationInformation(sdkAttestationInformation);
+					resolve();
+				})
+				.onError((error) => {
+					console.log(
+						`Getting FIDO UAF attestation information failed. Error: ${error.description}`
+					);
+					resolve();
+				})
+				.execute()
+				.catch((error) => {
+					console.log(
+						`Getting FIDO UAF attestation information failed. Error: ${error.message}`
+					);
+					resolve();
+				});
+		});
 	}
 
 	function readQrCode() {
@@ -363,6 +481,8 @@ const useHomeViewModel = () => {
 
 	return {
 		numberOfAccounts,
+		sdkMetaData,
+		sdkAttestationInformation,
 		initClient,
 		fetchData,
 		handleDeepLink,

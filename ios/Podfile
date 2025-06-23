@@ -1,3 +1,5 @@
+source "https://cdn.cocoapods.org"
+
 def node_require(script)
 	# Resolve script with node to allow for hoisting
 	require Pod::Executable.execute_command("node", ["-p", "require.resolve('#{script}', {paths: [process.argv[1]]})", __dir__]).strip
@@ -21,8 +23,8 @@ unless linkage.nil?
 end
 
 target "nevis_mobile_authentication_sdk_example_app_react" do
-	pod "NevisMobileAuthentication-Debug", "~> 3.9.0", configurations: ["Debug"]
-	pod "NevisMobileAuthentication", "~> 3.9.0", configurations: ["Release"]
+	pod "NevisMobileAuthentication-Debug", "~> 4.0.0", configurations: ["Debug"]
+	pod "NevisMobileAuthentication", "~> 4.0.0", configurations: ["Release"]
 
 	config = use_native_modules!
 

@@ -7,6 +7,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 const white = 'white';
 const black = 'black';
 const red = 'red';
+const green = 'green';
 
 const contentContainerStyle: ViewStyle = {
 	flexGrow: 1,
@@ -37,6 +38,22 @@ const listContainerStyle: ViewStyle = {
 	rowGap: 8,
 	paddingTop: 16,
 	paddingBottom: 16,
+};
+
+const listRowStyle: ViewStyle = {
+	flexDirection: 'row',
+	justifyContent: 'flex-start',
+	columnGap: 8,
+};
+
+const sectionContainerStyle: ViewStyle = {
+	flex: 1,
+	rowGap: 16,
+};
+
+const sectionContainerItemStyle: ViewStyle = {
+	flex: 1,
+	rowGap: 4,
 };
 
 const textTitleStyle: TextStyle = {
@@ -105,11 +122,17 @@ export const darkStyle = StyleSheet.create({
 	middleContainer: middleContainerStyle,
 	bottomContainer: bottomContainerStyle,
 	listContainer: listContainerStyle,
+	listRow: listRowStyle,
+	sectionContainer: sectionContainerStyle,
+	sectionContainerItem: sectionContainerItemStyle,
 	textForeground: {
 		color: white,
 	},
 	textError: {
 		color: red,
+	},
+	textSuccess: {
+		color: green,
 	},
 	textTitle: textTitleStyle,
 	textNormal: textNormalStyle,
@@ -141,11 +164,17 @@ export const lightStyle = StyleSheet.create({
 	middleContainer: middleContainerStyle,
 	bottomContainer: bottomContainerStyle,
 	listContainer: listContainerStyle,
+	listRow: listRowStyle,
+	sectionContainer: sectionContainerStyle,
+	sectionContainerItem: sectionContainerItemStyle,
 	textForeground: {
 		color: black,
 	},
 	textError: {
 		color: red,
+	},
+	textSuccess: {
+		color: green,
 	},
 	textTitle: textTitleStyle,
 	textNormal: textNormalStyle,

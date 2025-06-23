@@ -19,7 +19,7 @@ export class PasswordPolicyImpl extends PasswordPolicy {
 	): void {
 		console.log(`Received password for enrollment is ${password}`);
 
-		this._isValid(password)
+		return this._isValid(password)
 			? onSuccess()
 			: onError(new PasswordEnrollmentCustomValidationError(this.errorMessage, this.cause));
 	}
@@ -30,7 +30,7 @@ export class PasswordPolicyImpl extends PasswordPolicy {
 	): void {
 		console.log(`Received password for change is ${password}`);
 
-		this._isValid(password)
+		return this._isValid(password)
 			? onSuccess()
 			: onError(
 					new PasswordChangeRecoverableCustomValidationError(
