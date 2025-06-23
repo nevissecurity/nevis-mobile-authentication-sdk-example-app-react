@@ -15,13 +15,27 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
-### android main
+### android pr
 
 ```sh
-[bundle exec] fastlane android main
+[bundle exec] fastlane android pr
 ```
 
-Build and distribute the application
+Pull request build
+
+#### Options
+
+ * **`new_arch_enabled`**: Enable new architecture for the build.
+
+
+
+### android develop
+
+```sh
+[bundle exec] fastlane android develop
+```
+
+Continuous build
 
 #### Options
 
@@ -29,7 +43,21 @@ Build and distribute the application
 
  * **`build_number`**: The build number of the application.
 
- * **`new_arch_enabled`**: The build number of the application.
+
+
+### android main
+
+```sh
+[bundle exec] fastlane android main
+```
+
+Release build
+
+#### Options
+
+ * **`version`**: The version of the application.
+
+ * **`build_number`**: The build number of the application.
 
 
 

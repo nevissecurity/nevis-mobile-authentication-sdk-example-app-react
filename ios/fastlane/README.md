@@ -15,13 +15,43 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios pr
+
+```sh
+[bundle exec] fastlane ios pr
+```
+
+Pull request build
+
+#### Options
+
+ * **`new_arch_enabled`**: Enable new architecture for the build.
+
+
+
+### ios develop
+
+```sh
+[bundle exec] fastlane ios develop
+```
+
+Continuous build
+
+#### Options
+
+ * **`version`**: The version of the application.
+
+ * **`build_number`**: The build number of the application.
+
+
+
 ### ios main
 
 ```sh
 [bundle exec] fastlane ios main
 ```
 
-Build and distribute the application
+Release build
 
 #### Options
 

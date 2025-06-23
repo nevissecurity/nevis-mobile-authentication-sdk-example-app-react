@@ -18,12 +18,11 @@ runs:
         - name: Set up Node
           uses: ./.github/actions/setup-node
           with:
+              registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
               new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Set up iOS
           uses: ./.github/actions/setup-ios
-          with:
-              new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Update Configuration
           uses: ./.github/actions/update-config
@@ -31,25 +30,14 @@ runs:
               host-name: ${{ env.HOST_NAME }}
 
         - name: Publish iOS App
-          env:
-              CONNECT_API_KEY_ID: ${{ env.CONNECT_API_KEY_ID }}
-              CONNECT_API_ISSUER_ID: ${{ env.CONNECT_API_ISSUER_ID }}
-              CONNECT_API_KEY_CONTENT: ${{ env.CONNECT_API_KEY_CONTENT }}
-              BETA_APP_REVIEW_INFO: ${{ env.BETA_APP_REVIEW_INFO }}
-              MATCH_GIT_BASIC_AUTHORIZATION: ${{ env.MATCH_GIT_BASIC_AUTHORIZATION }}
-              MATCH_GIT_URL: ${{ env.MATCH_GIT_URL }}
-              MATCH_PASSWORD: ${{ env.MATCH_PASSWORD }}
-              DEVELOPER_PORTAL_TEAM_ID: ${{ env.DEVELOPER_PORTAL_TEAM_ID }}
-              CODE_SIGNING_IDENTITY: ${{ env.CODE_SIGNING_IDENTITY }}
-              PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
-              FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
-              FIREBASE_APP_ID_IOS: ${{ env.FIREBASE_APP_ID_IOS }}
-              TEMP_KEYCHAIN_NAME: ${{ env.TEMP_KEYCHAIN_NAME }}
-              SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+          if: ${{ env.BUILD_TYPE == 'RELEASE' || env.BUILD_TYPE == 'SNAPSHOT' }}
           uses: maierj/fastlane-action@v3.1.0
           with:
-              lane: 'main'
+              lane: ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }}
               subdirectory: 'ios'
-              options: '{ "version": "${{ inputs.version-number }}",
-                          "build_number": "${{ inputs.build-number }}"
-                        }'
+              options: |
+                {
+                  "version": "${{ inputs.version-number }}",
+                  "build_number": "${{ inputs.build-number }}",
+                  "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
+                }
