@@ -79,13 +79,13 @@ Native iOS dependencies of this project (including the Nevis Mobile Authenticati
 
 * When using the [new architecture](https://reactnative.dev/docs/the-new-architecture/landing-page):
 
-```
+```bash
 RCT_NEW_ARCH_ENABLED=1 USE_FRAMEWORKS=static NO_FLIPPER=1 pod install
 ```
 
 * When using the old architecture:
 
-```
+```bash
 RCT_NEW_ARCH_ENABLED=0 pod install
 ```
 
@@ -122,8 +122,7 @@ Edit the `assets/config_authentication_cloud.json` file and replace
     "loginRequestURL": "https://<YOUR INSTANCE>.mauth.nevis.cloud/_app/auth/pwd"
   },
   "sdk": {
-    "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud",
-     ...
+    "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud"
   }
 }
 ```
@@ -145,12 +144,12 @@ Due to the [Fast Refresh](https://reactnative.dev/docs/fast-refresh) feature of 
 If you configured everything properly, you can run the app on an Android device or Emulator with the following yarn commands:
 
 * Using the new architecture
-```
+```bash
 yarn android:run:new
 ```
 
 * Using the old architecture
-```
+```bash
 yarn android:run:old
 ```
 
@@ -163,13 +162,13 @@ If you configured everything properly, you're ready to build and run the example
 
 * Using the new architecture
 
-```
+```bash
 yarn ios:run:new
 ```
 
 * Using the old architecture
 
-```
+```bash
 yarn ios:run:old
 ```
 
@@ -187,7 +186,7 @@ To speed up local builds you can enable `ccache`, a compiler cache that speeds u
 To enable `ccache`, follow these instructions:
 
 - Install `ccache` on your machine. On macOS, you can use Homebrew:
-```shell
+```bash
 brew install ccache
 ```
 
@@ -240,7 +239,7 @@ In this section you can find hints about how the Nevis Mobile Authentication SDK
 
 ### Initialization
 
-The [HomeViewModel](src/screens/HomeViewModel.ts) class is responsible for creating and initializing a `MobileAuthenticationClient` instance which is the entry point to the SDK. Later this instance can be used to start the different operations.
+The [HomeViewModel](src/screens/HomeViewModel.ts) class is responsible for creating and initializing a [MobileAuthenticationClient](https://docs.nevis.net/mobilesdk/api-references/react_native/interfaces/MobileAuthenticationClient.html) instance which is the entry point to the SDK. Later this instance can be used to start the different operations.
 
 ### Registration
 
@@ -251,7 +250,7 @@ Before being able to authenticate using the Nevis Mobile Authentication SDK, go 
 If the application is using a backend using the Nevis Authentication Cloud, the [AuthCloudApiRegistrationViewModel](src/screens/AuthCloudApiRegistrationViewModel.ts) class will be used by passing the `enrollment` response or an `appLinkUri`.
 
 When the backend used by the application does not use the Nevis Authentication Cloud the name of the user to be registered is passed to the [UsernamePasswordLoginViewModel](src/screens/UsernamePasswordLoginViewModel.ts) class.
-If authorization is required by the backend to register, provide an `AuthorizationProvider`. In the example app a `CookieAuthorizationProvider` is created from the cookies obtained by the `login()` function (see [UsernamePasswordLoginViewModel](src/screens/UsernamePasswordLoginViewModel.ts)).
+If authorization is required by the backend to register, provide an [AuthorizationProvider](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/AuthorizationProvider.html). In the example app a [CookieAuthorizationProvider](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/CookieAuthorizationProvider.html) is created from the cookies obtained by the `login()` function (see [UsernamePasswordLoginViewModel](src/screens/UsernamePasswordLoginViewModel.ts)).
 
 #### Out-of-band registration
 
@@ -271,7 +270,7 @@ When the authentication is initiated in another device or application, the infor
 
 #### Transaction confirmation
 
-There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The `AuthenticatorSelectionContext` and the `AccountSelectionContext` contain string with the information. In the example app it is handled in the [AccountSelectorImpl](src/userInteraction/AccountSelectorImpl.ts) class.
+There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The [AuthenticatorSelectionContext](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/AuthenticatorSelectionContext.html) and the [AccountSelectionContext](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/AccountSelectionContext.html) contain string with the information. In the example app it is handled in the [AccountSelectorImpl](src/userInteraction/AccountSelectorImpl.ts) class.
 
 ### Deregistration
 
@@ -293,13 +292,29 @@ With the change password operation you can modify the password of a registered P
 
 #### Decode out-of-band payload
 
-Out-of-band operations occur when a message is delivered to the application through an alternate channel like a push notification, a QR code, or a deep link. With the help of the [OutOfBandOperationHandler](src/userInteraction/OutOfBandOperationHandler.ts) class the application can create an `OutOfBandPayload` either from a JSON or a Base64 URL encoded String. The `OutOfBandPayload` is then used to start an `OutOfBandOperation`, see chapters [Out-of-Band Registration](#out-of-band-registration) and [Out-of-Band Authentication](#out-of-band-authentication).
+Out-of-band operations occur when a message is delivered to the application through an alternate channel like a push notification, a QR code, or a deep link. With the help of the [OutOfBandOperationHandler](src/userInteraction/OutOfBandOperationHandler.ts) class the application can create an [OutOfBandPayload](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/OutOfBandPayload.html) either from a JSON or a Base64 URL encoded String. The [OutOfBandPayload](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/OutOfBandPayload.html) is then used to start an [OutOfBandOperation](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/OutOfBandOperation.html), see chapters [Out-of-Band Registration](#out-of-band-registration) and [Out-of-Band Authentication](#out-of-band-authentication).
 
 #### Change device information
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name is implemented in the [DeviceInformationChangeViewModel](src/screens/DeviceInformationChangeViewModel.ts) class.
 
-Firebase Cloud Messaging is not supported in the example app.
+> [!NOTE]
+> Firebase Cloud Messaging is not supported in the example app.
+
+#### Get information
+
+You can use the [LocalData](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/LocalData.html) to obtain the following information (see the [HomeViewModel](src/screens/HomeViewModel.ts) class):
+- The registered accounts.
+- The device information.
+- The authenticator information.
+
+#### Get MetaData
+
+The [HomeViewModel](src/screens/HomeViewModel.ts) class is responsible for obtaining the information of the SDK and the application with the help of [MetaData](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/MetaData.html), such as the SDK version, the application facet identifier and the certificate fingerprint.
+
+#### Get device capabilities
+
+The [HomeViewModel](src/screens/HomeViewModel.ts) class is responsible for obtaining the information about what the device can support with the help of [DeviceCapabilities](https://docs.nevis.net/mobilesdk/api-references/react_native/classes/DeviceCapabilities.html). It informs about whether the device supports [full basic FIDO UAF attestations](https://docs.nevis.net/mobilesdk/concept/security-considerations#surrogate-basic-and-full-basic-attestation) or not.
 
 ### Error handling
 
