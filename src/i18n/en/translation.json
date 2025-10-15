@@ -18,7 +18,8 @@
 		"supportedAttestation": "FIDO UAF Attestation Supported by Device",
 		"surrogateBasic": "Surrogate basic",
 		"fullBasicDefault": "Full basic default mode",
-		"basicStrict": "Full basic strict mode"
+		"basicStrict": "Full basic strict mode",
+		"strictStrongBox": "Full basic strict StongBox mode"
 	},
 	"readQrCode": {
 		"title": "Read Qr Code",
