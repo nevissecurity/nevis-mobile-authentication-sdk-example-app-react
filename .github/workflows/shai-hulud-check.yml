@@ -1,0 +1,25 @@
+name: Shai-Hulud 2.0 Security Check
+
+on:
+    workflow_dispatch:
+
+env:
+    SLACK_WEBHOOK_URL: ${{ vars.SLACK_WEBHOOK_URL }}
+
+jobs:
+    security-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Shai-Hulud 2.0 Security Check
+              id: scan
+              uses: ./.github/actions/shai-hulud-check
+
+            - name: Slack Message
+              uses: act10ns/slack@v2.1.0
+              with:
+                  status: ${{ steps.scan.outputs.status }}
+                  message: Shai-Hulud 2.0 Security Check completed with status ${{ steps.scan.outputs.status }}, ${{ steps.scan.outputs.affected-count }} compromised packages detected in ${{ github.repository }}
+              if: always()
