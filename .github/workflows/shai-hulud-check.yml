@@ -1,0 +1,11 @@
+name: Shai-Hulud 2.0 Security Check
+
+on:
+    workflow_dispatch:
+
+jobs:
+    security-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Shai-Hulud 2.0 Security Check
+              uses: ./.github/actions/shai-hulud-check

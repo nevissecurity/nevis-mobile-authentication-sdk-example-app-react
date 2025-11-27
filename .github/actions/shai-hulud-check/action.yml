@@ -1,0 +1,12 @@
+name: Shai-Hulud 2.0 Security Check
+
+runs:
+    using: composite
+    steps:
+      - uses: gensecaihq/Shai-Hulud-2.0-Detector@v1
+        with:
+          fail-on-critical: true
+          fail-on-high: true
+          fail-on-any: true
+          scan-lockfiles: true
+          scan-node-modules: true
