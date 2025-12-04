@@ -1,0 +1,20 @@
+name: Shai-Hulud 2.0 Security Check
+
+outputs:
+    status:
+        description: "Overall scan status"
+        value: ${{ steps.scan.outputs.status }}
+    affected-count:
+        description: "Number of compromised packages detected"
+        value: ${{ steps.scan.outputs.affected-count }}
+
+runs:
+    using: composite
+    steps:
+        - name: Run Detector
+          id: scan
+          uses: gensecaihq/Shai-Hulud-2.0-Detector@v2
+          with:
+              fail-on-any: true
+              scan-lockfiles: true
+              scan-node-modules: true
