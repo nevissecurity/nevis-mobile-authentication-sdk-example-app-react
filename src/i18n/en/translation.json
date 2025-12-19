@@ -18,7 +18,8 @@
 		"supportedAttestation": "FIDO UAF Attestation Supported by Device",
 		"surrogateBasic": "Surrogate basic",
 		"fullBasicDefault": "Full basic default mode",
-		"basicStrict": "Full basic strict mode"
+		"basicStrict": "Full basic strict mode",
+		"strictStrongBox": "Full basic strict StongBox mode"
 	},
 	"readQrCode": {
 		"title": "Read Qr Code",
@@ -104,16 +105,24 @@
 	"cancelButtonTitle": "Cancel",
 	"confirmButtonTitle": "Ok",
 	"biometric": {
-		"popup": {
-			"title": "Biometric authentication required",
-			"description": "Please use the default biometric method to identify yourself.",
-			"cancelButtonTitle": "Cancel"
+		"prompt": {
+			"title": "Verification",
+			"description": "Please authenticate to complete the operation.",
+			"cancelButtonText": "Cancel",
+			"fallbackButtonText": "Enter Passcode"
 		}
 	},
 	"devicePasscode": {
-		"popup": {
-			"title": "Passcode required",
-			"description": "Please provide the device passcode."
+		"prompt": {
+			"title": "Verification",
+			"description": "Please authenticate to complete the operation."
+		}
+	},
+	"fingerprint": {
+		"prompt": {
+			"description": "Please authenticate to complete the operation.",
+			"cancelButtonText": "Cancel",
+			"fallbackButtonText": "Enter Passcode"
 		}
 	},
 	"authenticator": {

@@ -55,6 +55,9 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
+            - name: Shai-Hulud 2.0 Security Check
+              uses: ./.github/actions/shai-hulud-check
+
             - name: Set up Node
               uses: ./.github/actions/setup-node
 

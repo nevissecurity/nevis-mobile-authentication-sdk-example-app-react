@@ -30,16 +30,27 @@ const AttestationInformationSection = ({ attestationInformation }: Props) => {
 				isSupported={
 					attestationInformation.onlySurrogateBasic ||
 					attestationInformation.onlyDefault ||
-					attestationInformation.strict
+					attestationInformation.strict ||
+					attestationInformation.strictStrongBox
 				}
 			/>
 			<AttestationModeListTile
 				title={t('home.fullBasicDefault')}
-				isSupported={attestationInformation.onlyDefault || attestationInformation.strict}
+				isSupported={
+					attestationInformation.onlyDefault ||
+					attestationInformation.strict ||
+					attestationInformation.strictStrongBox
+				}
 			/>
 			<AttestationModeListTile
 				title={t('home.basicStrict')}
-				isSupported={attestationInformation.strict}
+				isSupported={
+					attestationInformation.strict || attestationInformation.strictStrongBox
+				}
+			/>
+			<AttestationModeListTile
+				title={t('home.strictStrongBox')}
+				isSupported={attestationInformation.strictStrongBox}
 			/>
 		</View>
 	);

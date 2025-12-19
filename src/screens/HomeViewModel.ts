@@ -14,6 +14,7 @@ import {
 	OnlyDefaultMode,
 	OnlySurrogateBasicSupported,
 	StrictMode,
+	StrictStrongBoxMode,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -202,6 +203,10 @@ const useHomeViewModel = () => {
 						return;
 					}
 
+					console.log(
+						`Attestation information: ${JSON.stringify(information, null, ' ')}`
+					);
+
 					let sdkAttestationInformation: SdkAttestationInformation | undefined;
 					if (information instanceof OnlySurrogateBasicSupported) {
 						console.log('Only basic surrogate supported.');
@@ -210,21 +215,32 @@ const useHomeViewModel = () => {
 							onlySurrogateBasic: true,
 							onlyDefault: false,
 							strict: false,
+							strictStrongBox: false,
 						});
 					} else if (information instanceof OnlyDefaultMode) {
-						console.log('Only default mode supported.');
+						console.log('Full basic default mode supported.');
 						console.log(`Cause: ${information.cause}.`);
 						sdkAttestationInformation = new SdkAttestationInformation({
 							onlySurrogateBasic: true,
 							onlyDefault: true,
 							strict: false,
+							strictStrongBox: false,
 						});
 					} else if (information instanceof StrictMode) {
-						console.log('Strict mode supported.');
+						console.log('Full basic strict mode supported.');
 						sdkAttestationInformation = new SdkAttestationInformation({
 							onlySurrogateBasic: true,
 							onlyDefault: true,
 							strict: true,
+							strictStrongBox: false,
+						});
+					} else if (information instanceof StrictStrongBoxMode) {
+						console.log('Full basic strict strong-box mode supported.');
+						sdkAttestationInformation = new SdkAttestationInformation({
+							onlySurrogateBasic: true,
+							onlyDefault: true,
+							strict: true,
+							strictStrongBox: true,
 						});
 					}
 

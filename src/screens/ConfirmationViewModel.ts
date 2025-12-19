@@ -9,6 +9,7 @@ import {
 	BiometricUserVerificationHandler,
 	DevicePasscodePromptOptions,
 	DevicePasscodeUserVerificationHandler,
+	FingerprintPromptOptions,
 	FingerprintUserVerificationHandler,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 import i18next from 'i18next';
@@ -32,9 +33,10 @@ const useConfirmationViewModel = () => {
 				await handler
 					.listenForOsCredentials(
 						BiometricPromptOptions.create(
-							i18next.t('biometric.popup.title'),
-							i18next.t('biometric.popup.cancelButtonTitle'),
-							i18next.t('biometric.popup.description')
+							i18next.t('biometric.prompt.title'),
+							i18next.t('biometric.prompt.cancelButtonText'),
+							i18next.t('biometric.prompt.description'),
+							i18next.t('biometric.prompt.fallbackButtonText')
 						)
 					)
 					.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
@@ -43,7 +45,13 @@ const useConfirmationViewModel = () => {
 				console.log('Confirming fingerprint user verification.');
 				setIsFingerPrintVerification(true);
 				await handler
-					.listenForOsCredentials()
+					.listenForOsCredentials(
+						FingerprintPromptOptions.create(
+							i18next.t('fingerprint.prompt.cancelButtonText'),
+							i18next.t('fingerprint.prompt.description'),
+							i18next.t('fingerprint.prompt.fallbackButtonText')
+						)
+					)
 					.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 				break;
 			case handler instanceof DevicePasscodeUserVerificationHandler:
@@ -51,8 +59,8 @@ const useConfirmationViewModel = () => {
 				await handler
 					.listenForOsCredentials(
 						DevicePasscodePromptOptions.create(
-							i18next.t('devicePasscode.popup.title'),
-							i18next.t('devicePasscode.popup.description')
+							i18next.t('devicePasscode.prompt.title'),
+							i18next.t('devicePasscode.prompt.description')
 						)
 					)
 					.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
