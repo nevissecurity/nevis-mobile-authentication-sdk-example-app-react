@@ -1,6 +1,6 @@
 {
 	"name": "nevis-mobile-authentication-sdk-example-app-react",
-	"version": "4.3.0",
+	"version": "4.4.0",
 	"private": true,
 	"scripts": {
 		"android": "react-native run-android --terminal terminal --active-arch-only",
@@ -24,7 +24,7 @@
 		"fix-dependencies": "rnx-align-deps --diff-mode allow-subset --write"
 	},
 	"dependencies": {
-		"@nevis-security/nevis-mobile-authentication-sdk-react": ">=4.3.0-0 <4.4.0",
+		"@nevis-security/nevis-mobile-authentication-sdk-react": ">=4.4.0-0 <4.5.0",
 		"@react-native-community/hooks": "3.1.0",
 		"@react-native-vector-icons/ant-design": "12.0.1",
 		"@react-navigation/native": "7.1.16",
