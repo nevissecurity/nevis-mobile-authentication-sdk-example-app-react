@@ -3,6 +3,21 @@ require "fileutils"
 
 module Fastlane
 	module Actions
+		# This class provides an action to modify a Gradle file by replacing or appending content.
+		#
+		# Example usage:
+		# modify_gradle_file(
+		#   gradle_file_path: "path/to/file",
+		#   constant: "versionName",
+		#   value: "new_value",
+		#   mode: "replace"
+		# )
+		#
+		# Available options:
+		# - gradle_file_path: The path to the Gradle file to be modified (String, optional)
+		# - constant: The constant whose value is to be replaced or appended after (String, required)
+		# - value: The new value (String, required)
+		# - mode: The working mode. Possible values are "replace" or "append" (String, optional, default: "replace")
 		class ModifyGradleFileAction < Action
 			def self.run(params)
 				gradle_file_path ||= params[:gradle_file_path]
@@ -93,7 +108,7 @@ module Fastlane
 						optional: true,
 						type: String,
 						default_value: "replace"
-					),
+					)
 				]
 			end
 

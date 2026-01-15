@@ -12,11 +12,11 @@ on:
                 default: "self-hosted"
                 options:
                     - "self-hosted"
-                    - "macos-15"
+                    - "macos-26"
 
 env:
     BUILD_TYPE: 'SNAPSHOT' #BUILD_TYPE: Type of the build; allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
-    XCODE_VERSION: 16.3
+    XCODE_VERSION: 26.2
     JAVA_VERSION: 17
     RUBY_VERSION: 3.4.2
 
