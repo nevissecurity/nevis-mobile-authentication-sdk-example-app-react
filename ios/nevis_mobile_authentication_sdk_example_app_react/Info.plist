@@ -52,6 +52,8 @@
 	<string>Enable access to location when the app is in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Enable access to location.</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
