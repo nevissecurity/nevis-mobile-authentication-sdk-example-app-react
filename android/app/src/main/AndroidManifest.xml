@@ -10,7 +10,10 @@
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:allowBackup="false"
-      android:theme="@style/AppTheme">
+      android:fullBackupContent="false"
+      android:dataExtractionRules="@xml/data_extraction_rules"
+      android:theme="@style/AppTheme"
+      android:usesCleartextTraffic="false">
       <activity
         android:name=".MainActivity"
         android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"

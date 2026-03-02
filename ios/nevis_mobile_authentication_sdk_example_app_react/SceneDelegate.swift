@@ -3,9 +3,15 @@
 //
 
 import Foundation
-import React_RCTAppDelegate
+import ReactAppDependencyProvider
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+	// MARK: Properties
+
+	var window: UIWindow?
+	var reactNativeFactory: RCTReactNativeFactory?
+	var reactNativeFactoryDelegate: ReactNativeFactoryDelegateImpl?
+
 	// MARK: UIWindowSceneDelegate
 
 	// swiftformat:disable:next unusedArguments
@@ -14,24 +20,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			return
 		}
 
-		guard let appDelegate = UIApplication.shared.delegate as? RCTAppDelegate else {
-			return
-		}
+		let delegate = ReactNativeFactoryDelegateImpl()
+		let factory = RCTReactNativeFactory(delegate: delegate)
+		delegate.dependencyProvider = RCTAppDependencyProvider()
 
-		let window = UIWindow(windowScene: windowScene)
+		reactNativeFactory = factory
+		reactNativeFactoryDelegate = delegate
+
+		window = UIWindow(windowScene: windowScene)
 
 		// In scene-based lifecycle, a cold-start via custom URL scheme delivers the URL in `connectionOptions`.
 		// Create the React root view here (instead of relying on the app delegate) and forward the derived
 		// launch options so Linking/initial navigation can handle the URL on first render.
-		let rootView = appDelegate.rootViewFactory.view(withModuleName: appDelegate.moduleName ?? "",
-		                                                initialProperties: appDelegate.initialProps,
-		                                                launchOptions: .init(from: connectionOptions))
-		let rootViewController = UIViewController()
-		rootViewController.view = rootView
-		window.rootViewController = rootViewController
-		appDelegate.window = window
-
-		window.makeKeyAndVisible()
+		factory.startReactNative(
+			withModuleName: "nevis-mobile-authentication-sdk-example-app-react",
+			in: window,
+			launchOptions: .init(from: connectionOptions)
+		)
 	}
 
 	// swiftformat:disable:next unusedArguments

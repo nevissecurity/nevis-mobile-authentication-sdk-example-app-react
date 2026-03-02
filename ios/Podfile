@@ -34,11 +34,6 @@ target "nevis_mobile_authentication_sdk_example_app_react" do
 		app_path: "#{Pod::Config.instance.installation_root}/.."
 	)
 
-	target "nevis_mobile_authentication_sdk_example_app_reactTests" do
-		inherit! :complete
-		# Pods for testing
-	end
-
 	post_install do |installer|
 		installer.pods_project.targets.select.each do |target|
 			target.build_configurations.each do |c|
