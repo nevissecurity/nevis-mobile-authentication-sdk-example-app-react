@@ -38,6 +38,7 @@ google-services.json
 
 ### Android Patch ###
 gen-external-apklibs
+.kotlin/
 
 # Replacement of .externalNativeBuild directories introduced
 # with Android Studio 3.5.
