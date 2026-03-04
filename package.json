@@ -82,7 +82,7 @@
 		"kitType": "app",
 		"alignDeps": {
 			"requirements": [
-				"react-native@0.81.6"
+				"react-native@0.81"
 			],
 			"capabilities": [
 				"babel-preset-react-native",
