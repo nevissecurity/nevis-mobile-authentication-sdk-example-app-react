@@ -13,7 +13,7 @@
       android:fullBackupContent="false"
       android:dataExtractionRules="@xml/data_extraction_rules"
       android:theme="@style/AppTheme"
-      android:usesCleartextTraffic="false">
+      android:usesCleartextTraffic="${usesCleartextTraffic}">
       <activity
         android:name=".MainActivity"
         android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
