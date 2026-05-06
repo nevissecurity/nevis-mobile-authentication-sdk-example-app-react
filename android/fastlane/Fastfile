@@ -35,30 +35,9 @@ def report_on_error(message, exception)
 	UI.user_error!(exception.to_s)
 end
 
-# Converts a value to boolean.
-#
-# Accepts `true`, `1`, `"true"`, or `"1"` as truthy values.
-# Returns `true` if the value matches any of these, otherwise returns `false`.
-#
-# @example
-#   to_bool(true)        #=> true
-#   to_bool("true")      #=> true
-#   to_bool(1)           #=> true
-#   to_bool("1")         #=> true
-#   to_bool(false)       #=> false
-#   to_bool("no")        #=> false
-#   to_bool(nil)         #=> false
-#
-# @param value [Object] The value to convert.
-# @return [Boolean] The normalized boolean value.
-def to_bool(value)
-	[true, 1, "true", "1"].include?(value)
-end
-
 platform :android do
 	desc "Pull request build"
 	desc "#### Options"
-	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
 	desc ""
 	lane :pr do |options|
 		utilize_private_repos
@@ -100,14 +79,11 @@ platform :android do
 	end
 
 	desc "Build the application"
-	desc "#### Options"
-	desc " * **`new_arch_enabled`**: Enable new architecture for the build."
 	desc ""
-	private_lane :build do |options|
-		new_arch_enabled = to_bool(options.fetch(:new_arch_enabled, true))
+	private_lane :build do
 		UI.message("Build Debug version")
 		Dir.chdir("..") do
-			Actions.sh("yarn android:build:#{new_arch_enabled ? 'new' : 'old'}", error_callback: lambda {
+			Actions.sh("yarn android:build", error_callback: lambda {
 				raise "❌ Build Debug version failed! Result: #{result}"
 			})
 		end
@@ -121,7 +97,6 @@ platform :android do
 	private_lane :distribute do |options|
 		version = options[:version]
 		build_number = options[:build_number]
-		new_arch_enabled = to_bool(options.fetch(:new_arch_enabled, true))
 		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
 		modify_gradle_file(
@@ -148,10 +123,7 @@ platform :android do
 		)
 
 		gradle(
-			task: "clean assembleDebug",
-			properties: {
-				"newArchEnabled" => new_arch_enabled
-			}
+			task: "clean assembleDebug"
 		)
 
 		firebase_app_distribution(
