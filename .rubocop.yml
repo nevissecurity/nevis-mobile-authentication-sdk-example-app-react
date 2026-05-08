@@ -44,8 +44,6 @@ Naming/PredicatePrefix:
 
 Naming/PredicateMethod:
   Description: 'Checks that predicate methods end with ? and non-predicate methods do not.'
-  AllowedMethods:
-    - to_bool # Fastfile's to_bool method returns a boolean but is a conversion method, not a predicate
 
 # Style Cops
 

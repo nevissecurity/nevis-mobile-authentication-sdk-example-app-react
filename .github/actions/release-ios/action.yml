@@ -2,9 +2,6 @@ name: Release iOS
 description: Release iOS App
 
 inputs:
-    new-arch-enabled:
-        description: "Flag that tells whether enable support to the new architecture."
-        required: true
     version-number:
         description: "The current version number"
         required: true
@@ -19,7 +16,6 @@ runs:
           uses: ./.github/actions/setup-node
           with:
               registry-url: ${{ env.PRIVATE_NPM_REPOSITORY_URL }}
-              new-arch-enabled: ${{ inputs.new-arch-enabled }}
 
         - name: Set up iOS
           uses: ./.github/actions/setup-ios
@@ -38,6 +34,5 @@ runs:
               options: |
                 {
                   "version": "${{ inputs.version-number }}",
-                  "build_number": "${{ inputs.build-number }}",
-                  "new_arch_enabled": "${{ inputs.new-arch-enabled }}"
+                  "build_number": "${{ inputs.build-number }}"
                 }
