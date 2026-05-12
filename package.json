@@ -33,7 +33,7 @@
 		"react-native-device-info": "15.0.2",
 		"react-native-permissions": "5.4.4",
 		"react-native-safe-area-context": "5.7.0",
-		"react-native-screens": "4.24.0",
+		"react-native-screens": "4.25.0",
 		"react-native-uuid": "2.0.3",
 		"set-cookie-parser": "3.0.1"
 	},
@@ -92,7 +92,8 @@
 				"navigation/native",
 				"react",
 				"react-test-renderer",
-				"safe-area"
+				"safe-area",
+				"screens"
 			]
 		}
 	}
