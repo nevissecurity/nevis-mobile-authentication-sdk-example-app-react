@@ -12,7 +12,7 @@ The Nevis Mobile Authentication SDK allows you to integrate passwordless authent
 
 Some features demonstrated in this example app are:
 
-* Registering with QR code (when using the old architecture, see note below) and app link URIs
+* Registering with QR code and app link URIs
 * Simulating in-band authentication after registration
 * Deregistering a registered account
 * Changing the PIN of the PIN authenticator
@@ -20,10 +20,6 @@ Some features demonstrated in this example app are:
 * Using the SDK with the Authentication Cloud
 
 Please note that the example app only demonstrates a subset of the SDK features. The main purpose is to demonstrate how the SDK can be used and not to cover all supported scenarios and use cases.
-
-> [!NOTE]
-> QR code scanning in the example application is only available for the old architecture at the moment as we have not found any open source library that supports both old and new architecture. If you want to implement QR code scanning for the new architecture, evaluate plugin alternatives which support it.
-
 
 ## Getting Started
 
@@ -41,8 +37,8 @@ Your development setup has to meet the following prerequisites:
 * Android 11 or later, with API level 30, for the device passcode authenticator to work
 * Gradle 8.6 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 8.2.1 or later
-* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.9.22 or later
-* React Native 0.76.9
+* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 2.1.20 or later
+* React Native 0.85.2
 
 ### Initialization
 
@@ -59,13 +55,7 @@ First open a terminal and run the `yarn` command in the root directory to get th
     GH_PERSONAL_ACCESS_TOKEN=<YOUR PERSONAL ACCESS TOKEN>
     ```
 
-2. To choose between the Old and the [new architecture](https://reactnative.dev/docs/the-new-architecture/landing-page), you have to set the `newArchEnabled` property to `false` or `true` respectively by either (Note that if you use the yarn scripts described in the Build & run section, this will be done automatically for the selected architecture via setting the environment variable):
-    * Changing the corresponding line in `android/gradle.properties`
-    * Setting the environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
-
-3. To set whether the [Hermes](https://reactnative.dev/docs/hermes) JavaScript engine should be used or [JavaScript Core](https://trac.webkit.org/wiki/JavaScriptCore), you have to set the `hermesEnabled` property to `true` or `false` respectively in `android/gradle.properties`.
-
-4. Synchronize your [android](/android) project with Gradle if opened in Android Studio.
+2. Synchronize your [android](/android) project with Gradle if opened in Android Studio.
 
 :warning: **Warning**\
 The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
@@ -77,19 +67,11 @@ The package repository only exposes the `debug` flavor. To use the `release` fla
 
 Native iOS dependencies of this project (including the Nevis Mobile Authentication Client SDK for iOS) are provided via [Cocoapods](https://cocoapods.org/). Please install all dependencies by running
 
-* When using the [new architecture](https://reactnative.dev/docs/the-new-architecture/landing-page):
-
 ```bash
-RCT_NEW_ARCH_ENABLED=1 USE_FRAMEWORKS=static NO_FLIPPER=1 pod install
+USE_FRAMEWORKS=static pod install
 ```
 
-* When using the old architecture:
-
-```bash
-RCT_NEW_ARCH_ENABLED=0 pod install
-```
-
-Note that if you use the yarn scripts described in the Build & run section, this will be done automatically for the selected architecture.
+Note that if you use the yarn scripts described in the Build & run section, this will be done automatically.
 
 **Bitcode Support**
 
@@ -141,16 +123,10 @@ Due to the [Fast Refresh](https://reactnative.dev/docs/fast-refresh) feature of 
 <details>
 <summary>Android</summary>
 
-If you configured everything properly, you can run the app on an Android device or Emulator with the following yarn commands:
+If you configured everything properly, you can run the app on an Android device or Emulator with the following yarn command:
 
-* Using the new architecture
 ```bash
-yarn android:run:new
-```
-
-* Using the old architecture
-```bash
-yarn android:run:old
+yarn android:run
 ```
 
 </details>
@@ -158,18 +134,10 @@ yarn android:run:old
 <details>
 <summary>iOS</summary>
 
-If you configured everything properly, you're ready to build and run the example app on an iOS device or Simulator with the following yarn commands:
-
-* Using the new architecture
+If you configured everything properly, you're ready to build and run the example app on an iOS device or Simulator with the following yarn command:
 
 ```bash
-yarn ios:run:new
-```
-
-* Using the old architecture
-
-```bash
-yarn ios:run:old
+yarn ios:run
 ```
 
 Or by choosing Product > Run from Xcode, or by clicking the Run button in your project’s toolbar, similarly how you would run a native iOS application.

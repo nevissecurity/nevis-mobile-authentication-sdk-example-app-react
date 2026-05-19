@@ -1,11 +1,6 @@
 name: Setup Android
 description: Setup Android resources and install dependencies
 
-inputs:
-    new-arch-enabled:
-        description: "Flag that tells whether enable support to the new architecture."
-        required: true
-
 runs:
     using: composite
     steps:
@@ -35,4 +30,4 @@ runs:
               path: |
                   ~/.gradle/wrapper
                   ~/.gradle/caches
-              key: ${{ runner.os }}-gradle-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ inputs.new-arch-enabled == 'true' && 'new-arch' || 'old-arch' }}-${{ env.BUILD_TYPE }}
+              key: ${{ runner.os }}-gradle-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ env.BUILD_TYPE }}
