@@ -13,7 +13,6 @@ runs:
           uses: ./.github/actions/setup-ios
 
         - name: Build iOS App
-          uses: maierj/fastlane-action@v3.1.0
-          with:
-            lane: 'pr'
-            subdirectory: 'ios'
+          shell: bash
+          working-directory: ios
+          run: bundle exec fastlane pr

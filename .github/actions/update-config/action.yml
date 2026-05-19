@@ -10,8 +10,7 @@ runs:
     using: composite
     steps:
         - name: Update Configuration (hostname)
-          uses: jossef/action-set-json-field@v2.2
-          with:
-              file: assets/config_authentication_cloud.json
-              field: sdk.hostname
-              value: '${{ inputs.host-name }}.mauth.nevis.cloud'
+          shell: bash
+          run: |
+            file="assets/config_authentication_cloud.json"
+            jq '.sdk.hostname = "${{ inputs.host-name }}.mauth.nevis.cloud"' "$file" > /tmp/jq_out.json && mv /tmp/jq_out.json "$file"
