@@ -18,7 +18,7 @@ jobs:
               uses: ./.github/actions/shai-hulud-check
 
             - name: Slack Message
-              uses: act10ns/slack@v2.1.0
+              uses: act10ns/slack@v2.2.0
               with:
                   status: ${{ steps.scan.outputs.status }}
                   message: Shai-Hulud 2.0 Security Check completed with status ${{ steps.scan.outputs.status }}, ${{ steps.scan.outputs.affected-count }} compromised packages detected in ${{ github.repository }}
