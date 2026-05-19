@@ -16,6 +16,7 @@ import {
 import { useAppState } from '@react-native-community/hooks';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { Camera, CameraType } from 'react-native-camera-kit';
 import {
 	check as checkPermission,
 	PERMISSIONS,
@@ -23,7 +24,6 @@ import {
 	RESULTS,
 } from 'react-native-permissions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Camera, useCameraDevice, useCodeScanner } from 'react-native-vision-camera';
 
 import useReadQrCodeViewModel from './ReadQrCodeViewModel';
 import CloseButton from '../components/CloseButton';
@@ -105,23 +105,6 @@ const ReadQrCodeScreen = () => {
 		});
 	}
 
-	const device = useCameraDevice('back');
-
-	if (!device && !errorMessage) {
-		setErrorMessage(t('readQrCode.camera.initializationFailed'));
-	}
-
-	const codeScanner = useCodeScanner({
-		codeTypes: ['qr'],
-		onCodeScanned: (codes) => {
-			const value = codes[0]?.value;
-			if (value) {
-				setLoading(true);
-				setDispatchTokenResponse(value);
-			}
-		},
-	});
-
 	return (
 		<View
 			style={[
@@ -137,12 +120,22 @@ const ReadQrCodeScreen = () => {
 			<CloseButton onPress={onClose} />
 			<Text style={[styles.textForeground, styles.textTitle]}>{t('readQrCode.title')}</Text>
 			<View style={styles.middleContainer}>
-				{device && hasCameraPermission && (
+				{hasCameraPermission && isActive && (
 					<Camera
 						style={StyleSheet.absoluteFill}
-						device={device}
-						codeScanner={codeScanner}
-						isActive={isActive}
+						cameraType={CameraType.Back}
+						scanBarcode
+						allowedBarcodeTypes={['qr']}
+						onReadCode={(event) => {
+							if (isLoading) {
+								return;
+							}
+							const value = event.nativeEvent.codeStringValue;
+							if (value) {
+								setLoading(true);
+								setDispatchTokenResponse(value);
+							}
+						}}
 					/>
 				)}
 				{isLoading && (

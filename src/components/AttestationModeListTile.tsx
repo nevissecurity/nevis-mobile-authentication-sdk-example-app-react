@@ -24,7 +24,7 @@ const AttestationModeListTile = ({ title, isSupported }: Props) => {
 	return (
 		<View style={styles.listRow}>
 			<AntDesign name={iconName} color={color} size={17} />
-			<Text style={styles.textInfo}>{title}</Text>
+			<Text style={[styles.textForeground, styles.textInfo]}>{title}</Text>
 		</View>
 	);
 };
