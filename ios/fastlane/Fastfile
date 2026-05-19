@@ -13,11 +13,28 @@ display_name = "Nevis Mobile Authentication SDK Example App React iOS"
 keychain_password = SecureRandom.base64
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
+##
+# Ensures a temporary macOS keychain exists for the current build.
+#
+# This is a convenience wrapper that first removes any existing keychain with the same
+# name (if present) and then re-creates it using {#create_temp_keychain}.
+#
+# @param name [String] Keychain name (without the "-db" suffix).
+# @param password [String] Password used to create/unlock the keychain.
+# @return [void]
 def ensure_temp_keychain(name, password)
 	delete_temp_keychain(name)
 	create_temp_keychain(name, password)
 end
 
+##
+# Creates and unlocks a temporary macOS keychain for code signing.
+#
+# @param name [String] Keychain name (without the "-db" suffix).
+# @param password [String] Password used to create/unlock the keychain.
+# @return [void]
+#
+# @raise [FastlaneCore::Interface::FastlaneError] If the underlying fastlane action fails.
 def create_temp_keychain(name, password)
 	create_keychain(
 		name:,
@@ -28,10 +45,27 @@ def create_temp_keychain(name, password)
 	)
 end
 
+##
+# Deletes the temporary macOS keychain if it exists.
+#
+# Checks for the keychain database file at:
+#   ~/Library/Keychains/<name>-db
+#
+# @param name [String] Keychain name (without the "-db" suffix).
+# @return [void]
+#
+# @raise [FastlaneCore::Interface::FastlaneError] If deletion fails after existence check passes.
 def delete_temp_keychain(name)
 	delete_keychain(name:) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
 end
 
+##
+# Reports a successful build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set).
+#
+# Uses `CURRENT_BUILD_URL` environment variable to provide context on success.
+#
+# @param message [String] Message prefix to send.
+# @return [void]
 def report_on_success(message)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
@@ -39,6 +73,15 @@ def report_on_success(message)
 	) if ENV["SLACK_WEBHOOK_URL"]
 end
 
+##
+# Reports a failed build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set)
+# and fails the lane with the given exception and surface the error in Fastlane output.
+#
+# Uses `CURRENT_BUILD_URL` and `BUILD_NUMBER` environment variables to provide context on the failure.
+#
+# @param message [String] Message to send.
+# @param exception [Exception] The exception to report.
+# @return [void]
 def report_on_error(message, exception)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
@@ -57,6 +100,15 @@ def report_on_error(message, exception)
 	UI.user_error!(exception.to_s)
 end
 
+##
+# Prepends a private CocoaPods source repository URL to the Podfile.
+#
+# @param private_pod_repository_url [String] The URL of the private CocoaPods
+#   spec repository to prepend as a source in the Podfile.
+# @return [void]
+#
+# @raise [Errno::ENOENT] If the Podfile does not exist at the expected path.
+# @raise [IOError] If reading or writing the Podfile fails.
 def prepare_podfile(private_pod_repository_url)
 	filename = File.join("./../Podfile")
 	File.open(filename, "r") do |original_lines|
@@ -111,7 +163,7 @@ platform :ios do
 	private_lane :build do
 		UI.message("Build Debug version")
 		Dir.chdir("..") do
-			Actions.sh("yarn ios:build", error_callback: lambda {
+			Actions.sh("yarn ios:build", error_callback: lambda { |result|
 				raise "❌ Build Debug version failed! Result: #{result}"
 			})
 		end
