@@ -14,9 +14,8 @@ runs:
           uses: ./.github/actions/setup-android
 
         - name: Build Android App
+          shell: bash
+          working-directory: android
           env:
               PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
-          uses: maierj/fastlane-action@v3.1.0
-          with:
-              lane: 'pr'
-              subdirectory: 'android'
+          run: bundle exec fastlane pr

@@ -27,12 +27,6 @@ runs:
 
         - name: Publish iOS App
           if: ${{ env.BUILD_TYPE == 'RELEASE' || env.BUILD_TYPE == 'SNAPSHOT' }}
-          uses: maierj/fastlane-action@v3.1.0
-          with:
-              lane: ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }}
-              subdirectory: 'ios'
-              options: |
-                {
-                  "version": "${{ inputs.version-number }}",
-                  "build_number": "${{ inputs.build-number }}"
-                }
+          shell: bash
+          working-directory: ios
+          run: bundle exec fastlane ${{ env.BUILD_TYPE == 'RELEASE' && 'main' || 'develop' }} version:"${{ inputs.version-number }}" build_number:"${{ inputs.build-number }}"
