@@ -53,7 +53,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - name: Shai-Hulud 2.0 Security Check
               uses: ./.github/actions/shai-hulud-check
@@ -73,7 +73,7 @@ jobs:
         needs: [lint-and-format]
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - name: Set up Node
               uses: ./.github/actions/setup-node
@@ -90,7 +90,7 @@ jobs:
             build-number: ${{ steps.get_version.outputs.build-number }}
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - name: Get Version
               id: get_version
@@ -102,10 +102,10 @@ jobs:
       needs: [get-version-number]
       steps:
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@v6
 
         - name: Gradle Wrapper Validation
-          uses: gradle/actions/wrapper-validation@v4
+          uses: gradle/actions/wrapper-validation@v6
 
     release-android:
         name: Release Android App
@@ -113,7 +113,7 @@ jobs:
         needs: [get-version-number, validate-gradle-wrapper]
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - name: Release Android App
               uses: ./.github/actions/release-android
@@ -127,7 +127,7 @@ jobs:
         needs: [get-version-number]
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - name: Release iOS App
               uses: ./.github/actions/release-ios
@@ -141,7 +141,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - name: Create Tag
               uses: ./.github/actions/create-tag
