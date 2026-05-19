@@ -10,6 +10,13 @@ signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
 display_name = "Nevis Mobile Authentication SDK Example App React Android"
 build_gradle = File.join(root_dir, "build.gradle")
 
+##
+# Reports a successful build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set).
+#
+# Uses `CURRENT_BUILD_URL` environment variable to provide context on success.
+#
+# @param message [String] Message prefix to send.
+# @return [void]
 def report_on_success(message)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
@@ -17,6 +24,15 @@ def report_on_success(message)
 	) if ENV["SLACK_WEBHOOK_URL"]
 end
 
+##
+# Reports a failed build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set)
+# and fails the lane with the given exception and surface the error in Fastlane output.
+#
+# Uses `CURRENT_BUILD_URL` and `BUILD_NUMBER` environment variables to provide context on the failure.
+#
+# @param message [String] Message to send.
+# @param exception [Exception] The exception to report.
+# @return [void]
 def report_on_error(message, exception)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
@@ -83,7 +99,7 @@ platform :android do
 	private_lane :build do
 		UI.message("Build Debug version")
 		Dir.chdir("..") do
-			Actions.sh("yarn android:build", error_callback: lambda {
+			Actions.sh("yarn android:build", error_callback: lambda { |result|
 				raise "❌ Build Debug version failed! Result: #{result}"
 			})
 		end
