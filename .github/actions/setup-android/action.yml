@@ -24,6 +24,14 @@ runs:
               fileDir: './android/etc'
               encodedString: ${{ env.KEYSTORE_FILE }}
 
+        - name: Create Keystore Properties
+          if: ${{ env.KEYSTORE_PROPERTIES != '' }}
+          uses: timheuer/base64-to-file@v2
+          with:
+              fileName: 'keystore.properties'
+              fileDir: './android'
+              encodedString: ${{ env.KEYSTORE_PROPERTIES }}
+
         - name: Cache Gradle
           uses: actions/cache@v5
           with:

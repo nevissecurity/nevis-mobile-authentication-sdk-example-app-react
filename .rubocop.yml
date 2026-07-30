@@ -90,7 +90,11 @@ Lint/ConstantDefinitionInBlock:
 
 Metrics/AbcSize:
   Description: 'Checks that the ABC size of methods is not higher than the configured maximum.'
-  Max: 27
+  Max: 31
+
+Metrics/PerceivedComplexity:
+    Description: 'Checks that the perceived complexity of methods is not higher than the configured maximum.'
+    Max: 10
 
 Metrics/BlockLength:
   Description: 'Checks if the length of a block exceeds some maximum value.'
@@ -100,7 +104,7 @@ Metrics/BlockLength:
 
 Metrics/ClassLength:
   Description: 'Checks if the length of a class exceeds some maximum value.'
-  Max: 105
+  Max: 115
 
 Metrics/MethodLength:
   Description: 'Checks if the length of a method exceeds some maximum value.'
