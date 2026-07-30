@@ -6,9 +6,9 @@
 default_platform(:android)
 
 root_dir = File.expand_path(File.join(File.dirname(__FILE__), "../"))
-signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
 display_name = "Nevis Mobile Authentication SDK Example App React Android"
-build_gradle = File.join(root_dir, "build.gradle")
+build_gradle = File.join(root_dir, "build.gradle.kts")
+keystore_properties_file = File.join(root_dir, "keystore.properties")
 
 ##
 # Reports a successful build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set).
@@ -115,6 +115,13 @@ platform :android do
 		build_number = options[:build_number]
 		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
+		unless File.exist?(keystore_properties_file)
+			UI.user_error!(
+				"keystore.properties not found at #{keystore_properties_file}. " \
+				"Set the KEYSTORE_FILE and KEYSTORE_PROPERTIES secrets so the \"signing\" signingConfig can be created."
+			)
+		end
+
 		modify_gradle_file(
 			constant: "versionName",
 			value: version
@@ -125,17 +132,9 @@ platform :android do
 			value: build_number
 		)
 
-		Actions.sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
-
 		modify_gradle_file(
 			constant: "signingConfig",
-			value: "signingConfigs.signing"
-		)
-
-		modify_gradle_file(
-			constant: "apply plugin: 'com.facebook.react'",
-			value: "apply from: 'signing_configs.gradle'",
-			mode: "append"
+			value: "signing"
 		)
 
 		gradle(

@@ -1,10 +1,20 @@
-apply plugin: 'com.android.application'
-apply plugin: "org.jetbrains.kotlin.android"
-apply plugin: 'com.facebook.react'
+import java.io.FileInputStream
+import java.util.Properties
 
-/**
+plugins {
+    id("com.android.application")
+    id("com.facebook.react")
+    id("org.jetbrains.kotlin.android")
+}
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) FileInputStream(keystorePropertiesFile).use { load(it) }
+}
+
+/*
  * This is the configuration block to customize your React Native Android app.
- * By default you don't need to apply any configuration, just uncomment the lines you need.
+ * By default, you don't need to apply any configuration, just uncomment the lines you need.
  */
 react {
     /* Folders */
@@ -19,7 +29,7 @@ react {
 
     /* Variants */
     //   The list of variants to that are debuggable. For those we're going to
-    //   skip the bundling of the JS bundle and the assets. By default is just 'debug'.
+    //   skip the bundling of the JS bundle and the assets. By default, is just 'debug'.
     //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
     // debuggableVariants = ["liteDebug", "liteDebugOptimized", "prodDebug", "prodDebugOptimized"]
 
@@ -27,7 +37,7 @@ react {
     //   A list containing the node command and its flags. Default is just 'node'.
     // nodeExecutableAndArgs = ["node"]
     //
-    //   The command to run when bundling. By default is 'bundle'
+    //   The command to run when bundling. By default, is 'bundle'
     // bundleCommand = "ram-bundle"
     //
     //   The path to the CLI configuration file. Default is empty.
@@ -44,10 +54,10 @@ react {
     // extraPackagerArgs = []
 
     /* Hermes Commands */
-    //   The hermes compiler command to run. By default it is 'hermesc'
+    //   The hermes compiler command to run. By default, it is 'hermesc'
     // hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
     //
-    //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
+    //   The list of flags to pass to the Hermes compiler. By default, is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
 
     /* Autolinking */
@@ -65,54 +75,74 @@ react {
  * give correct results when using with locales other than en-US. Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
+val jscFlavor = "io.github.react-native-community:jsc-android:2026004.+"
 
 android {
-    ndkVersion rootProject.ext.ndkVersion
+    namespace = "ch.nevis.mobile.authentication.sdk.react.example"
+    ndkVersion = rootProject.extra["ndkVersion"] as String
+    buildToolsVersion = rootProject.extra["buildToolsVersion"] as String
+    compileSdk = rootProject.extra["compileSdkVersion"] as Int
 
-    buildToolsVersion rootProject.ext.buildToolsVersion
-    compileSdk rootProject.ext.compileSdkVersion
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
-    namespace "ch.nevis.mobile.authentication.sdk.react.example"
     defaultConfig {
-        applicationId "ch.nevis.mobile.authentication.sdk.react.example"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "5.1.0"
+        applicationId = "ch.nevis.mobile.authentication.sdk.react.example"
+        minSdk = rootProject.extra["minSdkVersion"] as Int
+        targetSdk = rootProject.extra["targetSdkVersion"] as Int
+        versionCode = 1
+        versionName = "5.1.0"
+    }
+
+    if (keystorePropertiesFile.exists()) {
+        signingConfigs {
+            create("signing") {
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storePassword = keystoreProperties["storePassword"] as String
+                enableV1Signing = true
+                enableV2Signing = true
+            }
+        }
     }
 
     buildTypes {
         debug {
+            @Suppress("UnstableApiUsage")
             externalNativeBuild {
                 ndkBuild {
-                    cFlags "-O0 -g"
-                    cppFlags "-O0 -g"
+                    cFlags("-O0", "-g")
+                    cppFlags("-O0", "-g")
                 }
             }
         }
         configureEach {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.debug
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }
 
 kotlin {
-    jvmToolchain(17)
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
 }
 
 dependencies {
     //noinspection GradleDynamicVersion
-    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:4.5.+'
+    debugImplementation("ch.nevis:nevis-mobile-authentication-sdk-android-debug:4.5.+")
 
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
-    if (hermesEnabled.toBoolean()) {
-        implementation("com.facebook.react:hermes-android")
-    } else {
-        implementation jscFlavor
-    }
+    // Hermes is always enabled in RN 0.74+
+    implementation("com.facebook.react:hermes-android")
 }

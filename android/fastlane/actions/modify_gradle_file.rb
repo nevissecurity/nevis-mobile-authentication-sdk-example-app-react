@@ -3,22 +3,16 @@ require "fileutils"
 
 module Fastlane
 	module Actions
+		##
 		# This class provides an action to modify a Gradle file by replacing or appending content.
 		#
-		# Example usage:
-		# modify_gradle_file(
-		#   gradle_file_path: "path/to/file",
-		#   constant: "versionName",
-		#   value: "new_value",
-		#   mode: "replace"
-		# )
-		#
-		# Available options:
-		# - gradle_file_path: The path to the Gradle file to be modified (String, optional)
-		# - constant: The constant whose value is to be replaced or appended after (String, required)
-		# - value: The new value (String, required)
-		# - mode: The working mode. Possible values are "replace" or "append" (String, optional, default: "replace")
+		# See {ModifyGradleFileAction.available_options available options} for supported parameters.
 		class ModifyGradleFileAction < Action
+			##
+			# Main entry point for this Fastlane action.
+			#
+			# @param params [FastlaneCore::Configuration] Parameters for the action.
+			# @return [void]
 			def self.run(params)
 				gradle_file_path ||= params[:gradle_file_path]
 				constant = params[:constant]
@@ -29,7 +23,7 @@ module Fastlane
 					app_folder_name ||= params[:app_folder_name]
 					UI.message("Using project folder `#{app_folder_name}`!")
 
-					Dir.glob("**/#{app_folder_name}/build.gradle") do |path|
+					Dir.glob("**/#{app_folder_name}/build.gradle.kts") do |path|
 						modify(path, constant, value, mode)
 					end
 				else
@@ -38,6 +32,22 @@ module Fastlane
 				end
 			end
 
+			##
+			# Modifies a text file in-place by applying an operation ("replace" or "append")
+			# on every line that contains `constant_name`.
+			#
+			# The method streams the original file line-by-line into a temporary file, then
+			# replaces the original file with the temporary one.
+			#
+			# @param path [String] Path to the file to modify.
+			# @param constant_name [String] Substring to look for in each line. The operation is applied
+			#   only to lines that include this value.
+			# @param constant_value [String] Replacement text (for "replace") or the text to insert
+			#   (for "append").
+			# @param mode [String] Operation mode:
+			#   - `replace`: Replaces the first occurrence of `constant_name` in the matching line with `constant_value`.
+			#   - `append`: Writes the original matching line, then writes `constant_value` as a new line after it.
+			# @return [void]
 			def self.modify(path, constant_name, constant_value, mode)
 				raise "No file exist at path: (#{path})!" unless File.file?(path)
 
@@ -48,8 +58,15 @@ module Fastlane
 							if line.include? constant_name
 								if mode == "replace"
 									components = line.strip.split
-									current_value = components[components.length - 1].tr("\"", "")
-									line.replace line.sub(current_value, constant_value)
+									current_token = components[components.length - 1]
+									quoted_value = current_token[/"([^"]*)"/, 1]
+									if quoted_value
+										# Kotlin DSL values are often wrapped, e.g. uri("...") or getByName("..."),
+										# so only the quoted portion of the token is replaced, keeping the wrapper intact.
+										line.replace line.sub("\"#{quoted_value}\"", "\"#{constant_value}\"")
+									else
+										line.replace line.sub(current_token, constant_value.to_s)
+									end
 									temp_file.puts line
 								elsif mode == "append"
 									temp_file.puts line
@@ -69,6 +86,7 @@ module Fastlane
 					raise "Modifying gradle file failed!"
 				end
 			end
+			private_class_method :modify
 
 			def self.description
 				"Modify gradle file of your Android project."

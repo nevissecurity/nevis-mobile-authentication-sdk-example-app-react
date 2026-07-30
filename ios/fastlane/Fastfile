@@ -234,7 +234,7 @@ platform :ios do
 			)
 
 			Dir.chdir("..") do
-				Actions.sh("yarn pods", error_callback: lambda {
+				Actions.sh("yarn pods", error_callback: lambda { |result|
 					raise "❌ Pod install failed! Result: #{result}"
 				})
 			end
