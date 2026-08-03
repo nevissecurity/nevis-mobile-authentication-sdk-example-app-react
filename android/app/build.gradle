@@ -67,19 +67,39 @@ react {
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
-android {
-    ndkVersion rootProject.ext.ndkVersion
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { stream ->
+        keystoreProperties.load(stream)
+    }
+}
 
+android {
+    namespace "ch.nevis.mobile.authentication.sdk.react.example"
+    ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "ch.nevis.mobile.authentication.sdk.react.example"
     defaultConfig {
         applicationId "ch.nevis.mobile.authentication.sdk.react.example"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "5.1.0"
+    }
+
+    if (keystorePropertiesFile.exists()) {
+        signingConfigs {
+            signing {
+                storeFile file(keystoreProperties["storeFile"])
+                keyAlias keystoreProperties["keyAlias"]
+                keyPassword keystoreProperties["keyPassword"]
+                storePassword keystoreProperties["storePassword"]
+                enableV1Signing true
+                enableV2Signing true
+            }
+        }
     }
 
     buildTypes {
@@ -93,7 +113,7 @@ android {
         }
         configureEach {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.debug
         }
     }

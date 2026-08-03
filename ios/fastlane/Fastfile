@@ -75,7 +75,7 @@ end
 
 ##
 # Reports a failed build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set)
-# and fails the lane with the given exception and surface the error in Fastlane output.
+# and fails the lane with the given exception and surfaces the error in Fastlane output.
 #
 # Uses `CURRENT_BUILD_URL` and `BUILD_NUMBER` environment variables to provide context on the failure.
 #
