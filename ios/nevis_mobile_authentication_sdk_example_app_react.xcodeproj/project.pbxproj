@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11CE6B8FF50DF5E659F35EF4 /* libPods-nevis_mobile_authentication_sdk_example_app_react.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD663D3F7C7F9C86CF1B6BD6 /* libPods-nevis_mobile_authentication_sdk_example_app_react.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		389565792F51A78D00352F84 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 389565782F51A78D00352F84 /* PrivacyInfo.xcprivacy */; };
 		389565812F51C93300352F84 /* ReactNativeFactoryDelegateImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389565802F51C93300352F84 /* ReactNativeFactoryDelegateImpl.swift */; };
 		38A447EF2F2A3CCA00C02069 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A447ED2F2A3CCA00C02069 /* AppDelegate.swift */; };
 		38A447F32F2A40A400C02069 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A447F22F2A40A400C02069 /* SceneDelegate.swift */; };
 		38A447F82F2A6FDA00C02069 /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A447F62F2A6FDA00C02069 /* Dictionary+Extensions.swift */; };
+		7C2CF481745CDDCED67BFF0B /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B73733EEE664BC15F2976E5A /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +30,7 @@
 		38A447F62F2A6FDA00C02069 /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		740AD05AE736C52D74AD372A /* Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = nevis_mobile_authentication_sdk_example_app_react/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		BD663D3F7C7F9C86CF1B6BD6 /* libPods-nevis_mobile_authentication_sdk_example_app_react.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-nevis_mobile_authentication_sdk_example_app_react.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B73733EEE664BC15F2976E5A /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nevis_mobile_authentication_sdk_example_app_react.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -39,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11CE6B8FF50DF5E659F35EF4 /* libPods-nevis_mobile_authentication_sdk_example_app_react.a in Frameworks */,
+				7C2CF481745CDDCED67BFF0B /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,7 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				BD663D3F7C7F9C86CF1B6BD6 /* libPods-nevis_mobile_authentication_sdk_example_app_react.a */,
+				B73733EEE664BC15F2976E5A /* Pods_nevis_mobile_authentication_sdk_example_app_react.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -311,7 +311,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.0;
+				MARKETING_VERSION = 5.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -342,7 +342,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.0;
+				MARKETING_VERSION = 5.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
