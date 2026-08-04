@@ -45,7 +45,7 @@ module Fastlane
 					temp_file = Tempfile.new("fastlaneModifyGradleFile")
 					File.open(path, "r") do |file|
 						file.each_line do |line|
-							if line.include? constant_name
+							if line.match?(/\b#{Regexp.escape(constant_name)}\b/)
 								if mode == "replace"
 									components = line.strip.split
 									current_value = components[components.length - 1].tr("\"", "")
