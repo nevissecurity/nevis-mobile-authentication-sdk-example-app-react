@@ -53,11 +53,10 @@ end
 
 platform :android do
 	desc "Pull request build"
-	desc "#### Options"
 	desc ""
-	lane :pr do |options|
+	lane :pr do
 		utilize_private_repos
-		build(options)
+		build
 	end
 
 	desc "Continuous build"
