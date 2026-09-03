@@ -1,5 +1,5 @@
 /**
- * Copyright © 2023 Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026 Nevis Security AG. All rights reserved.
  */
 
 import i18next from 'i18next';
@@ -12,6 +12,7 @@ export enum OperationType {
 	deregistration,
 	deviceInformationChange,
 	payloadDecode,
+	pendingOutOfBandOperations,
 	pinChange,
 	passwordChange,
 	localData,
@@ -35,6 +36,8 @@ export class OperationTypeUtils {
 				return i18next.t('operation.deviceInformationChange');
 			case OperationType.payloadDecode:
 				return i18next.t('operation.payloadDecode');
+			case OperationType.pendingOutOfBandOperations:
+				return i18next.t('operation.pendingOutOfBandOperations');
 			case OperationType.pinChange:
 				return i18next.t('operation.pinChange');
 			case OperationType.passwordChange:
