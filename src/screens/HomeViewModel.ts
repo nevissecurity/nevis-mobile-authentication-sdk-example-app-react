@@ -1,5 +1,5 @@
 /**
- * Copyright © 2023 Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026 Nevis Security AG. All rights reserved.
  */
 
 import { useState } from 'react';
@@ -293,6 +293,34 @@ const useHomeViewModel = () => {
 		selectAccount(OperationType.authentication);
 	}
 
+	async function fetchPendingOperations() {
+		if (localAccounts.length === 0) {
+			return ErrorHandler.handle(
+				OperationType.pendingOutOfBandOperations,
+				new AppErrorAccountsNotFound('There are no registered accounts')
+			);
+		}
+
+		const client = ClientProvider.getInstance().client;
+		await client?.operations.pendingOutOfBandOperations
+			.onResult(async (result) => {
+				result.errors.forEach((error) => {
+					console.log(`Pending out-of-band operations error: ${error.description}`);
+				});
+
+				// The operations are sorted by creation time, the last one is the latest.
+				const pendingOperation = result.operations.at(-1);
+				if (pendingOperation) {
+					await OutOfBandOperationHandler.handleOutOfBandPayload(
+						pendingOperation.payload,
+						client
+					);
+				}
+			})
+			.execute()
+			.catch(ErrorHandler.handle.bind(null, OperationType.pendingOutOfBandOperations));
+	}
+
 	function deregister() {
 		const client = ClientProvider.getInstance().client;
 		if (localAccounts.length === 0) {
@@ -506,6 +534,7 @@ const useHomeViewModel = () => {
 		authCloudApiRegister,
 		inBandRegister,
 		inBandAuthenticate,
+		fetchPendingOperations,
 		deregister,
 		changeDeviceInformation,
 		deleteLocalAuthenticators,

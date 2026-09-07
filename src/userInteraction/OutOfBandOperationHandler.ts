@@ -1,5 +1,5 @@
 /**
- * Copyright © 2023 Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026 Nevis Security AG. All rights reserved.
  */
 
 import {
@@ -78,11 +78,11 @@ async function handleAuthentication(authentication: OutOfBandAuthentication) {
 		.execute();
 }
 
-async function handleOutOfBandPayload(
+export async function handleOutOfBandPayload(
 	payload: OutOfBandPayload,
 	client?: MobileAuthenticationClient
 ) {
-	client?.operations.outOfBandOperation
+	await client?.operations.outOfBandOperation
 		.payload(payload)
 		.onRegistration(async (registration) => {
 			await handleRegistration(registration, client).catch(
