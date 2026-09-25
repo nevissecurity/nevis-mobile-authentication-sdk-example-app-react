@@ -10,7 +10,9 @@ import {
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
 import { ConfigurationLoader } from '../configuration/ConfigurationLoader';
+import { ErrorHandler } from '../error/ErrorHandler';
 import { AuthenticatorItem } from '../model/AuthenticatorItem';
+import { OperationType } from '../model/OperationType';
 import * as RootNavigation from '../utility/RootNavigation';
 import { AuthenticatorValidator } from '../utility/validation/AuthenticatorValidator';
 
@@ -36,10 +38,14 @@ export class AuthenticatorSelectorImpl extends AuthenticatorSelector {
 		let authenticators: Array<Authenticator> = [];
 		switch (this.operation) {
 			case AuthenticatorSelectorOperation.registration:
-				authenticators = await AuthenticatorValidator.validateForRegistration(
-					context,
-					configuration.authenticatorAllowlist
-				);
+				try {
+					authenticators = await AuthenticatorValidator.validateForRegistration(
+						context,
+						configuration.authenticatorAllowlist
+					);
+				} catch (error) {
+					return ErrorHandler.handle(OperationType.unknown, error as Error);
+				}
 				break;
 			case AuthenticatorSelectorOperation.authentication:
 				authenticators = AuthenticatorValidator.validateForAuthentication(
@@ -51,15 +57,22 @@ export class AuthenticatorSelectorImpl extends AuthenticatorSelector {
 
 		if (authenticators.length === 0) {
 			console.log('No available authenticators found. Cancelling authenticator selection.');
-			return handler.cancel();
+			return handler.cancel().catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 		}
 
 		const items: AuthenticatorItem[] = [];
 		for (const authenticator of authenticators) {
+			let isPolicyCompliant: boolean;
+			try {
+				isPolicyCompliant = await context.isPolicyCompliant(authenticator.aaid);
+			} catch (error) {
+				return ErrorHandler.handle(OperationType.unknown, error as Error);
+			}
+
 			items.push(
 				new AuthenticatorItem(
 					authenticator,
-					await context.isPolicyCompliant(authenticator.aaid),
+					isPolicyCompliant,
 					authenticator.userEnrollment.isEnrolled(username)
 				)
 			);
