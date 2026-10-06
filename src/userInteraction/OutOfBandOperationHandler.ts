@@ -25,9 +25,9 @@ import { PinUserVerifierImpl } from './PinUserVerifierImpl';
 import { AppErrorPayloadDecodeError, AppErrorQrCodeError } from '../error/AppError';
 import { ErrorHandler } from '../error/ErrorHandler';
 import { OperationType } from '../model/OperationType';
-import { AuthorizationUtils } from '../utility/AuthorizationUtils';
+import { printAuthorizationInfo } from '../utility/AuthorizationUtils';
 import { ClientProvider } from '../utility/ClientProvider';
-import { DeviceInformationUtils } from '../utility/DeviceInformationUtils';
+import { createDeviceInformation } from '../utility/DeviceInformationUtils';
 import * as RootNavigation from '../utility/RootNavigation';
 
 async function handleRegistration(
@@ -35,7 +35,7 @@ async function handleRegistration(
 	client?: MobileAuthenticationClient
 ) {
 	const deviceInformation =
-		(await client?.localData.deviceInformation()) ?? DeviceInformationUtils.create();
+		(await client?.localData.deviceInformation()) ?? createDeviceInformation();
 	await registration
 		.deviceInformation(deviceInformation)
 		.authenticatorSelector(
@@ -69,7 +69,7 @@ async function handleAuthentication(authentication: OutOfBandAuthentication) {
 		.fingerprintUserVerifier(new FingerprintUserVerifierImpl())
 		.onSuccess((authorizationProvider?: AuthorizationProvider) => {
 			console.log('Out-of-Band authentication succeeded.');
-			AuthorizationUtils.printAuthorizationInfo(authorizationProvider);
+			printAuthorizationInfo(authorizationProvider);
 			RootNavigation.navigate('Result', {
 				operation: OperationType.authentication,
 			});

@@ -20,7 +20,7 @@ import { FingerprintUserVerifierImpl } from '../userInteraction/FingerprintUserV
 import { PasswordEnrollerImpl } from '../userInteraction/PasswordEnrollerImpl';
 import { PinEnrollerImpl } from '../userInteraction/PinEnrollerImpl';
 import { ClientProvider } from '../utility/ClientProvider';
-import { DeviceInformationUtils } from '../utility/DeviceInformationUtils';
+import { createDeviceInformation } from '../utility/DeviceInformationUtils';
 
 const useAuthCloudApiRegistrationViewModel = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -31,7 +31,7 @@ const useAuthCloudApiRegistrationViewModel = () => {
 	async function confirm() {
 		const client = ClientProvider.getInstance().client;
 		const deviceInformation =
-			(await client?.localData.deviceInformation()) ?? DeviceInformationUtils.create();
+			(await client?.localData.deviceInformation()) ?? createDeviceInformation();
 		const authCloudApiRegistration = client?.operations.authCloudApiRegistration
 			.deviceInformation(deviceInformation)
 			.authenticatorSelector(

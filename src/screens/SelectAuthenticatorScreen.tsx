@@ -15,7 +15,7 @@ import useSelectAuthenticatorViewModel from './SelectAuthenticatorViewModel';
 import ListItem from '../components/ListItem';
 import { AuthenticatorItemUtils } from '../model/AuthenticatorItem';
 import { darkStyle, lightStyle } from '../Styles';
-import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
+import { localizedAuthenticatorTitle } from '../utility/AuthenticatorUtils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectAuthenticator'>;
 
@@ -60,7 +60,7 @@ const SelectAuthenticatorScreen = ({ route }: Props) => {
 		return route.params.items.map((item) => {
 			return {
 				aaid: item.authenticator.aaid,
-				title: AuthenticatorUtils.localizedTitle(item.authenticator),
+				title: localizedAuthenticatorTitle(item.authenticator),
 				isEnabled: item.isEnabled,
 				details: AuthenticatorItemUtils.localizedDetails(item),
 			};

@@ -8,7 +8,7 @@ import {
 	DevicePasscodeUserVerifier,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
+import { localizedAuthenticatorTitle } from '../utility/AuthenticatorUtils';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class DevicePasscodeUserVerifierImpl extends DevicePasscodeUserVerifier {
@@ -18,7 +18,7 @@ export class DevicePasscodeUserVerifierImpl extends DevicePasscodeUserVerifier {
 	): Promise<void> {
 		console.log('Please start device passcode user verification.');
 		RootNavigation.navigate('Confirmation', {
-			authenticator: AuthenticatorUtils.localizedTitle(context.authenticator),
+			authenticator: localizedAuthenticatorTitle(context.authenticator),
 			handler: handler,
 		});
 	}

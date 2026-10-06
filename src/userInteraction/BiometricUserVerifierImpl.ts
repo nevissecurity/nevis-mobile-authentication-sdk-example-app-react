@@ -8,7 +8,7 @@ import {
 	BiometricUserVerifier,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
+import { localizedAuthenticatorTitle } from '../utility/AuthenticatorUtils';
 import * as RootNavigation from '../utility/RootNavigation';
 
 export class BiometricUserVerifierImpl extends BiometricUserVerifier {
@@ -18,7 +18,7 @@ export class BiometricUserVerifierImpl extends BiometricUserVerifier {
 	): Promise<void> {
 		console.log('Please start biometric user verification.');
 		RootNavigation.navigate('Confirmation', {
-			authenticator: AuthenticatorUtils.localizedTitle(context.authenticator),
+			authenticator: localizedAuthenticatorTitle(context.authenticator),
 			handler: handler,
 		});
 	}
