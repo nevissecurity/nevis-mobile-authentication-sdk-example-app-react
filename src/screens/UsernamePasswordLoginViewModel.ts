@@ -33,7 +33,7 @@ import { FingerprintUserVerifierImpl } from '../userInteraction/FingerprintUserV
 import { PasswordEnrollerImpl } from '../userInteraction/PasswordEnrollerImpl';
 import { PinEnrollerImpl } from '../userInteraction/PinEnrollerImpl';
 import { ClientProvider } from '../utility/ClientProvider';
-import { DeviceInformationUtils } from '../utility/DeviceInformationUtils';
+import { createDeviceInformation } from '../utility/DeviceInformationUtils';
 
 const useUsernamePasswordLoginViewModel = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -51,7 +51,7 @@ const useUsernamePasswordLoginViewModel = () => {
 		// defined in {@link Configuration.baseUrl} will be used.
 		const client = ClientProvider.getInstance().client;
 		const deviceInformation =
-			(await client?.localData.deviceInformation()) ?? DeviceInformationUtils.create();
+			(await client?.localData.deviceInformation()) ?? createDeviceInformation();
 		await client?.operations.registration
 			.username(usernameToRegister)
 			.deviceInformation(deviceInformation)

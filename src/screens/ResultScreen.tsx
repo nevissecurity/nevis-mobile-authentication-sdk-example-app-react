@@ -13,8 +13,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useResultViewModel from './ResultViewModel';
 import { type RootStackParamList } from './RootStackParamList';
 import OutlinedButton from '../components/OutlinedButton';
-import { OperationTypeUtils } from '../model/OperationType';
 import { darkStyle, lightStyle } from '../Styles';
+import { localizedOperationTitle } from '../utility/OperationTypeUtils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Result'>;
 
@@ -43,7 +43,7 @@ const ResultScreen = ({ route }: Props) => {
 		confirm();
 	}, []);
 
-	const resolvedOperation = OperationTypeUtils.localizedTitle(route.params.operation);
+	const resolvedOperation = localizedOperationTitle(route.params.operation);
 	const errorDescription = route.params.errorDescription;
 	const errorCause = route.params.errorCause;
 	return (
