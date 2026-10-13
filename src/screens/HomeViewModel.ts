@@ -37,7 +37,7 @@ import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
 import { ClientProvider } from '../utility/ClientProvider';
 import * as RootNavigation from '../utility/RootNavigation';
-import { VersionUtils } from '../utility/VersionUtils.ts';
+import { formattedVersion } from '../utility/VersionUtils.ts';
 
 const useHomeViewModel = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -158,7 +158,7 @@ const useHomeViewModel = () => {
 				}
 
 				const sdkMetaData = new SdkMetaData(
-					VersionUtils.formatted(androidMetaData.mobileAuthenticationVersion),
+					formattedVersion(androidMetaData.mobileAuthenticationVersion),
 					androidMetaData.applicationFacetId,
 					androidMetaData.signingCertificateSha256
 				);
@@ -174,7 +174,7 @@ const useHomeViewModel = () => {
 				}
 
 				const sdkMetaData = new SdkMetaData(
-					VersionUtils.formatted(iosMetaData.mobileAuthenticationVersion),
+					formattedVersion(iosMetaData.mobileAuthenticationVersion),
 					iosMetaData.applicationFacetId,
 					undefined
 				);

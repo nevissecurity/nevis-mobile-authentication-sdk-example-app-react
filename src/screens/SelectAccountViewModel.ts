@@ -24,7 +24,7 @@ import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
 import { PasswordUserVerifierImpl } from '../userInteraction/PasswordUserVerifierImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
 import { PinUserVerifierImpl } from '../userInteraction/PinUserVerifierImpl';
-import { AuthorizationUtils } from '../utility/AuthorizationUtils';
+import { printAuthorizationInfo, printSessionInfo } from '../utility/AuthorizationUtils';
 import { ClientProvider } from '../utility/ClientProvider';
 import * as RootNavigation from '../utility/RootNavigation';
 
@@ -84,7 +84,7 @@ const useSelectAccountViewModel = () => {
 			.fingerprintUserVerifier(new FingerprintUserVerifierImpl())
 			.onSuccess(async (authorizationProvider?: AuthorizationProvider) => {
 				console.log('In-Band authentication succeeded.');
-				AuthorizationUtils.printAuthorizationInfo(authorizationProvider);
+				printAuthorizationInfo(authorizationProvider);
 				switch (operation) {
 					case OperationType.authentication:
 						navigation.navigate('Result', {
@@ -110,7 +110,7 @@ const useSelectAccountViewModel = () => {
 				}
 			})
 			.onError((error) => {
-				AuthorizationUtils.printSessionInfo(error.sessionProvider);
+				printSessionInfo(error.sessionProvider);
 				ErrorHandler.handle(operation, error);
 			})
 			.execute()
