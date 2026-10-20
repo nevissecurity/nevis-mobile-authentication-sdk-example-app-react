@@ -4,7 +4,7 @@
 
 import { Aaid } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import { AuthenticatorUtils } from '../utility/AuthenticatorUtils';
+import { getAaidFromRawValue } from '../utility/AuthenticatorUtils';
 
 export class SdkConfiguration {
 	hostname: string;
@@ -36,7 +36,7 @@ export class AppConfiguration {
 		const sdk = SdkConfiguration.fromJson(json.sdk);
 		const data = json.authenticatorAllowlist;
 		const authenticatorAllowlist = data.flatMap((allowedAuthenticator: string) => {
-			return AuthenticatorUtils.getAaidFromRawValue(allowedAuthenticator) || [];
+			return getAaidFromRawValue(allowedAuthenticator) || [];
 		});
 		return new AppConfiguration(sdk, authenticatorAllowlist, json.loginRequestURL);
 	}

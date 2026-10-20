@@ -1,6 +1,7 @@
 /**
  * Copyright © 2024 Nevis Security AG. All rights reserved.
  */
+
 import { Platform } from 'react-native';
 
 import {
@@ -9,8 +10,8 @@ import {
 	AuthenticatorSelectionContext,
 } from '@nevis-security/nevis-mobile-authentication-sdk-react';
 
-import AsyncUtils from '../AsyncUtils';
-import { AuthenticatorUtils } from '../AuthenticatorUtils';
+import { asyncFilter } from '../AsyncUtils';
+import { getAaidFromRawValue } from '../AuthenticatorUtils';
 
 export abstract class AuthenticatorValidator {
 	/**
@@ -26,23 +27,20 @@ export abstract class AuthenticatorValidator {
 		const allowedAuthenticators: Array<Authenticator> =
 			AuthenticatorValidatorImpl.allowedAuthenticators(context, allowlistedAuthenticators);
 
-		return AsyncUtils.asyncFilter(
-			allowedAuthenticators,
-			async (authenticator: Authenticator) => {
-				// Do not display:
-				//  - policy non-compliant authenticators (this includes already registered authenticators)
-				//  - not hardware supported authenticators
-				//  - prefer Biometrics authenticator on Android
-				const isSupportedByHardware = authenticator.isSupportedByHardware;
-				const isPolicyCompliant = await context.isPolicyCompliant(authenticator.aaid);
-				const filterAndroidIfNecessary =
-					await AuthenticatorValidatorImpl.filterAndroidFingerprintIfNecessary(
-						context,
-						authenticator
-					);
-				return isSupportedByHardware && isPolicyCompliant && filterAndroidIfNecessary;
-			}
-		);
+		return asyncFilter(allowedAuthenticators, async (authenticator: Authenticator) => {
+			// Do not display:
+			//  - policy non-compliant authenticators (this includes already registered authenticators)
+			//  - not hardware supported authenticators
+			//  - prefer Biometrics authenticator on Android
+			const isSupportedByHardware = authenticator.isSupportedByHardware;
+			const isPolicyCompliant = await context.isPolicyCompliant(authenticator.aaid);
+			const filterAndroidIfNecessary =
+				await AuthenticatorValidatorImpl.filterAndroidFingerprintIfNecessary(
+					context,
+					authenticator
+				);
+			return isSupportedByHardware && isPolicyCompliant && filterAndroidIfNecessary;
+		});
 	}
 
 	/**
@@ -82,7 +80,7 @@ export class AuthenticatorValidatorImpl extends AuthenticatorValidator {
 		allowlistedAuthenticators: Array<Aaid>
 	): Array<Authenticator> {
 		return context.authenticators.filter((authenticator) => {
-			const authenticatorAaid = AuthenticatorUtils.getAaidFromRawValue(authenticator.aaid);
+			const authenticatorAaid = getAaidFromRawValue(authenticator.aaid);
 			if (authenticatorAaid === undefined) {
 				return false;
 			}

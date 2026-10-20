@@ -18,7 +18,9 @@ const useSelectAuthenticatorViewModel = () => {
 	}
 
 	async function cancel(authenticatorSelectionHandler?: AuthenticatorSelectionHandler) {
-		await authenticatorSelectionHandler?.cancel();
+		await authenticatorSelectionHandler
+			?.cancel()
+			.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 	}
 
 	return {

@@ -30,10 +30,16 @@ export class AccountSelectorImpl extends AccountSelector {
 		const usernames = new Set<string>();
 		for (const authenticator of supportedAuthenticators) {
 			for (const account of authenticator.registration.registeredAccounts) {
-				const isPolicyCompliant = await context.isPolicyCompliant(
-					authenticator.aaid,
-					account.username
-				);
+				let isPolicyCompliant: boolean;
+				try {
+					isPolicyCompliant = await context.isPolicyCompliant(
+						authenticator.aaid,
+						account.username
+					);
+				} catch (error) {
+					return ErrorHandler.handle(OperationType.unknown, error as Error);
+				}
+
 				if (isPolicyCompliant) {
 					usernames.add(account.username);
 				}
@@ -45,11 +51,11 @@ export class AccountSelectorImpl extends AccountSelector {
 				// No username is compliant with the policy.
 				// Provide a random username that will generate an error in the SDK.
 				console.log('No valid account found!');
-				await handler.username('');
+				handler.username('').catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 				break;
 			case 1:
 				{
-					const username = usernames.values().next().value;
+					const username = usernames.values().next().value!;
 					if (context.transactionConfirmationData) {
 						console.log('Transaction need to be confirmed!');
 						RootNavigation.navigate('TransactionConfirmation', {
@@ -60,7 +66,9 @@ export class AccountSelectorImpl extends AccountSelector {
 					} else {
 						// Typical case: authentication with username provided, just use it.
 						console.log('One account found, performing automatic selection!');
-						await handler.username(username);
+						handler
+							.username(username)
+							.catch(ErrorHandler.handle.bind(null, OperationType.unknown));
 					}
 				}
 				break;
