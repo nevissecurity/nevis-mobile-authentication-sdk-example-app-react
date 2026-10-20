@@ -1,5 +1,5 @@
 /**
- * Copyright © 2023 Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026 Nevis Security AG. All rights reserved.
  */
 
 import { useState } from 'react';
@@ -37,7 +37,7 @@ import { PasswordChangerImpl } from '../userInteraction/PasswordChangerImpl';
 import { PinChangerImpl } from '../userInteraction/PinChangerImpl';
 import { ClientProvider } from '../utility/ClientProvider';
 import * as RootNavigation from '../utility/RootNavigation';
-import { VersionUtils } from '../utility/VersionUtils.ts';
+import { formattedVersion } from '../utility/VersionUtils.ts';
 
 const useHomeViewModel = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -158,7 +158,7 @@ const useHomeViewModel = () => {
 				}
 
 				const sdkMetaData = new SdkMetaData(
-					VersionUtils.formatted(androidMetaData.mobileAuthenticationVersion),
+					formattedVersion(androidMetaData.mobileAuthenticationVersion),
 					androidMetaData.applicationFacetId,
 					androidMetaData.signingCertificateSha256
 				);
@@ -174,7 +174,7 @@ const useHomeViewModel = () => {
 				}
 
 				const sdkMetaData = new SdkMetaData(
-					VersionUtils.formatted(iosMetaData.mobileAuthenticationVersion),
+					formattedVersion(iosMetaData.mobileAuthenticationVersion),
 					iosMetaData.applicationFacetId,
 					undefined
 				);
@@ -291,6 +291,34 @@ const useHomeViewModel = () => {
 		}
 
 		selectAccount(OperationType.authentication);
+	}
+
+	async function fetchPendingOperations() {
+		if (localAccounts.length === 0) {
+			return ErrorHandler.handle(
+				OperationType.pendingOutOfBandOperations,
+				new AppErrorAccountsNotFound('There are no registered accounts')
+			);
+		}
+
+		const client = ClientProvider.getInstance().client;
+		await client?.operations.pendingOutOfBandOperations
+			.onResult(async (result) => {
+				result.errors.forEach((error) => {
+					console.log(`Pending out-of-band operations error: ${error.description}`);
+				});
+
+				// The operations are sorted by creation time, the last one is the latest.
+				const pendingOperation = result.operations.at(-1);
+				if (pendingOperation) {
+					await OutOfBandOperationHandler.handleOutOfBandPayload(
+						pendingOperation.payload,
+						client
+					);
+				}
+			})
+			.execute()
+			.catch(ErrorHandler.handle.bind(null, OperationType.pendingOutOfBandOperations));
 	}
 
 	function deregister() {
@@ -506,6 +534,7 @@ const useHomeViewModel = () => {
 		authCloudApiRegister,
 		inBandRegister,
 		inBandAuthenticate,
+		fetchPendingOperations,
 		deregister,
 		changeDeviceInformation,
 		deleteLocalAuthenticators,

@@ -1,5 +1,5 @@
 /**
- * Copyright © 2023 Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026 Nevis Security AG. All rights reserved.
  */
 
 import { useCallback, useEffect } from 'react';
@@ -29,6 +29,7 @@ const HomeScreen = () => {
 		authCloudApiRegister,
 		inBandRegister,
 		inBandAuthenticate,
+		fetchPendingOperations,
 		deregister,
 		changeDeviceInformation,
 		deleteLocalAuthenticators,
@@ -97,6 +98,10 @@ const HomeScreen = () => {
 					<OutlinedButton
 						text={t('home.inBandAuthenticate')}
 						onPress={inBandAuthenticate}
+					/>
+					<OutlinedButton
+						text={t('home.fetchPendingOperations')}
+						onPress={fetchPendingOperations}
 					/>
 					<OutlinedButton text={t('home.deregister')} onPress={deregister} />
 					<OutlinedButton
