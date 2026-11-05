@@ -38,7 +38,7 @@ Your development setup has to meet the following prerequisites:
 * Gradle 8.6 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 8.2.1 or later
 * Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 2.1.20 or later
-* React Native 0.85.2
+* React Native 0.86.3
 
 ### Initialization
 
