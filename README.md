@@ -100,9 +100,6 @@ Edit the `assets/config_authentication_cloud.json` file and replace
 
 ```json
 {
-  "login": {
-    "loginRequestURL": "https://<YOUR INSTANCE>.mauth.nevis.cloud/_app/auth/pwd"
-  },
   "sdk": {
     "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud"
   }
@@ -179,6 +176,10 @@ Further information can be found in the [ccache documentation](https://ccache.de
 Now that the React Native example app is up and running, it's time to try it out!
 
 Check out our [Quickstart Guide](https://docs.nevis.net/mobilesdk/quickstart).
+
+## AI Assistant Support
+
+This repository contains an [AGENTS.md](AGENTS.md) file with project context for AI coding assistants (e.g. Claude Code, Cursor, GitHub Copilot). `CLAUDE.md`, `.cursorrules` and `.github/copilot-instructions.md` are symlinks to it. It helps the assistant answer questions about configuring, running and adapting the example app, and about moving its SDK integration code into your own application.
 
 #### Troubleshooting
 
