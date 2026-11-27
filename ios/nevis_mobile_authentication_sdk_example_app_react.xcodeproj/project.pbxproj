@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		3841A25E30B96FA900AB75F2 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3841A25D30B96FA900AB75F2 /* AppIcon.icon */; };
 		389565792F51A78D00352F84 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 389565782F51A78D00352F84 /* PrivacyInfo.xcprivacy */; };
 		389565812F51C93300352F84 /* ReactNativeFactoryDelegateImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389565802F51C93300352F84 /* ReactNativeFactoryDelegateImpl.swift */; };
 		38A447EF2F2A3CCA00C02069 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A447ED2F2A3CCA00C02069 /* AppDelegate.swift */; };
@@ -19,9 +19,9 @@
 
 /* Begin PBXFileReference section */
 		13B07F961A680F5B00A75B9A /* nevis_mobile_authentication_sdk_example_app_react.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nevis_mobile_authentication_sdk_example_app_react.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = nevis_mobile_authentication_sdk_example_app_react/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = nevis_mobile_authentication_sdk_example_app_react/Info.plist; sourceTree = "<group>"; };
 		30C283FF555A6DBC28E16AF2 /* Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig"; path = "Target Support Files/Pods-nevis_mobile_authentication_sdk_example_app_react/Pods-nevis_mobile_authentication_sdk_example_app_react.debug.xcconfig"; sourceTree = "<group>"; };
+		3841A25D30B96FA900AB75F2 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; name = AppIcon.icon; path = nevis_mobile_authentication_sdk_example_app_react/AppIcon.icon; sourceTree = "<group>"; };
 		389565782F51A78D00352F84 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = nevis_mobile_authentication_sdk_example_app_react/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		389565802F51C93300352F84 /* ReactNativeFactoryDelegateImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReactNativeFactoryDelegateImpl.swift; path = nevis_mobile_authentication_sdk_example_app_react/ReactNativeFactoryDelegateImpl.swift; sourceTree = "<group>"; };
 		38A447ED2F2A3CCA00C02069 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = nevis_mobile_authentication_sdk_example_app_react/AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 				38A447F22F2A40A400C02069 /* SceneDelegate.swift */,
 				389565802F51C93300352F84 /* ReactNativeFactoryDelegateImpl.swift */,
 				38A447EE2F2A3CCA00C02069 /* nevis_mobile_authentication_sdk_example_app_react-Bridging-Header.h */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				3841A25D30B96FA900AB75F2 /* AppIcon.icon */,
 				389565782F51A78D00352F84 /* PrivacyInfo.xcprivacy */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -181,7 +181,7 @@
 			files = (
 				389565792F51A78D00352F84 /* PrivacyInfo.xcprivacy in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				3841A25E30B96FA900AB75F2 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
